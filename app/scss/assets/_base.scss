@@ -1,0 +1,54 @@
+// Add cursor pointer for desktop
+button,
+[type="file"],
+[type="color"],
+[type="submit"],
+[type="button"] {
+  @media (any-hover: hover) {
+    cursor: pointer;
+  }
+}
+
+// Set block behavior for img
+img {
+  display: block;
+}
+
+// Add vertical resize for textarea
+textarea {
+  resize: vertical;
+}
+
+// Set text elements style
+sub,
+sup {
+  font-size: .75em;
+}
+
+code {
+  font-family: monospace, monospace;
+}
+
+b,
+strong {
+  font-weight: revert;
+}
+
+// Progress bar
+progress {
+  vertical-align: baseline;
+
+  &::-webkit-progress-bar {
+    background-color: orange;
+  }
+
+  &::-webkit-progress-value {
+    background-color: red;
+  }
+}
+
+// Selected text background color
+::selection {
+  color: #fff;
+  background-color: #004fe4;
+}

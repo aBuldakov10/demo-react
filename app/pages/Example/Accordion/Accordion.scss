@@ -1,0 +1,29 @@
+// Import mixins and variables
+@import '../../../scss/assets/util';
+
+// Accordion
+.accordion {
+  border: 1px solid $border-clr;
+
+  &__item:not(:last-child) {
+    border-bottom: 1px solid $border-clr;
+  }
+
+  &__body,
+  &__title {
+    padding: 15px;
+  }
+
+  &__title {
+    cursor: pointer;
+
+    &.active {
+      background-color: $main-clr-active;
+      color: $bg-clr;
+    }
+  }
+
+  &__body {
+    border-top: 1px solid $border-clr;
+  }
+}

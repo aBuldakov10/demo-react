@@ -1,0 +1,236 @@
+// Import mixins and variables
+@import '../../scss/assets/util';
+
+// -------------- Default app style --------------
+// No script message
+.no-script-msg {
+  @include font-size(13);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  padding: .538em;
+  width: 100%;
+  background: #f9e03b;
+  text-align: center;
+}
+
+// Set base font style
+html {
+  font-size: $fs-base+px;
+  line-height: 1.2;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: 100vh;
+  min-width: 320px;
+  font-family: $main-font;
+  color: $txt-clr;
+  background-color: $bg-clr;
+}
+
+// Block style
+.block {
+  margin-bottom: 30px;
+
+  &__heading,
+  &__body,
+  &__footer {
+    &:not(:last-child) {
+      margin-bottom: 3.462em;
+
+      @include media(min, $md) {
+        margin-bottom: 3.750em;
+      }
+    }
+  }
+}
+
+// Video, google map, iframe, responsive wrapper
+.responsive-wrapper {
+  position: relative;
+  padding-top: 50%;
+
+  iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.img-bg {
+  position: relative;
+
+  & img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// Link and button style
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50px;
+  color: $txt-clr-bg;
+  background: $main-clr;
+  text-transform: capitalize;
+
+  @include media(min, $sm) {
+    max-width: 200px;
+  }
+
+  @media (any-hover: hover) {
+    &:hover {
+      background: $main-clr-hover;
+    }
+  }
+
+  &:focus {
+    background-color: $main-clr-focus;
+  }
+}
+
+.link {
+  color: $main-clr;
+
+  @media (any-hover: hover) {
+    &:hover {
+      color: $main-clr-hover;
+    }
+  }
+
+  &:focus {
+    color: $main-clr-focus;
+  }
+
+  &:active {
+  }
+
+  &:visited {
+  }
+
+  &:focus-visible {
+  }
+}
+
+// Common styles
+.hidden {
+  display: none;
+}
+
+.no-scroll {
+  overflow: hidden;
+}
+
+.is-blur {
+  main,
+  footer {
+    filter: blur(2px);
+  }
+}
+
+// -------------- Custom general app style for all pages in project --------------
+.container {
+  max-width: 1295px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+// Tabs
+.tabs__navigation {
+  display: none;
+
+  @include media(min, $md) {
+    display: flex;
+  }
+
+  &-link {
+    padding: 8px 16px;
+    color: inherit;
+
+    &.active {
+      color: $main-clr-active;
+      border-bottom: 1px solid $main-clr-active;
+    }
+  }
+}
+
+.tab {
+  @include media(max, $md) {
+    margin-bottom: 1.25em;
+    padding-bottom: 1.25em;
+    border-bottom: 1px solid $border-clr;
+  }
+
+  @include media(min, $md) {
+    display: none;
+  }
+
+  &.active {
+    display: block;
+  }
+}
+
+.mob-tab {
+  &-nav {
+    @include media(min, $md) {
+      display: none;
+    }
+
+    @include media(max, $md) {
+      &.active + .mob-tab-content {
+        display: block;
+      }
+    }
+
+    & h3 {
+      margin-bottom: 0;
+      padding-right: 2.2em;
+    }
+
+    &.active {
+      color: $main-clr-active;
+    }
+  }
+
+  &-content {
+    margin-top: .75em;
+
+    @include media(max, $md) {
+      display: none;
+    }
+  }
+}
+
+.collapse-arrow {
+  position: relative;
+  transition: $transition;
+
+  &:after {
+    @include pseudo();
+    top: 17px;
+    right: 20px;
+    width: 15px;
+    height: 15px;
+    border-left: 2px solid $border-clr;
+    border-bottom: 2px solid $border-clr;
+    transform: rotate(315deg);
+    transition: $transition;
+  }
+
+  &.active:after {
+    top: 25px;
+    transform: rotate(135deg);
+  }
+}

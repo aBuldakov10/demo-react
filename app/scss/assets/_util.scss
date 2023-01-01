@@ -1,0 +1,6 @@
+/*
+  Import variables and mixins for using in all components.
+  This file must be imported in any components scss files if need use mixins or variables in component
+*/
+@import "variables";
+@import "mixins";

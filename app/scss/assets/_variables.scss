@@ -1,0 +1,38 @@
+// -------------- Fonts --------------
+// Default
+$sans: 'Helvetica', 'Verdana', 'Arial', sans-serif;
+
+// Custom
+$main-font: 'Montserrat', $sans;
+
+// Size
+$fs-base: 16;
+
+// Weight
+$regular: 400;
+$medium: 500;
+
+// -------------- Breakpoints --------------
+$xs: 375;
+$sm: 576;
+$md: 768;
+$lg: 992;
+$xl: 1200;
+$xxl: 1400;
+
+// -------------- Colors --------------
+$bg-clr: #eee;
+$txt-clr: #222;
+$txt-clr-bg: #eee;
+
+$main-clr: #432874;
+$main-clr-hover: #2c1a4d;
+$main-clr-focus: #59359a;
+$main-clr-active: #6f42c1;
+
+$border-clr: #ccc;
+$border-clr-focus: #432874;
+
+// -------------- Other --------------
+$transition: .2s ease;
+$shadow: 0 0 4px 0 #a5a5a5;

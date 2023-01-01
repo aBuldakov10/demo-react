@@ -1,0 +1,37 @@
+h1 {
+  @include font-size(32);
+  margin-bottom: .75em;
+}
+
+h2 {
+  @include font-size(28);
+  margin-bottom: .85em;
+}
+
+h3 {
+  @include font-size(24);
+  margin-bottom: 1em;
+}
+
+h4 {
+  @include font-size(20);
+  margin-bottom: .75em;
+}
+
+h5, h6 {
+  @include font-size(16);
+  margin-bottom: .95em;
+}
+
+p {
+  line-height: 1.5;
+
+  &:not(:last-child) {
+    margin-bottom: 1.5em;
+  }
+}
+
+a,
+button {
+  transition: $transition;
+}

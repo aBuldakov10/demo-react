@@ -1,0 +1,15 @@
+.header {
+  background: #e6e6e6;
+
+ &-content {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   padding: 15px 0;
+
+   & .nav-menu__list {
+     display: flex;
+     gap: 20px;
+   }
+ }
+}
