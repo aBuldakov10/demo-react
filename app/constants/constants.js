@@ -1,4 +1,4 @@
 export const headerNav = {
-  Home: '/',
-  Example: '/example',
+  Weather: '/',
+  // Example: '/example',
 };

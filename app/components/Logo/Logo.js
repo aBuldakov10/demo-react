@@ -6,7 +6,7 @@ import logo from './logo.jpg';
 
 const Logo = () => {
   return (
-    <Link to={'/'} className="logo" target="">
+    <Link to={'/demo-react'} className="logo" target="">
       <img src={logo} alt="logo" title="logo" />
     </Link>
   );

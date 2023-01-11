@@ -4,7 +4,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 
 const sourceDir = 'app';
-const compileDir = 'build';
+const compileDir = 'docs';
 const imagesDir = 'images';
 const publicDir = 'public';
 

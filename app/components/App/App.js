@@ -1,28 +1,36 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import './App.scss';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
-import Home from '../../pages/Home/Home';
-import Example from '../../pages/Example/Example';
+import Weather from '../../pages/Weather/Weather';
+import PageNotFound from '../../pages/PageNotFound';
+
+const theme = createTheme({
+  typography: {
+    fontFamily: '',
+  },
+});
 
 const App = () => {
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Header />
 
       <main className="main">
         <div className="container">
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/example" element={<Example />} />
+            <Route path="/" element={<Navigate to="/demo-react" />} />
+            <Route path="/demo-react" element={<Weather />} />
+            <Route path="*" element={<PageNotFound />} />
           </Routes>
         </div>
       </main>
 
       <Footer />
-    </>
+    </ThemeProvider>
   );
 };
 
