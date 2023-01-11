@@ -7,7 +7,7 @@ export const sortedCities = cities.sort((firstItem, secondItem) =>
 
 /*** Fetch city weather ***/
 const apiKey = '641c47dcb8a7b9d976c1925431f690f7';
-const apiDomain = 'http://api.openweathermap.org/data/2.5';
+const apiDomain = 'https://api.openweathermap.org/data/2.5';
 export const weatherIconUrl = 'http://openweathermap.org/img';
 export const fetchWeather = async (cityId) => {
   const apiRequest = `${apiDomain}/weather?id=${cityId}&appid=${apiKey}&units=metric`;
