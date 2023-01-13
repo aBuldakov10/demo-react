@@ -10,11 +10,23 @@ import {
   Typography,
 } from '@mui/material';
 
+import {
+  AccessTime,
+  Air,
+  Opacity,
+  ExploreOutlined,
+  RemoveRedEyeOutlined,
+  SouthOutlined,
+} from '@mui/icons-material';
+
+import './Weather.scss';
+import imgBg from './weather-bg.jpg';
 import { sortedCities, fetchWeather, weatherIconUrl, getTime } from './index';
 
 const Weather = () => {
   // State
   const [cityId, setCityId] = useState(658225);
+  const [cityActive, setCityActive] = useState(false);
   const [cityWeather, setCityWeather] = useState({});
   const [cityWeatherMain, setCityWeatherMain] = useState({});
   const [cityWeatherClouds, setCityWeatherClouds] = useState({});
@@ -43,18 +55,22 @@ const Weather = () => {
             sx={{
               borderRadius: 2,
               bgcolor: '#fff',
+              overflow: 'hidden',
             }}
+            disablePadding={true}
           >
-            {sortedCities.map(({ id, name }) => {
+            {sortedCities.map(({ id, name }, index) => {
               return (
                 <ListItem disablePadding key={id}>
                   <ListItemButton
+                    selected={cityActive === index}
                     data-city-id={id}
                     onClick={() => {
                       setCityId(id);
+                      setCityActive(index);
                     }}
                   >
-                    <ListItemText primary={name} />
+                    <ListItemText primary={name} sx={{ my: 0 }} />
                   </ListItemButton>
                 </ListItem>
               );
@@ -66,19 +82,31 @@ const Weather = () => {
           <Box
             className="weather__content"
             sx={{
-              p: 2,
+              position: 'relative',
+              p: 3,
               height: '100%',
               borderRadius: 2,
               bgcolor: '#fff',
+              backgroundImage: `url(${imgBg})`,
+              backgroundPosition: 'center',
+              backgroundSize: 'cover',
+              overflow: 'hidden',
             }}
           >
-            <div>
+            <Box
+              sx={{
+                position: 'relative',
+                zIndex: 1,
+                color: '#fff',
+                opacity: 0.8,
+              }}
+            >
               <Box
                 sx={{
                   display: 'flex',
                   alignItems: 'center',
                   gap: '50px',
-                  pb: 2,
+                  pb: 3,
                 }}
               >
                 <Typography
@@ -97,7 +125,7 @@ const Weather = () => {
                     fontSize: 14,
                   }}
                 >
-                  <span>Time:</span>
+                  <AccessTime />
 
                   <Box
                     sx={{
@@ -111,6 +139,10 @@ const Weather = () => {
                 </Box>
 
                 {cityWeatherWeather.map(({ description }, index) => {
+                  if (index > 0) {
+                    return false;
+                  }
+
                   return (
                     <span key={index} style={{ fontSize: 14 }}>
                       Description: {description}
@@ -119,11 +151,11 @@ const Weather = () => {
                 })}
               </Box>
 
-              <Divider style={{ marginBottom: 16 }} />
+              <Divider style={{ marginBottom: 24 }} />
 
               <Box
                 sx={{
-                  pb: 2,
+                  pb: 3,
                   display: 'flex',
                   alignItems: 'flex-start',
                   gap: '50px',
@@ -133,6 +165,7 @@ const Weather = () => {
                   <Box
                     sx={{
                       display: 'inline-block',
+                      mr: 4,
                       verticalAlign: 'middle',
                     }}
                   >
@@ -150,10 +183,17 @@ const Weather = () => {
                     sx={{
                       display: 'inline-block',
                       verticalAlign: 'middle',
-                      mr: 2,
+                      mr: 4,
+                      width: 70,
+                      backgroundColor: '#8c8c8c',
+                      borderRadius: 50,
                     }}
                   >
                     {cityWeatherWeather.map(({ icon, description }, index) => {
+                      if (index > 0) {
+                        return false;
+                      }
+
                       return (
                         <img
                           src={`${weatherIconUrl}/wn/${icon}@2x.png`}
@@ -196,7 +236,7 @@ const Weather = () => {
                 </Box>
               </Box>
 
-              <Divider style={{ marginBottom: 16 }} />
+              <Divider style={{ marginBottom: 24 }} />
 
               <Box
                 sx={{
@@ -208,7 +248,7 @@ const Weather = () => {
                 <Box
                   sx={{
                     display: 'flex',
-                    alignItems: 'flex-start',
+                    alignItems: 'center',
                     gap: '15px',
                   }}
                 >
@@ -218,19 +258,20 @@ const Weather = () => {
                       gap: '15px',
                     }}
                   >
-                    <span>Wind:</span>
+                    <Air />
 
                     <Box
                       sx={{
                         display: 'flex',
                         flexDirection: 'column',
                         gap: '5px',
+                        mt: 0.25,
                       }}
                     >
-                      <span>speed {cityWeatherWind.speed} m/s</span>
+                      <span>speed: {cityWeatherWind.speed} m/s</span>
 
                       {cityWeatherWind.gust ? (
-                        <span>gust {cityWeatherWind.gust} m/s</span>
+                        <span>gust: {cityWeatherWind.gust} m/s</span>
                       ) : (
                         ''
                       )}
@@ -239,26 +280,49 @@ const Weather = () => {
 
                   <span
                     style={{
+                      display: 'flex',
                       transform: `rotate(${cityWeatherWind.deg}deg)`,
-                      fontSize: 44,
-                      lineHeight: 1,
                     }}
                   >
-                    &#8595;
+                    <SouthOutlined />
                   </span>
                 </Box>
-                <div>
-                  Visibility:{' '}
+
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '15px',
+                  }}
+                >
+                  <RemoveRedEyeOutlined />{' '}
                   {cityWeather.visibility >= 1000
                     ? `${cityWeather.visibility / 1000} km`
                     : `${cityWeather.visibility} m`}
-                </div>
-                <div>Humidity: {cityWeatherMain.humidity} %</div>
-                <div>
-                  Pressure: {Math.round(cityWeatherMain.pressure / 1.333)} mmHg
-                </div>
+                </Box>
+
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '15px',
+                  }}
+                >
+                  <Opacity /> <span>{cityWeatherMain.humidity} %</span>
+                </Box>
+
+                <Box
+                  sx={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '15px',
+                  }}
+                >
+                  <ExploreOutlined />{' '}
+                  {Math.round(cityWeatherMain.pressure / 1.333)} mmHg
+                </Box>
               </Box>
-            </div>
+            </Box>
           </Box>
         </Grid>
       </Grid>
