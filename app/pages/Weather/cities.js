@@ -10,36 +10,6 @@ export const cities = [
     },
   },
   {
-    id: 536203,
-    name: 'Saint Petersburg',
-    state: '',
-    country: 'RU',
-    coord: {
-      lon: 30.25,
-      lat: 59.916668,
-    },
-  },
-  {
-    id: 519336,
-    name: 'Velikiy Novgorod',
-    state: '',
-    country: 'RU',
-    coord: {
-      lon: 31.283331,
-      lat: 58.51667,
-    },
-  },
-  {
-    id: 520555,
-    name: 'Nizhniy Novgorod',
-    state: '',
-    country: 'RU',
-    coord: {
-      lon: 44.002048,
-      lat: 56.328674,
-    },
-  },
-  {
     id: 1496747,
     name: 'Novosibirsk',
     state: '',
@@ -50,46 +20,6 @@ export const cities = [
     },
   },
   {
-    id: 499099,
-    name: 'Samara',
-    state: '',
-    country: 'RU',
-    coord: {
-      lon: 50.150002,
-      lat: 53.200001,
-    },
-  },
-  {
-    id: 501175,
-    name: 'Rostov-na-Donu',
-    state: '',
-    country: 'RU',
-    coord: {
-      lon: 39.71389,
-      lat: 47.236389,
-    },
-  },
-  {
-    id: 2013348,
-    name: 'Vladivostok',
-    state: '',
-    country: 'RU',
-    coord: {
-      lon: 131.873535,
-      lat: 43.105621,
-    },
-  },
-  {
-    id: 2023469,
-    name: 'Irkutsk',
-    state: '',
-    country: 'RU',
-    coord: {
-      lon: 104.296387,
-      lat: 52.297779,
-    },
-  },
-  {
     id: 524305,
     name: 'Murmansk',
     state: '',
@@ -97,6 +27,76 @@ export const cities = [
     coord: {
       lon: 33.09251,
       lat: 68.979172,
+    },
+  },
+  {
+    id: 2950159,
+    name: 'Berlin',
+    state: '',
+    country: 'DE',
+    coord: {
+      lon: 13.41053,
+      lat: 52.524368,
+    },
+  },
+  {
+    id: 360630,
+    name: 'Cairo',
+    state: '',
+    country: 'EG',
+    coord: {
+      lon: 31.24967,
+      lat: 30.06263,
+    },
+  },
+  {
+    id: 1816670,
+    name: 'Beijing',
+    state: '',
+    country: 'CN',
+    coord: {
+      lon: 116.397232,
+      lat: 39.907501,
+    },
+  },
+  {
+    id: 1275339,
+    name: 'Mumbai',
+    state: '',
+    country: 'IN',
+    coord: {
+      lon: 72.847939,
+      lat: 19.01441,
+    },
+  },
+  {
+    id: 2147714,
+    name: 'Sydney',
+    state: '',
+    country: 'AU',
+    coord: {
+      lon: 151.207321,
+      lat: -33.867851,
+    },
+  },
+  {
+    id: 5368361,
+    name: 'Los Angeles',
+    state: 'CA',
+    country: 'US',
+    coord: {
+      lon: -118.243683,
+      lat: 34.052231,
+    },
+  },
+  {
+    id: 3451190,
+    name: 'Rio de Janeiro',
+    state: '',
+    country: 'BR',
+    coord: {
+      lon: -43.2075,
+      lat: -22.902781,
     },
   },
 ];

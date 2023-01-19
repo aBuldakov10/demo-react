@@ -76,7 +76,7 @@ const Weather = () => {
               py: 2,
             }}
           >
-            {sortedCities.map(({ id, name }, index) => {
+            {sortedCities.map(({ id, name, country }, index) => {
               return (
                 <ListItem disablePadding key={id}>
                   <ListItemButton
@@ -89,7 +89,10 @@ const Weather = () => {
                       setCityActive(index); // Change active city
                     }}
                   >
-                    <ListItemText primary={name} sx={{ my: 0 }} />
+                    <ListItemText
+                      primary={`${name} (${country})`}
+                      sx={{ my: 0 }}
+                    />
                   </ListItemButton>
                 </ListItem>
               );
