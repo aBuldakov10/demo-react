@@ -8,8 +8,10 @@ import {
   ListItemText,
   Divider,
   Typography,
+  Button,
+  Alert,
+  AlertTitle,
 } from '@mui/material';
-
 import {
   AccessTime,
   Air,
@@ -17,16 +19,31 @@ import {
   ExploreOutlined,
   RemoveRedEyeOutlined,
   SouthOutlined,
+  LocationOn,
 } from '@mui/icons-material';
 
 import './Weather.scss';
 import imgBg from './weather-bg.jpg';
-import { sortedCities, fetchWeather, weatherIconUrl, getTime } from './index';
+import {
+  sortedCities,
+  fetchWeather,
+  weatherIconUrl,
+  getTime,
+  chooseMyCity,
+} from './index';
 
 const Weather = () => {
-  // State
+  // General states
   const [cityId, setCityId] = useState(658225);
-  const [cityActive, setCityActive] = useState(false);
+  const [cityActive, setCityActive] = useState(false); // Active selected city
+
+  // Location states
+  const [isLocation, setIsLocation] = useState(false); // Use if location btn click
+  const [locationCoordinates, setLocationCoordinates] = useState({}); // Use location coordinates in message
+  const [isLocationEnabled, setIsLocationEnabled] = useState(true); // Location enable state
+  const [locationErrorMessage, setLocationErrorMessage] = useState(''); // Show message if location disabled
+
+  // Weather data states
   const [cityWeather, setCityWeather] = useState({});
   const [cityWeatherMain, setCityWeatherMain] = useState({});
   const [cityWeatherClouds, setCityWeatherClouds] = useState({});
@@ -56,8 +73,8 @@ const Weather = () => {
               borderRadius: 2,
               bgcolor: '#fff',
               overflow: 'hidden',
+              py: 2,
             }}
-            disablePadding={true}
           >
             {sortedCities.map(({ id, name }, index) => {
               return (
@@ -65,9 +82,11 @@ const Weather = () => {
                   <ListItemButton
                     selected={cityActive === index}
                     data-city-id={id}
+                    sx={{ px: 3 }}
                     onClick={() => {
-                      setCityId(id);
-                      setCityActive(index);
+                      setIsLocation(false); // Set if not location weather
+                      setCityId(id); // Get weather data
+                      setCityActive(index); // Change active city
                     }}
                   >
                     <ListItemText primary={name} sx={{ my: 0 }} />
@@ -76,6 +95,42 @@ const Weather = () => {
               );
             })}
           </List>
+
+          <Button
+            variant="contained"
+            color="custom"
+            endIcon={<LocationOn />}
+            sx={{
+              marginTop: 2,
+              width: '100%',
+              borderRadius: 2,
+              fontSize: '16px',
+              textTransform: 'none',
+            }}
+            onClick={async () => {
+              const locationData = await chooseMyCity(); // Get location error or location data if enabled
+
+              // Disabled location
+              if (Array.isArray(locationData) && !locationData[0]) {
+                const [locationResult, errorMessage] = locationData;
+
+                setIsLocation(true); // Location btn was clicked
+                setIsLocationEnabled(locationResult); // Set false state - location disabled
+                setLocationErrorMessage(errorMessage);
+
+                return;
+              }
+
+              // Enabled location
+              setLocationCoordinates(locationData[1]); // Show location coordinates in its own message
+              setCityId(locationData[0]); // Get weather location data
+              setCityActive(false); // Disable active city state
+              setIsLocation(true); // Is location data state
+              setIsLocationEnabled(true); // Set true state - location enabled
+            }}
+          >
+            My location
+          </Button>
         </Grid>
 
         <Grid item xs={12} md={6} lg={9}>
@@ -106,7 +161,6 @@ const Weather = () => {
                   display: 'flex',
                   alignItems: 'center',
                   gap: '50px',
-                  pb: 3,
                 }}
               >
                 <Typography
@@ -151,11 +205,16 @@ const Weather = () => {
                 })}
               </Box>
 
-              <Divider style={{ marginBottom: 24 }} />
+              <Divider
+                style={{
+                  marginTop: 24,
+                  marginBottom: 24,
+                  borderColor: 'inherit',
+                }}
+              />
 
               <Box
                 sx={{
-                  pb: 3,
                   display: 'flex',
                   alignItems: 'flex-start',
                   gap: '50px',
@@ -236,7 +295,13 @@ const Weather = () => {
                 </Box>
               </Box>
 
-              <Divider style={{ marginBottom: 24 }} />
+              <Divider
+                style={{
+                  marginTop: 24,
+                  marginBottom: 24,
+                  borderColor: 'inherit',
+                }}
+              />
 
               <Box
                 sx={{
@@ -322,6 +387,38 @@ const Weather = () => {
                   {Math.round(cityWeatherMain.pressure / 1.333)} mmHg
                 </Box>
               </Box>
+
+              {/*** Location notification ***/}
+              {!isLocation ? (
+                ''
+              ) : (
+                <Box>
+                  <Divider
+                    style={{
+                      marginTop: 24,
+                      marginBottom: 24,
+                      borderColor: 'inherit',
+                    }}
+                  />
+
+                  {isLocationEnabled ? (
+                    <Typography
+                      variant="body1"
+                      style={{ fontSize: 14 }}
+                    >{`* Your location is: latitude ${locationCoordinates.lat} and longitude ${locationCoordinates.lon}. The nearest weather data location is ${cityWeather.name}`}</Typography>
+                  ) : (
+                    <Alert
+                      severity="warning"
+                      variant="outlined"
+                      style={{ backgroundColor: '#fff' }}
+                    >
+                      <AlertTitle>{locationErrorMessage}</AlertTitle>
+                      You should to enable geolocation in your browser to see
+                      your weather location data
+                    </Alert>
+                  )}
+                </Box>
+              )}
             </Box>
           </Box>
         </Grid>

@@ -12,6 +12,13 @@ const theme = createTheme({
   typography: {
     fontFamily: '',
   },
+  palette: {
+    custom: {
+      main: '#432874',
+      dark: '#2c1a4d',
+      contrastText: '#fff',
+    },
+  },
 });
 
 const App = () => {
