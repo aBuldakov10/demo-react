@@ -14,7 +14,7 @@ const Footer = () => {
         >
           Copyright{' '}
           <Copyright style={{ width: 17, marginLeft: 5, marginRight: 5 }} />{' '}
-          2021. Company Inc.
+          2023. Company Inc.
         </Typography>
       </Box>
     </footer>

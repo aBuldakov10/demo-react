@@ -75,7 +75,7 @@ const Weather = () => {
           <List
             className="weather__list"
             sx={{
-              borderRadius: 2,
+              borderRadius: 1,
               bgcolor: '#fff',
               overflow: 'hidden',
               py: 2,
@@ -111,7 +111,6 @@ const Weather = () => {
             sx={{
               marginTop: 2,
               width: '100%',
-              borderRadius: 2,
               fontSize: '16px',
               textTransform: 'none',
             }}
@@ -149,7 +148,7 @@ const Weather = () => {
               position: 'relative',
               p: 3,
               height: '100%',
-              borderRadius: 2,
+              borderRadius: 1,
               color: '#fff',
               backgroundImage: `url(${imgBg})`,
               backgroundPosition: 'center',
