@@ -75,10 +75,11 @@ const Weather = () => {
           <List
             className="weather__list"
             sx={{
+              py: 2,
               borderRadius: 1,
               bgcolor: '#fff',
+              boxShadow: '0px 2px 5px 0px #d2d2d2;',
               overflow: 'hidden',
-              py: 2,
             }}
           >
             {sortedCities.map(({ id, name, country }, index) => {
@@ -153,6 +154,7 @@ const Weather = () => {
               backgroundImage: `url(${imgBg})`,
               backgroundPosition: 'center',
               backgroundSize: 'cover',
+              boxShadow: '0px 2px 5px 0px #d2d2d2;',
               overflow: 'hidden',
             }}
           >

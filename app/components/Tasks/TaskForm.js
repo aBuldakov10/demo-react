@@ -39,7 +39,12 @@ const TaskForm = () => {
       >
         <Form
           className="form"
-          style={{ borderRadius: 4, backgroundColor: '#fff', padding: 16 }}
+          style={{
+            padding: 16,
+            borderRadius: 4,
+            backgroundColor: '#fff',
+            boxShadow: '0px 2px 5px 0px #d2d2d2',
+          }}
         >
           <Field
             id="titleId"
