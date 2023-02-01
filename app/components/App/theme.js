@@ -10,6 +10,11 @@ export const theme = createTheme({
       dark: '#2c1a4d',
       contrastText: '#fff',
     },
+    delete: {
+      main: '#c71919',
+      dark: '#a61818',
+      contrastText: '#fff',
+    },
   },
   components: {
     MuiTextField: {
