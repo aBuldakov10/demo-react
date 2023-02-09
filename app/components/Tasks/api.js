@@ -25,3 +25,12 @@ export const deleteTask = async (id) => {
 
   return await data.json();
 };
+
+/*** Done task ***/
+export const doneTask = async (id) => {
+  const data = await fetch(`${host}/tasks/done/${id}`, {
+    method: 'PATCH',
+  });
+
+  return await data.json();
+};

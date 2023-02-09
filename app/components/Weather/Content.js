@@ -37,6 +37,7 @@ const Content = () => {
             gap: '15px',
             fontSize: 14,
           }}
+          title="time"
         >
           <AccessTime />
 
@@ -132,7 +133,7 @@ const Content = () => {
         }}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-          <Box sx={{ display: 'flex', gap: '15px' }}>
+          <Box sx={{ display: 'flex', gap: '15px' }} title="wind">
             <Air />
 
             <Box
@@ -158,23 +159,33 @@ const Content = () => {
               display: 'flex',
               transform: `rotate(${cityWeatherWind.deg}deg)`,
             }}
+            title="wind direction"
           >
             <SouthOutlined />
           </span>
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+        <Box
+          sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}
+          title="visibility"
+        >
           <RemoveRedEyeOutlined />{' '}
           {cityWeather.visibility >= 1000
             ? `${cityWeather.visibility / 1000} km`
             : `${cityWeather.visibility} m`}
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+        <Box
+          sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}
+          title="humidity"
+        >
           <Opacity /> <span>{cityWeatherMain.humidity} %</span>
         </Box>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+        <Box
+          sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}
+          title="pressure"
+        >
           <ExploreOutlined /> {Math.round(cityWeatherMain.pressure / 1.333)}{' '}
           mmHg
         </Box>

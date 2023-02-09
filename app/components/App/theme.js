@@ -15,6 +15,16 @@ export const theme = createTheme({
       dark: '#a61818',
       contrastText: '#fff',
     },
+    done: {
+      main: '#b6b6b6',
+      dark: '#44d605',
+      contrastText: '#fff',
+    },
+    isDone: {
+      main: '#44d605',
+      dark: '#3bbb05',
+      contrastText: '#fff',
+    },
   },
   components: {
     MuiTextField: {

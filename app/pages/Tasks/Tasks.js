@@ -11,11 +11,17 @@ import {
   DialogContentText,
   DialogActions,
 } from '@mui/material';
-import { Delete } from '@mui/icons-material';
+import { Delete, Done } from '@mui/icons-material';
 import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
 
-import { getTask, createTask, deleteTask } from '../../components/Tasks/api';
+import './Task.scss';
+import {
+  getTask,
+  createTask,
+  deleteTask,
+  doneTask,
+} from '../../components/Tasks/api';
 
 import InputText from '../../components/Form/InputText';
 import Textarea from '../../components/Form/Textarea';
@@ -70,6 +76,7 @@ const Tasks = () => {
                   // Bottom spacing for task list item
                   const itemSpacing =
                     Object.values(taskList).length - 1 === index ? '' : 2;
+                  const isDoneTask = isDone ? 'isDone' : 'done';
 
                   return (
                     <li key={id}>
@@ -83,6 +90,7 @@ const Tasks = () => {
                           mb: itemSpacing,
                           boxShadow: '0px 2px 5px 0px #d2d2d2;',
                         }}
+                        className={`task-${isDoneTask}`}
                       >
                         <Typography
                           component="h4"
@@ -97,14 +105,28 @@ const Tasks = () => {
                         </Typography>
 
                         <Box sx={{ position: 'absolute', top: 16, right: 16 }}>
-                          {/*<button>Done</button>*/}
+                          <Button
+                            variant="contained"
+                            color={isDoneTask}
+                            title="Done"
+                            sx={{ minWidth: 'inherit', p: 1, ml: 2 }}
+                            onClick={() => {
+                              // Mark task as done and rerender task list
+                              doneTask(id).then((taskList) => {
+                                setTaskList(taskList);
+                              });
+                            }}
+                          >
+                            <Done fontSize="small" />
+                          </Button>
+
                           {/*<button>Edit</button>*/}
 
                           <Button
                             variant="contained"
                             color="delete"
                             title="Delete"
-                            sx={{ minWidth: 'inherit', p: 1 }}
+                            sx={{ minWidth: 'inherit', p: 1, ml: 2 }}
                             onClick={() => {
                               setTaskId(id); // Set task id state for delete popup
                               setTaskTitle(title); // Set task title state for delete popup
