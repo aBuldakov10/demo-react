@@ -34,3 +34,13 @@ export const doneTask = async (id) => {
 
   return await data.json();
 };
+
+/*** Edit task ***/
+export const editTask = async (id, body) => {
+  const data = await fetch(`${host}/tasks/${id}`, {
+    method: 'PATCH',
+    body,
+  });
+
+  return await data.json();
+};

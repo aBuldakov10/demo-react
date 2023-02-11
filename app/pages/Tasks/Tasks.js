@@ -11,7 +11,7 @@ import {
   DialogContentText,
   DialogActions,
 } from '@mui/material';
-import { Delete, Done } from '@mui/icons-material';
+import { Delete, Done, Edit } from '@mui/icons-material';
 import { Field, Form, Formik } from 'formik';
 import * as yup from 'yup';
 
@@ -21,6 +21,7 @@ import {
   createTask,
   deleteTask,
   doneTask,
+  editTask,
 } from '../../components/Tasks/api';
 
 import InputText from '../../components/Form/InputText';
@@ -30,10 +31,12 @@ const Tasks = () => {
   const [taskList, setTaskList] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [openDeletePopup, setOpenDeletePopup] = useState(false);
+  const [openEditPopup, setOpenEditPopup] = useState(false);
 
-  // Task data for delete
+  // Task data for delete/edit
   const [taskId, setTaskId] = useState(0);
   const [taskTitle, setTaskTitle] = useState('');
+  const [taskDescription, setTaskDescription] = useState('');
 
   // Set task list state on load page
   useEffect(() => {
@@ -95,7 +98,7 @@ const Tasks = () => {
                         <Typography
                           component="h4"
                           variant="body1"
-                          sx={{ mb: '.75em', fontSize: '1.25rem' }}
+                          sx={{ mb: '.75em', fontSize: '1.25rem', pr: 20 }}
                         >
                           <strong>#{id}.</strong> {title}
                         </Typography>
@@ -105,6 +108,7 @@ const Tasks = () => {
                         </Typography>
 
                         <Box sx={{ position: 'absolute', top: 16, right: 16 }}>
+                          {/*** Done task button ***/}
                           <Button
                             variant="contained"
                             color={isDoneTask}
@@ -120,8 +124,24 @@ const Tasks = () => {
                             <Done fontSize="small" />
                           </Button>
 
-                          {/*<button>Edit</button>*/}
+                          {/*** Edit task button ***/}
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            title="Edit"
+                            disabled={isDone}
+                            sx={{ minWidth: 'inherit', p: 1, ml: 2 }}
+                            onClick={() => {
+                              setTaskId(id); // Set task id state for edit popup
+                              setTaskTitle(title); // Set task title state for edit popup
+                              setTaskDescription(description); // Set task description state for edit popup
+                              setOpenEditPopup(true); // Open edit task popup
+                            }}
+                          >
+                            <Edit fontSize="small" />
+                          </Button>
 
+                          {/*** Delete task button ***/}
                           <Button
                             variant="contained"
                             color="delete"
@@ -199,6 +219,7 @@ const Tasks = () => {
                   placeholder="Enter the task name"
                   component={InputText}
                 />
+
                 <Field
                   id="descriptionId"
                   name="description"
@@ -225,7 +246,7 @@ const Tasks = () => {
         </Grid>
       </Grid>
 
-      {/* Confirmation delete task popup */}
+      {/*** Confirmation delete task popup ***/}
       <Dialog
         open={openDeletePopup}
         onClose={() => {
@@ -249,7 +270,7 @@ const Tasks = () => {
             variant="contained"
             color="delete"
             title="Delete"
-            sx={{ textTransform: 'none' }}
+            sx={{ textTransform: 'none', width: 100 }}
             onClick={() => {
               setOpenDeletePopup(false); // Close popup
 
@@ -266,7 +287,7 @@ const Tasks = () => {
             variant="contained"
             color="custom"
             title="Cancel"
-            sx={{ textTransform: 'none' }}
+            sx={{ textTransform: 'none', width: 100 }}
             onClick={() => {
               setOpenDeletePopup(false); // Close popup without delete task
             }}
@@ -274,6 +295,97 @@ const Tasks = () => {
             Cancel
           </Button>
         </DialogActions>
+      </Dialog>
+
+      {/*** Edit task popup ***/}
+      <Dialog
+        open={openEditPopup}
+        onClose={() => {
+          setOpenEditPopup(false);
+        }}
+        aria-labelledby="alert-dialog-title"
+      >
+        <Formik
+          initialValues={{ title: taskTitle, description: taskDescription }}
+          onSubmit={async (values) => {
+            const body = new FormData();
+
+            Object.entries(values).forEach(([key, value]) => {
+              body.append(key, value);
+            });
+
+            // Save new task data and rerender task list
+            await editTask(taskId, body).then((taskList) => {
+              setTaskList(taskList);
+            });
+
+            setOpenEditPopup(false); // Close popup
+          }}
+          validationSchema={yup.object().shape({
+            title: yup
+              .string()
+              .min(4)
+              .max(30)
+              .required('This field is required'),
+            description: yup.string().max(150),
+          })}
+        >
+          <Form
+            className="form"
+            style={{
+              width: 500,
+              borderRadius: 4,
+              backgroundColor: '#fff',
+              padding: 16,
+              boxShadow: '0px 2px 5px 0px #d2d2d2',
+            }}
+          >
+            <DialogTitle id="alert-dialog-title" sx={{ px: 0, pt: 0 }}>
+              Edit task <strong>#{taskId}</strong>
+            </DialogTitle>
+
+            <Field
+              id="titleId"
+              name="title"
+              label="Task name"
+              placeholder="Enter the task name"
+              component={InputText}
+            />
+
+            <Field
+              id="descriptionId"
+              name="description"
+              label="Task description"
+              placeholder="Enter the task description"
+              component={Textarea}
+            />
+
+            <DialogActions sx={{ p: 0 }}>
+              <Button
+                variant="contained"
+                color="primary"
+                title="Save task"
+                type="submit"
+                sx={{ textTransform: 'none', width: 100 }}
+              >
+                Save
+              </Button>
+
+              <Button
+                variant="contained"
+                color="custom"
+                title="Cancel"
+                type="button"
+                sx={{ textTransform: 'none', width: 100 }}
+                onClick={() => {
+                  setOpenEditPopup(false); // Close popup without edit task
+                }}
+              >
+                Cancel
+              </Button>
+            </DialogActions>
+          </Form>
+        </Formik>
       </Dialog>
     </Box>
   );

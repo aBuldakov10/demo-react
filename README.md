@@ -13,7 +13,7 @@ the weather data according your coordinates.
 you'll get the error notification
 #### Task list
 - Used backend on [render](https://render.com/) service.
-It disabled by default (in sleep mode) that's why it 
+It **disabled by default** (in sleep mode) that's why it 
 can takes a few minutes to start server. Or you can 
-create task while server starting and wait a few minutes.
-- Allows create/delete tasks.
+create tasks while server starting and wait a few minutes.
+- Allows create/delete/edit and mark as done tasks.
