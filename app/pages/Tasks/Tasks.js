@@ -75,11 +75,23 @@ const Tasks = () => {
           ) : (
             <ul>
               {Object.values(taskList).map(
-                ({ id, title, description, isDone }, index) => {
+                (
+                  { id, title, description, createTime, isDone, isEdited },
+                  index
+                ) => {
                   // Bottom spacing for task list item
                   const itemSpacing =
                     Object.values(taskList).length - 1 === index ? '' : 2;
-                  const isDoneTask = isDone ? 'isDone' : 'done';
+                  const isDoneTask = isDone ? 'isDone' : 'done'; // Task done state
+                  const edited =
+                    isEdited && ' ' ? (
+                      <span style={{ color: '#777' }}>edited</span>
+                    ) : (
+                      ''
+                    ); // Mark task as edited
+                  const createDate = new Date(+createTime)
+                    .toLocaleTimeString()
+                    .slice(0, -3); // Create task time
 
                   return (
                     <li key={id}>
@@ -103,8 +115,26 @@ const Tasks = () => {
                           <strong>#{id}.</strong> {title}
                         </Typography>
 
-                        <Typography variant="body1" style={{ marginBottom: 0 }}>
+                        <Typography
+                          variant="body1"
+                          style={{ marginBottom: '.75em' }}
+                        >
                           {description}
+                        </Typography>
+
+                        <Typography
+                          variant="body1"
+                          style={{
+                            display: 'flex',
+                            justifyContent: 'flex-end',
+                            gap: 10,
+                            marginBottom: 0,
+                            fontSize: 12,
+                            textDecoration: 'none',
+                          }}
+                        >
+                          {edited}
+                          <span>{createDate}</span>
                         </Typography>
 
                         <Box sx={{ position: 'absolute', top: 16, right: 16 }}>
@@ -121,7 +151,7 @@ const Tasks = () => {
                               });
                             }}
                           >
-                            <Done fontSize="small" />
+                            <Done style={{ fontSize: 'inherit' }} />
                           </Button>
 
                           {/*** Edit task button ***/}
@@ -138,7 +168,7 @@ const Tasks = () => {
                               setOpenEditPopup(true); // Open edit task popup
                             }}
                           >
-                            <Edit fontSize="small" />
+                            <Edit style={{ fontSize: 'inherit' }} />
                           </Button>
 
                           {/*** Delete task button ***/}
@@ -153,7 +183,7 @@ const Tasks = () => {
                               setOpenDeletePopup(true); // Open confirmation delete popup
                             }}
                           >
-                            <Delete fontSize="small" />
+                            <Delete style={{ fontSize: 'inherit' }} />
                           </Button>
                         </Box>
                       </Box>
@@ -181,7 +211,10 @@ const Tasks = () => {
             <Formik
               initialValues={{}}
               onSubmit={async (values, formikHelpers) => {
+                const createTime = Date.now().toString();
                 const body = new FormData();
+
+                body.append('createTime', createTime);
 
                 Object.entries(values).forEach(([key, value]) => {
                   body.append(key, value);
