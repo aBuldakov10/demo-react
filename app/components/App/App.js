@@ -8,7 +8,7 @@ import { theme } from './theme';
 import Header from '../Header/Header';
 import Footer from '../Footer/Footer';
 import Weather from '../../pages/Weather/Weather';
-import Tasks from '../../pages/Tasks/Tasks';
+import Tasks from '../../pages/Tasks';
 import PageNotFound from '../../pages/PageNotFound';
 
 const App = () => {
