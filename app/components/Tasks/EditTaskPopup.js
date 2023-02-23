@@ -1,36 +1,36 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material';
 import { Field, Form, Formik } from 'formik';
 
+// Files
 import { editTask } from './api';
 import { taskValidation } from './validation';
 
+// Store
+import { editPopupSelector } from '../../store/tasks/selectors';
+import { closeEditPopup, updateTask } from '../../store/tasks/actions';
+
+// Components
 import InputText from '../Form/InputText';
 import Textarea from '../Form/Textarea';
-import { EditTaskContext } from '../../pages/Tasks';
 
 const EditTaskPopup = () => {
-  const {
-    openEditPopup,
-    setOpenEditPopup,
-    taskId,
-    setTaskList,
-    taskTitle,
-    taskDescription,
-  } = useContext(EditTaskContext);
+  const dispatch = useDispatch();
+  const { id, title, description, state } = useSelector(editPopupSelector);
 
   return (
     <Dialog
-      open={openEditPopup}
+      open={state}
       onClose={() => {
-        setOpenEditPopup(false);
+        dispatch(closeEditPopup());
       }}
       aria-labelledby="alert-dialog-title"
     >
       <Formik
         initialValues={{
-          title: taskTitle,
-          description: taskDescription,
+          title: title,
+          description: description,
         }}
         onSubmit={async (values) => {
           const body = new FormData();
@@ -40,11 +40,11 @@ const EditTaskPopup = () => {
           });
 
           // Save new task data and rerender task list
-          await editTask(taskId, body).then((taskList) => {
-            setTaskList(taskList);
+          await editTask(id, body).then((taskList) => {
+            dispatch(updateTask(taskList));
           });
 
-          setOpenEditPopup(false); // Close popup
+          dispatch(closeEditPopup()); // Close popup
         }}
         validationSchema={taskValidation}
       >
@@ -59,7 +59,7 @@ const EditTaskPopup = () => {
           }}
         >
           <DialogTitle id="alert-dialog-title" sx={{ px: 0, pt: 0 }}>
-            Edit task <strong>#{taskId}</strong>
+            Edit task <strong>#{id}</strong>
           </DialogTitle>
 
           <Field
@@ -96,7 +96,7 @@ const EditTaskPopup = () => {
               type="button"
               sx={{ textTransform: 'none', width: 100 }}
               onClick={() => {
-                setOpenEditPopup(false); // Close popup without edit task
+                dispatch(closeEditPopup()); // Close popup without edit task
               }}
             >
               Cancel

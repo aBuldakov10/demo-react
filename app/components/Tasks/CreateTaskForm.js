@@ -1,16 +1,21 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Button } from '@mui/material';
 import { Formik, Form, Field } from 'formik';
 
+// Files
 import { createTask } from './api';
 import { taskValidation } from './validation';
 
+// Store
+import { addTask } from '../../store/tasks/actions';
+
+// Components
 import InputText from '../Form/InputText';
 import Textarea from '../Form/Textarea';
-import { TaskFormContext } from '../../pages/Tasks';
 
 const CreateTaskForm = () => {
-  const { setTaskList } = useContext(TaskFormContext);
+  const dispatch = useDispatch();
 
   return (
     <Formik
@@ -27,7 +32,7 @@ const CreateTaskForm = () => {
 
         // Create task and rerender task list
         await createTask(body).then((taskList) => {
-          setTaskList(taskList);
+          dispatch(addTask(taskList));
         });
 
         formikHelpers.resetForm();

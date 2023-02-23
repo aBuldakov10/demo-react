@@ -1,21 +1,23 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Typography } from '@mui/material';
 import { Delete, Done, Edit } from '@mui/icons-material';
 
+// Files
 import '../../components/Tasks/Task.scss';
 import { doneTask } from './api';
-import { TaskListContext } from '../../pages/Tasks';
+
+// Store
+import { taskListSelector } from '../../store/tasks/selectors';
+import {
+  openDeletePopup,
+  openEditPopup,
+  toggleDoneTask,
+} from '../../store/tasks/actions';
 
 const TaskList = () => {
-  const {
-    taskList,
-    setTaskList,
-    setTaskId,
-    setTaskTitle,
-    setTaskDescription,
-    setOpenEditPopup,
-    setOpenDeletePopup,
-  } = useContext(TaskListContext);
+  const dispatch = useDispatch();
+  const taskList = useSelector(taskListSelector);
 
   return (
     <ul>
@@ -24,8 +26,10 @@ const TaskList = () => {
           // Bottom spacing for task list item
           const itemSpacing =
             Object.values(taskList).length - 1 === index ? '' : 2;
+
           // Task done state
           const isDoneTask = isDone ? 'isDone' : 'done';
+
           // Mark task as edited
           const edited =
             isEdited && ' ' ? (
@@ -33,6 +37,7 @@ const TaskList = () => {
             ) : (
               ''
             );
+
           // Create task time
           const createDate = new Date(+createTime)
             .toLocaleTimeString()
@@ -93,7 +98,7 @@ const TaskList = () => {
                     onClick={() => {
                       // Mark task as done and rerender task list
                       doneTask(id).then((taskList) => {
-                        setTaskList(taskList);
+                        dispatch(toggleDoneTask(taskList));
                       });
                     }}
                   >
@@ -108,10 +113,7 @@ const TaskList = () => {
                     disabled={isDone}
                     sx={{ minWidth: 'inherit', p: 1, ml: 2 }}
                     onClick={() => {
-                      setTaskId(id); // Set task id state for edit popup
-                      setTaskTitle(title); // Set task title state for edit popup
-                      setTaskDescription(description); // Set task description state for edit popup
-                      setOpenEditPopup(true); // Open edit task popup
+                      dispatch(openEditPopup(id, title, description));
                     }}
                   >
                     <Edit style={{ fontSize: 'inherit' }} />
@@ -124,9 +126,7 @@ const TaskList = () => {
                     title="Delete"
                     sx={{ minWidth: 'inherit', p: 1, ml: 2 }}
                     onClick={() => {
-                      setTaskId(id); // Set task id state for delete popup
-                      setTaskTitle(title); // Set task title state for delete popup
-                      setOpenDeletePopup(true); // Open confirmation delete popup
+                      dispatch(openDeletePopup(id, title));
                     }}
                   >
                     <Delete style={{ fontSize: 'inherit' }} />

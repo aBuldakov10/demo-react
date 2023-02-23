@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Button,
   Dialog,
@@ -8,34 +9,33 @@ import {
   DialogTitle,
 } from '@mui/material';
 
+// Files
 import { deleteTask } from './api';
-import { DeleteTaskContext } from '../../pages/Tasks';
+
+// Store
+import { deletePopupSelector } from '../../store/tasks/selectors';
+import { closeDeletePopup, removeTask } from '../../store/tasks/actions';
 
 const DeleteTaskPopup = () => {
-  const {
-    openDeletePopup,
-    setOpenDeletePopup,
-    taskId,
-    taskTitle,
-    setTaskList,
-  } = useContext(DeleteTaskContext);
+  const dispatch = useDispatch();
+  const { id, title, state } = useSelector(deletePopupSelector);
 
   return (
     <Dialog
-      open={openDeletePopup}
+      open={state}
       onClose={() => {
-        setOpenDeletePopup(false);
+        dispatch(closeDeletePopup());
       }}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        Are you sure you want to delete task <strong>#{taskId}</strong>?
+        Are you sure you want to delete task <strong>#{id}</strong>?
       </DialogTitle>
 
       <DialogContent>
         <DialogContentText id="alert-dialog-description">
-          Task name: "{taskTitle}"
+          Task name: "{title}"
         </DialogContentText>
       </DialogContent>
 
@@ -46,11 +46,11 @@ const DeleteTaskPopup = () => {
           title="Delete"
           sx={{ textTransform: 'none', width: 100 }}
           onClick={() => {
-            setOpenDeletePopup(false); // Close popup
+            dispatch(closeDeletePopup()); // Close popup
 
             // Delete task and rerender task list
-            deleteTask(taskId).then((taskList) => {
-              setTaskList(taskList);
+            deleteTask(id).then((taskList) => {
+              dispatch(removeTask(taskList));
             });
           }}
         >
@@ -63,7 +63,7 @@ const DeleteTaskPopup = () => {
           title="Cancel"
           sx={{ textTransform: 'none', width: 100 }}
           onClick={() => {
-            setOpenDeletePopup(false); // Close popup without delete task
+            dispatch(closeDeletePopup()); // Close popup without delete task
           }}
         >
           Cancel
