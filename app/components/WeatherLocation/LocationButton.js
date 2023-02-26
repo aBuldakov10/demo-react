@@ -1,20 +1,21 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Button } from '@mui/material';
 import { LocationOn } from '@mui/icons-material';
 
+// Files
 import { chooseMyCity } from './index';
-import { WeatherLocation } from '../../pages/Weather/Weather'; // Import context
+
+// Store
+import {
+  disabledLocation,
+  getWeatherLocation,
+  weatherLoaded,
+  weatherLoading,
+} from '../../store/weather/actions';
 
 const LocationButton = () => {
-  const {
-    setIsLocation,
-    setIsLocationEnabled,
-    setLocationErrorMessage,
-    setIsLoading,
-    setLocationCoordinates,
-    setCityId,
-    setCityActive,
-  } = useContext(WeatherLocation);
+  const dispatch = useDispatch();
 
   return (
     <Button
@@ -28,26 +29,25 @@ const LocationButton = () => {
         textTransform: 'none',
       }}
       onClick={async () => {
-        const locationData = await chooseMyCity(); // Get location error or location data if enabled
+        dispatch(weatherLoading());
+
+        // Get location error or location data if enabled
+        // Return object with location data - id, coords, weather
+        const locationData = await chooseMyCity();
 
         // Disabled location
-        if (Array.isArray(locationData) && !locationData[0]) {
-          const [locationResult, errorMessage] = locationData;
+        if (locationData.enabledInBrowser === false) {
+          const { errorMessage } = locationData;
 
-          setIsLocation(true); // Location btn was clicked
-          setIsLocationEnabled(locationResult); // Set false state - location disabled
-          setLocationErrorMessage(errorMessage);
+          dispatch(disabledLocation(errorMessage));
+          dispatch(weatherLoaded());
 
           return;
         }
 
         // Enabled location
-        setIsLoading(true); // Fix location notification
-        setLocationCoordinates(locationData[1]); // Show location coordinates in its own message
-        setCityId(locationData[0]); // Get weather location data
-        setCityActive(false); // Disable active city state
-        setIsLocation(true); // Is location data state
-        setIsLocationEnabled(true); // Set true state - location enabled
+        dispatch(getWeatherLocation(locationData));
+        dispatch(weatherLoaded());
       }}
     >
       My location

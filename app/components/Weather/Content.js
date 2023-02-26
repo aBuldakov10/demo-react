@@ -1,4 +1,5 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { Box, Divider, Typography } from '@mui/material';
 import {
   AccessTime,
@@ -9,25 +10,24 @@ import {
   SouthOutlined,
 } from '@mui/icons-material';
 
+// Files
 import { getTime } from './index';
 import { weatherIconUrl } from '../../pages/Weather/api';
-import { WeatherContent } from '../../pages/Weather/Weather'; // Import context
+
+// Store
+import { cityWeatherSelector } from '../../store/weather/selectors';
 
 const Content = () => {
-  const {
-    cityWeather,
-    cityWeatherWeather,
-    cityWeatherMain,
-    cityWeatherClouds,
-    cityWeatherSys,
-    cityWeatherWind,
-  } = useContext(WeatherContent);
+  const { name, dt, weather, main, clouds, sys, wind, visibility } =
+    useSelector(cityWeatherSelector);
+  const visibleDistance =
+    visibility >= 1000 ? `${visibility / 1000} km` : `${visibility} m`;
 
   return (
     <Box sx={{ position: 'relative', zIndex: 1, opacity: 0.8 }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: '50px' }}>
         <Typography variant="h4" component="h1" style={{ fontWeight: 600 }}>
-          {cityWeather.name}
+          {name}
         </Typography>
 
         <Box
@@ -43,17 +43,17 @@ const Content = () => {
 
           <Box sx={{ display: 'flex', flexDirection: 'column' }}>
             <time>current: {getTime()}</time>
-            <time>data calculation: {getTime(cityWeather.dt)}</time>
+            <time>data calculation: {getTime(dt)}</time>
           </Box>
         </Box>
 
-        {cityWeatherWeather.map(({ description }, index) => {
+        {weather.map(({ id, description }, index) => {
           if (index > 0) {
             return false;
           }
 
           return (
-            <span key={index} style={{ fontSize: 14 }}>
+            <span key={id} style={{ fontSize: 14 }}>
               Description: {description}
             </span>
           );
@@ -66,7 +66,7 @@ const Content = () => {
         <div>
           <Box sx={{ display: 'inline-block', mr: 4, verticalAlign: 'middle' }}>
             <span style={{ fontSize: 52, fontWeight: 'bolder' }}>
-              {Math.round(cityWeatherMain.temp)} &#8451;
+              {Math.round(main.temp)} &#8451;
             </span>
           </Box>
 
@@ -80,7 +80,7 @@ const Content = () => {
               borderRadius: 50,
             }}
           >
-            {cityWeatherWeather.map(({ icon, description }, index) => {
+            {weather.map(({ id, icon, description }, index) => {
               if (index > 0) {
                 return false;
               }
@@ -90,7 +90,7 @@ const Content = () => {
                   src={`${weatherIconUrl}/wn/${icon}@2x.png`}
                   alt="Weather-icon"
                   title={description}
-                  key={index}
+                  key={id}
                 />
               );
             })}
@@ -100,12 +100,12 @@ const Content = () => {
             <span style={{ fontSize: 22 }}>
               Feels like{' '}
               <span style={{ fontWeight: 'bolder' }}>
-                {Math.round(cityWeatherMain.feels_like)} &#8451;
+                {Math.round(main.feels_like)} &#8451;
               </span>
             </span>
 
             <span style={{ display: 'block', fontSize: 14 }}>
-              Clouds {cityWeatherClouds.all} %
+              Clouds {clouds.all} %
             </span>
           </Box>
         </div>
@@ -118,8 +118,8 @@ const Content = () => {
             fontSize: 14,
           }}
         >
-          <span>Sunrise: {getTime(cityWeatherSys.sunrise)}</span>
-          <span>Sunset: {getTime(cityWeatherSys.sunset)}</span>
+          <span>Sunrise: {getTime(sys.sunrise)}</span>
+          <span>Sunset: {getTime(sys.sunset)}</span>
         </Box>
       </Box>
 
@@ -144,20 +144,15 @@ const Content = () => {
                 mt: 0.25,
               }}
             >
-              <span>speed: {cityWeatherWind.speed} m/s</span>
-
-              {cityWeatherWind.gust ? (
-                <span>gust: {cityWeatherWind.gust} m/s</span>
-              ) : (
-                ''
-              )}
+              <span>speed: {wind.speed} m/s</span>
+              {wind.gust && <span>gust: {wind.gust} m/s</span>}
             </Box>
           </Box>
 
           <span
             style={{
               display: 'flex',
-              transform: `rotate(${cityWeatherWind.deg}deg)`,
+              transform: `rotate(${wind.deg}deg)`,
             }}
             title="wind direction"
           >
@@ -169,25 +164,21 @@ const Content = () => {
           sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}
           title="visibility"
         >
-          <RemoveRedEyeOutlined />{' '}
-          {cityWeather.visibility >= 1000
-            ? `${cityWeather.visibility / 1000} km`
-            : `${cityWeather.visibility} m`}
+          <RemoveRedEyeOutlined /> {visibleDistance}
         </Box>
 
         <Box
           sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}
           title="humidity"
         >
-          <Opacity /> <span>{cityWeatherMain.humidity} %</span>
+          <Opacity /> <span>{main.humidity} %</span>
         </Box>
 
         <Box
           sx={{ display: 'flex', alignItems: 'center', gap: '15px' }}
           title="pressure"
         >
-          <ExploreOutlined /> {Math.round(cityWeatherMain.pressure / 1.333)}{' '}
-          mmHg
+          <ExploreOutlined /> {Math.round(main.pressure / 1.333)} mmHg
         </Box>
       </Box>
     </Box>

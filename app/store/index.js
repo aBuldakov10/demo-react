@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 
 import { taskReducer } from './tasks/reducers';
 import { generalReducer } from './general/reducers';
+import { weatherReducer } from './weather/reducers';
 
 /*** Redux devtools ***/
 const composeEnhancers =
@@ -11,6 +12,7 @@ const composeEnhancers =
 /*** Reducers list ***/
 const reducers = combineReducers({
   general: generalReducer,
+  weather: weatherReducer,
   tasks: taskReducer,
 });
 

@@ -1,12 +1,17 @@
-import React, { useContext } from 'react';
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 
+// Files
 import { sortedCities } from './index';
-import { WeatherCityList } from '../../pages/Weather/Weather'; // Import context
+
+// Store
+import { selectCity, weatherLoading } from '../../store/weather/actions';
+import { activeCitySelector } from '../../store/weather/selectors';
 
 const CityList = () => {
-  const { cityActive, setCityActive, setCityId, setIsLocation } =
-    useContext(WeatherCityList);
+  const dispatch = useDispatch();
+  const { activeCityId, activeCityIndex } = useSelector(activeCitySelector);
 
   return (
     <List
@@ -23,13 +28,17 @@ const CityList = () => {
         return (
           <ListItem disablePadding key={id}>
             <ListItemButton
-              selected={cityActive === index} // Use index as selected city identify
+              selected={activeCityIndex === index} // Use index as selected city identify
               data-city-id={id}
               sx={{ px: 3 }}
               onClick={() => {
-                setIsLocation(false); // Set if not location weather
-                setCityId(id); // Get weather data
-                setCityActive(index); // Change active city
+                // Avoid bug after click on selected city
+                if (id === activeCityId) {
+                  return false;
+                }
+
+                dispatch(weatherLoading());
+                dispatch(selectCity(id, index));
               }}
             >
               <ListItemText primary={`${name} (${country})`} sx={{ my: 0 }} />

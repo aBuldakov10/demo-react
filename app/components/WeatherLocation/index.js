@@ -14,23 +14,27 @@ export const chooseMyCity = async () => {
         resolve(coord);
       },
       ({ message }) => {
-        // Return array with false for manage state and error message
-        resolve([false, message]);
+        // Return object with false for manage state and error message
+        resolve({
+          enabledInBrowser: false,
+          errorMessage: message,
+        });
       },
       { enableHighAccuracy: true }
     );
   });
 
   // Return error message if location is disabled
-  if (Array.isArray(geolocationResult) && !geolocationResult[0]) {
+  if (geolocationResult.enabledInBrowser === false) {
     return geolocationResult;
   }
 
   // Return coordinates and location id if location is enabled
-  const locationCityWeather = await fetchLocationWeather(
-    geolocationResult.lat,
-    geolocationResult.lon
-  );
+  const locationCityWeather = await fetchLocationWeather(geolocationResult);
 
-  return [locationCityWeather.id, geolocationResult];
+  return {
+    id: locationCityWeather.id,
+    coordinates: geolocationResult,
+    weatherInfo: locationCityWeather,
+  };
 };
