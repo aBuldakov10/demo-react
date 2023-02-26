@@ -2,7 +2,7 @@
 Based on react-template (node 18.12.1, npm 8.19.3).\
 Used **MUI** for styling without adaptive and minimum SCSS.\
 Used **Formik** and **Yup** for validation forms\
-Used **Redux**, **Redux-thunk** for state managing\
+Used **Redux** for state managing\
 Has 2 branches: **'master'** and **'app-context'**\
 App with using **Context** instead **Redux** placed in 
 **'app-context'** branch\
