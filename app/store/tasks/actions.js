@@ -6,6 +6,8 @@ import {
   DONE_TASK,
   EDIT_TASK,
   GET_TASKS,
+  LOADED,
+  LOADING,
   OPEN_DELETE_POPUP,
   OPEN_EDIT_POPUP,
 } from './types';
@@ -73,5 +75,20 @@ export const updateTask = (taskList) => {
   return {
     type: EDIT_TASK,
     taskList,
+  };
+};
+
+/*** Loader ***/
+export const loading = () => {
+  return {
+    type: LOADING,
+    loading: true,
+  };
+};
+
+export const loaded = () => {
+  return {
+    type: LOADED,
+    loading: false,
   };
 };

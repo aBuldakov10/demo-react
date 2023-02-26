@@ -6,11 +6,14 @@ import {
   DONE_TASK,
   EDIT_TASK,
   GET_TASKS,
+  LOADED,
+  LOADING,
   OPEN_DELETE_POPUP,
   OPEN_EDIT_POPUP,
 } from './types';
 
 const initialTasksState = {
+  taskLoader: true,
   taskList: {},
   editPopup: {
     id: null,
@@ -103,6 +106,21 @@ export const taskReducer = (state = initialTasksState, action) => {
     return {
       ...state,
       taskList: { ...action.taskList },
+    };
+  }
+
+  // Loader
+  if (action.type === LOADING) {
+    return {
+      ...state,
+      taskLoader: action.loading,
+    };
+  }
+
+  if (action.type === LOADED) {
+    return {
+      ...state,
+      taskLoader: action.loading,
     };
   }
 

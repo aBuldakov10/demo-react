@@ -18,3 +18,7 @@ export const EDIT_TASK = `${namespace}/EDIT`;
 export const OPEN_DELETE_POPUP = `${namespace}/OPEN_DELETE_POPUP`;
 export const CLOSE_DELETE_POPUP = `${namespace}/CLOSE_DELETE_POPUP`;
 export const DELETE_TASK = `${namespace}/DELETE`;
+
+// Loader
+export const LOADING = `${namespace}/LOADING`;
+export const LOADED = `${namespace}/LOADED`;

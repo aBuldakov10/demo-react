@@ -20,7 +20,7 @@ const CreateTaskForm = () => {
   return (
     <Formik
       initialValues={{ title: '', description: '' }}
-      onSubmit={async (values, formikHelpers) => {
+      onSubmit={async (values, { resetForm }) => {
         const createTime = Date.now().toString();
         const body = new FormData();
 
@@ -35,7 +35,7 @@ const CreateTaskForm = () => {
           dispatch(addTask(taskList));
         });
 
-        formikHelpers.resetForm();
+        resetForm();
       }}
       validationSchema={taskValidation}
     >

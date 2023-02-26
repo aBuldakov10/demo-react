@@ -18,3 +18,7 @@ export const editPopupSelector = ({ tasks }) => {
     state: tasks.editPopup.isOpen,
   };
 };
+
+export const taskLoaderSelector = ({ tasks }) => {
+  return tasks.taskLoader;
+};

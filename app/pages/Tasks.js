@@ -7,10 +7,8 @@ import { Box, Typography, CircularProgress } from '@mui/material';
 import { getTask } from '../components/Tasks/api';
 
 // Store
-import { loaderSelector } from '../store/general/selectors';
-import { taskListSelector } from '../store/tasks/selectors';
-import { loaded } from '../store/general/actions';
-import { getTasks } from '../store/tasks/actions';
+import { getTasks, loaded } from '../store/tasks/actions';
+import { taskListSelector, taskLoaderSelector } from '../store/tasks/selectors';
 
 // Components
 import TaskList from '../components/Tasks/TaskList';
@@ -20,7 +18,7 @@ import EditTaskPopup from '../components/Tasks/EditTaskPopup';
 
 const Tasks = () => {
   const dispatch = useDispatch();
-  const loader = useSelector(loaderSelector);
+  const loader = useSelector(taskLoaderSelector);
   const taskList = useSelector(taskListSelector);
 
   // Set task list state on load page
