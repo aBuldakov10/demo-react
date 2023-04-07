@@ -11,7 +11,7 @@ import { taskValidation } from './validation';
 import { addTask } from '../../store/tasks/actions';
 
 // Components
-import InputText from '../Form/InputText';
+import Text from '../Form/Text';
 import Textarea from '../Form/Textarea';
 
 const CreateTaskForm = () => {
@@ -48,13 +48,7 @@ const CreateTaskForm = () => {
           boxShadow: '0px 2px 5px 0px #d2d2d2',
         }}
       >
-        <Field
-          id="titleId"
-          name="title"
-          label="Task name"
-          placeholder="Enter the task name"
-          component={InputText}
-        />
+        <Field id="titleId" name="title" label="Task name" placeholder="Enter the task name" component={Text} />
 
         <Field
           id="descriptionId"

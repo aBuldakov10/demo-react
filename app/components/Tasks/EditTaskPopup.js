@@ -12,7 +12,7 @@ import { editPopupSelector } from '../../store/tasks/selectors';
 import { closeEditPopup, updateTask } from '../../store/tasks/actions';
 
 // Components
-import InputText from '../Form/InputText';
+import Text from '../Form/Text';
 import Textarea from '../Form/Textarea';
 
 const EditTaskPopup = () => {
@@ -62,13 +62,7 @@ const EditTaskPopup = () => {
             Edit task <strong>#{id}</strong>
           </DialogTitle>
 
-          <Field
-            id="titleId"
-            name="title"
-            label="Task name"
-            placeholder="Enter the task name"
-            component={InputText}
-          />
+          <Field id="titleId" name="title" label="Task name" placeholder="Enter the task name" component={Text} />
 
           <Field
             id="descriptionId"

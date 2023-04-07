@@ -1,3 +1,7 @@
 .input-error-message:first-letter {
   text-transform: uppercase;
 }
+
+.form__password input {
+  padding-right: 50px;
+}

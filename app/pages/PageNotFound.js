@@ -3,11 +3,7 @@ import { Typography } from '@mui/material';
 
 const PageNotFound = () => {
   return (
-    <Typography
-      variant="h3"
-      component="h1"
-      style={{ fontWeight: 600, textAlign: 'center' }}
-    >
+    <Typography variant="h3" component="h1" style={{ fontWeight: 600, textAlign: 'center' }}>
       Page not found
     </Typography>
   );

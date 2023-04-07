@@ -1,10 +1,12 @@
 import React from 'react';
 import { Box, TextField, Typography } from '@mui/material';
 
+// Files
 import './Form.scss';
 
-const InputText = ({
+const Text = ({
   id,
+  className,
   placeholder,
   label,
   field: { name, onBlur, onChange, value },
@@ -19,6 +21,7 @@ const InputText = ({
     <Box sx={{ mb: 4, position: 'relative' }}>
       <TextField
         id={id}
+        className={className || ''}
         name={name}
         value={value || ''}
         label={label}
@@ -33,12 +36,7 @@ const InputText = ({
       {(isRequiredOnSubmit || isError) && (
         <Typography
           className="input-error-message"
-          sx={{
-            position: 'absolute',
-            bottom: -20,
-            fontSize: 12,
-            color: '#d32f2f',
-          }}
+          sx={{ position: 'absolute', bottom: -20, fontSize: 12, color: '#d32f2f' }}
         >
           {errorMessage}
         </Typography>
@@ -47,4 +45,4 @@ const InputText = ({
   );
 };
 
-export default InputText;
+export default Text;
