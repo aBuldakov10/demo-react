@@ -1,16 +1,20 @@
 .header {
   background: #432874;
-  color: #fff;
+  color: #eee;
 
  &-content {
    display: flex;
-   justify-content: space-between;
    align-items: center;
+   gap: 35px;
    padding: 15px 0;
 
-   & .nav-menu__list {
-     display: flex;
-     gap: 20px;
+   & .nav-menu {
+     margin-left: auto;
+
+     &__list {
+       display: flex;
+       gap: 20px;
+     }
    }
  }
 }
