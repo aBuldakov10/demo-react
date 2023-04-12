@@ -11,7 +11,7 @@ import Tasks from '../pages/Tasks';
 import Login from '../pages/Login/Login';
 import Registration from '../pages/Registration/Registration';
 import ResetPassword from '../pages/ResetPassword/ResetPassword';
-import Profile from '../pages/Profile';
+import Profile from '../pages/Profile/Profile';
 import PageNotFound from '../pages/PageNotFound';
 
 const RoutesList = () => {

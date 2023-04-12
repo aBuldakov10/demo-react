@@ -28,7 +28,9 @@ const App = () => {
 
       onAuthStateChanged(auth, (user) => {
         if (user) {
-          dispatch(loginUser(user.uid, user.email, user.accessToken));
+          const { uid, displayName, email, accessToken, metadata } = user;
+
+          dispatch(loginUser(uid, displayName, email, accessToken, metadata.createdAt));
         } else {
           localStorage.removeItem('user_state');
           dispatch(logoutUser());

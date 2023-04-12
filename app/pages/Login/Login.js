@@ -37,10 +37,10 @@ const Login = () => {
         onSubmit={({ email, password }) => {
           signInWithEmailAndPassword(auth, email, password)
             .then(({ user }) => {
-              const { uid, email, accessToken } = user;
+              const { uid, displayName, email, accessToken, metadata } = user;
 
               localStorage.setItem('user_state', 'logged_in');
-              dispatch(loginUser(uid, email, accessToken));
+              dispatch(loginUser(uid, displayName, email, accessToken, metadata.createdAt));
             })
             .catch((error) => {
               if (error.code === AuthErrorCodes.INVALID_EMAIL) {

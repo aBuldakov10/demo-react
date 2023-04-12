@@ -1,0 +1,9 @@
+.change-password-form {
+  display: flex;
+  gap: 30px;
+
+  & > div {
+    flex-grow: 1;
+    margin-bottom: 0;
+  }
+}

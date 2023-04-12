@@ -97,7 +97,7 @@ body {
     }
   }
 
-  &:focus {
+  &:focus:not(.css-t9m64s-MuiButtonBase-root-MuiButton-root) {
     background-color: $main-clr-focus;
   }
 }
