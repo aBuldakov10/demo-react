@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Grid from '@mui/material/Unstable_Grid2';
-import { Box, CircularProgress } from '@mui/material';
+import { Box, CircularProgress, Typography } from '@mui/material';
 
 // Files
 import './Weather.scss';
@@ -10,17 +10,17 @@ import { fetchWeather } from './api';
 
 // Store
 import { getWeatherCity, weatherLoaded } from '../../store/weather/actions';
-import {
-  activeCitySelector,
-  locationDataSelector,
-  weatherLoader,
-} from '../../store/weather/selectors';
+import { activeCitySelector, locationDataSelector, weatherLoader } from '../../store/weather/selectors';
 
 // Components
 import CityList from '../../components/Weather/CityList';
 import LocationButton from '../../components/WeatherLocation/LocationButton';
 import LocationNotification from '../../components/WeatherLocation/LocationNotification';
 import Content from '../../components/Weather/Content';
+import YaMap from './YaMap';
+
+// Hooks
+import useMedia from '../../hooks/useMedia';
 
 const Weather = () => {
   const dispatch = useDispatch();
@@ -35,8 +35,18 @@ const Weather = () => {
     });
   }, [activeCityId]);
 
+  let small = useMedia('(max-width: 767px)');
+  let large = useMedia('(min-width: 992px)');
+  let medium = !small && !large;
+
   return (
     <Box sx={{ py: 2 }}>
+      <Typography variant="h6" component="p" align={'center'} style={{ fontWeight: 600 }}>
+        {small && 'Mobile version'}
+        {medium && 'Tablet version'}
+        {large && 'Desktop version'}
+      </Typography>
+
       <Grid className="weather" container spacing={4}>
         <Grid item xs={12} md={4} lg={3}>
           {/*** Render city list ***/}
