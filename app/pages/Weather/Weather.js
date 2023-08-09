@@ -94,6 +94,12 @@ const Weather = () => {
             )}
           </Box>
         </Grid>
+
+        <Grid item xs={12}>
+          <div className="map-wrapper">
+            <YaMap />
+          </div>
+        </Grid>
       </Grid>
     </Box>
   );

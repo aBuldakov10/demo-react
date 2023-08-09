@@ -16,3 +16,10 @@ export const cityWeatherSelector = ({ weather }) => {
 export const locationDataSelector = ({ weather }) => {
   return weather.location;
 };
+
+export const cityCoordSelector = ({ weather }) => {
+  return {
+    coord: weather.weatherInfo.info.coord,
+    name: weather.weatherInfo.info.name,
+  };
+};
