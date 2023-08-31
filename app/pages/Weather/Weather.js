@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Grid from '@mui/material/Unstable_Grid2';
-import { Box, CircularProgress, Typography } from '@mui/material';
+import { Box, CircularProgress } from '@mui/material';
 
 // Files
 import './Weather.scss';
@@ -19,9 +19,6 @@ import LocationNotification from '../../components/WeatherLocation/LocationNotif
 import Content from '../../components/Weather/Content';
 import YaMap from './YaMap';
 
-// Hooks
-import useMedia from '../../hooks/useMedia';
-
 const Weather = () => {
   const dispatch = useDispatch();
   const loader = useSelector(weatherLoader);
@@ -35,18 +32,8 @@ const Weather = () => {
     });
   }, [activeCityId]);
 
-  let small = useMedia('(max-width: 767px)');
-  let large = useMedia('(min-width: 992px)');
-  let medium = !small && !large;
-
   return (
     <Box sx={{ py: 2 }}>
-      <Typography variant="h6" component="p" align={'center'} style={{ fontWeight: 600 }}>
-        {small && 'Mobile version'}
-        {medium && 'Tablet version'}
-        {large && 'Desktop version'}
-      </Typography>
-
       <Grid className="weather" container spacing={4}>
         <Grid item xs={12} md={4} lg={3}>
           {/*** Render city list ***/}
