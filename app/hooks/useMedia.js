@@ -1,23 +1,27 @@
 import React, { useEffect, useState } from 'react';
 
+// Хук для отображения контента при заданном размере экрана
 const useMedia = (query) => {
-  const [matches, setMatches] = useState(window.matchMedia(query).matches);
+  const [matches, setMatches] = useState(window.matchMedia(query).matches); // true || false
 
   useEffect(() => {
-    let media = window.matchMedia(query);
+    const media = window.matchMedia(query);
 
-    if (media.matches !== matches) {
-      setMatches(media.matches);
-    }
+    if (media.matches !== matches) setMatches(media.matches);
 
-    let listener = () => setMatches(media.matches);
+    const listener = () => setMatches(media.matches);
 
     media.addEventListener('change', listener);
 
+    // удалить слушателя, дабы он не срабатывал в компоненте, в котором не был вызван этот хук
     return () => media.removeEventListener('change', listener);
   }, [query]);
 
-  return matches;
+  return matches; // true || false
 };
 
 export default useMedia;
+
+// // использование в компоненте
+// const small = useMedia('(max-width: 767px)');
+// {small && 'Mobile version'}
