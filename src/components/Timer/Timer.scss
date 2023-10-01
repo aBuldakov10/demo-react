@@ -1,0 +1,32 @@
+// Import mixins and variables
+@import "../../assets/scss/assets/util";
+
+.timer {
+  display: flex;
+  justify-content: center;
+  gap: 60px;
+  margin: 30px 0;
+
+  &__item {
+    min-width: 90px;
+  }
+
+  &__value,
+  &__label {
+    display: block;
+    text-align: center;
+    font-weight: 700;
+  }
+
+  &__value {
+    font-size: 60px;
+  }
+
+  &__label {
+    padding-top: 15px;
+    font-size: 14px;
+    color: #7d7d7d;
+    text-transform: uppercase;
+    border-top: 3px solid #014e87;
+  }
+}
