@@ -1,0 +1,103 @@
+@import '../../../assets/scss/assets/util';
+
+.weather {
+  &-heading {
+    flex-wrap: wrap;
+    gap: 20px 50px;
+  }
+
+  &-body {
+    flex-wrap: wrap;
+    gap: 15px 30px;
+  }
+
+  &-content {
+    position: relative;
+    z-index: 1;
+    opacity: 0.8;
+
+    &__divider.MuiDivider-root {
+      margin-top: 24px;
+      margin-bottom: 24px;
+      border-color: inherit;
+    }
+
+    &__item {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &-temp {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px 30px;
+  }
+
+  &-temperature {
+    font-size: 30px;
+    font-weight: 600;
+
+    @include media(min, $md) {
+      font-size: 40px;
+    }
+
+    @include media(min, $xl) {
+      font-size: 52px;
+    }
+  }
+
+  &-time {
+    display: flex;
+    align-items: flex-start;
+    gap: 15px;
+    font-size: 14px;
+
+    time {
+      display: block;
+    }
+  }
+
+  &-icon {
+    width: 30px;
+    background-color: #8c8c8c;
+    border-radius: 200px;
+
+    @include media(min, $md) {
+      width: 50px;
+    }
+
+    @include media(min, $xl) {
+      width: 70px;
+    }
+  }
+
+  &-informers {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    &__item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      width: 100%;
+
+      @include media(min, $sm) {
+        width: 48%;
+      }
+
+      @include media(min, $xl) {
+        width: auto;
+      }
+    }
+  }
+
+  &-wind {
+    &__info {
+      display: flex;
+      gap: 15px;
+    }
+  }
+}

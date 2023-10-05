@@ -4,15 +4,11 @@ import { Button } from '@mui/material';
 import { LocationOn } from '@mui/icons-material';
 
 // Files
+import './WeatherLocation.scss';
 import { chooseMyCity } from './index';
 
 // Store
-import {
-  disabledLocation,
-  getWeatherLocation,
-  weatherLoaded,
-  weatherLoading,
-} from '../../store/weather/actions';
+import { disabledLocation, getWeatherLocation, weatherLoaded, weatherLoading } from '../../store/weather/actions';
 
 const LocationButton = () => {
   const dispatch = useDispatch();
@@ -21,13 +17,8 @@ const LocationButton = () => {
     <Button
       variant="contained"
       color="custom"
+      className="weather-location-btn"
       endIcon={<LocationOn />}
-      sx={{
-        marginTop: 2,
-        width: '100%',
-        fontSize: '16px',
-        textTransform: 'none',
-      }}
       onClick={async () => {
         dispatch(weatherLoading());
 

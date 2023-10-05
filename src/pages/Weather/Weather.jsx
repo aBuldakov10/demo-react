@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Grid from '@mui/material/Unstable_Grid2';
-import { Box, CircularProgress } from '@mui/material';
+import { Box } from '@mui/material';
 
 // Files
 import './Weather.scss';
@@ -13,11 +13,12 @@ import { getWeatherCity, weatherLoaded } from '../../store/weather/actions';
 import { activeCitySelector, locationDataSelector, weatherLoader } from '../../store/weather/selectors';
 
 // Components
-import CityList from '../../components/Weather/CityList';
+import Loader from '../../components/Loader/Loader';
+import CityList from '../../components/Weather/CityList/CityList';
 import LocationButton from '../../components/WeatherLocation/LocationButton';
 import LocationNotification from '../../components/WeatherLocation/LocationNotification';
-import Content from '../../components/Weather/Content';
-import YaMap from './YaMap';
+import Content from '../../components/Weather/Content/Content';
+import YaMap from '../../components/YaMap/YaMap';
 
 const Weather = () => {
   const dispatch = useDispatch();
@@ -44,32 +45,9 @@ const Weather = () => {
         </Grid>
 
         <Grid item xs={12} md={8} lg={9}>
-          <Box
-            className="weather__content"
-            sx={{
-              position: 'relative',
-              p: 3,
-              height: '100%',
-              borderRadius: 1,
-              color: '#fff',
-              backgroundImage: `url(${imgBg})`,
-              backgroundPosition: 'center',
-              backgroundSize: 'cover',
-              boxShadow: '0px 2px 5px 0px #d2d2d2;',
-              overflow: 'hidden',
-            }}
-          >
+          <Box className="weather-content-wrapper" sx={{ backgroundImage: `url(${imgBg})` }}>
             {loader ? (
-              <Box
-                sx={{
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: '100%',
-                }}
-              >
-                <CircularProgress color="inherit" />
-              </Box>
+              <Loader />
             ) : (
               <>
                 {/*** Main weather content ***/}

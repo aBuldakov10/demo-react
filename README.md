@@ -1,6 +1,6 @@
 ## Demo react app
 #### Environment
-Based on react-template (node 18.12.1, npm 8.19.3).
+Based on create-react-app.
 
 Used **MUI** for styling without adaptive and minimum SCSS.\
 Used **Formik** and **Yup** for validation forms\
