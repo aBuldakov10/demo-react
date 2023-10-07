@@ -8,7 +8,7 @@ import { isAuthUserSelector } from '../store/auth/selectors';
 // Components
 import Home from '../pages/Home';
 import Weather from '../pages/Weather/Weather';
-import Tasks from '../pages/Tasks';
+import ToDo from '../pages/ToDo/ToDo';
 import Login from '../pages/Login/Login';
 import Registration from '../pages/Registration/Registration';
 import ResetPassword from '../pages/ResetPassword/ResetPassword';
@@ -23,7 +23,7 @@ const RoutesList = () => {
       <Route path="/" element={<Navigate to="/demo-react" />} />
       <Route path="/demo-react" element={<Home />} />
       <Route path="/weather" element={<Weather />} />
-      <Route path="/task-list" element={<Tasks />} />
+      <Route path="/to-do" element={<ToDo />} />
       <Route path="/login" element={loggedIn ? <Navigate to="/profile" /> : <Login />} />
       <Route path="/register" element={<Navigate to="/registration" />} />
       <Route path="/registration" element={loggedIn ? <Navigate to="/profile" /> : <Registration />} />

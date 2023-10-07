@@ -1,6 +1,6 @@
 export const headerNav = {
   Home: '/',
   Weather: '/weather',
-  Tasks: '/task-list',
+  'To Do': '/to-do',
   // Example: '/example',
 };

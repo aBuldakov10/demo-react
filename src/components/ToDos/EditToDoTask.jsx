@@ -15,49 +15,37 @@ import { closeEditPopup, updateTask } from '../../store/tasks/actions';
 import Text from '../Form/Text';
 import Textarea from '../Form/Textarea';
 
-const EditTaskPopup = () => {
+const EditToDoTask = () => {
   const dispatch = useDispatch();
   const { id, title, description, state } = useSelector(editPopupSelector);
 
+  /*** Handlers ***/
+  const handleEditTask = (values) => {
+    const body = new FormData();
+
+    Object.entries(values).forEach(([key, value]) => {
+      body.append(key, value);
+    });
+
+    // Save new task data and rerender task list
+    editTask(id, body).then((taskList) => dispatch(updateTask(taskList)));
+  };
+
   return (
-    <Dialog
-      open={state}
-      onClose={() => {
-        dispatch(closeEditPopup());
-      }}
-      aria-labelledby="alert-dialog-title"
-    >
+    <Dialog open={state} onClose={() => dispatch(closeEditPopup())} aria-labelledby="alert-dialog-title">
       <Formik
         initialValues={{
           title: title,
           description: description,
         }}
         onSubmit={async (values) => {
-          const body = new FormData();
-
-          Object.entries(values).forEach(([key, value]) => {
-            body.append(key, value);
-          });
-
-          // Save new task data and rerender task list
-          await editTask(id, body).then((taskList) => {
-            dispatch(updateTask(taskList));
-          });
+          await handleEditTask(values);
 
           dispatch(closeEditPopup()); // Close popup
         }}
         validationSchema={taskValidation}
       >
-        <Form
-          className="form"
-          style={{
-            width: 500,
-            borderRadius: 4,
-            backgroundColor: '#fff',
-            padding: 16,
-            boxShadow: '0px 2px 5px 0px #d2d2d2',
-          }}
-        >
+        <Form className="form edit-to-do-task-form">
           <DialogTitle id="alert-dialog-title" sx={{ px: 0, pt: 0 }}>
             Edit task <strong>#{id}</strong>
           </DialogTitle>
@@ -73,25 +61,17 @@ const EditTaskPopup = () => {
           />
 
           <DialogActions sx={{ p: 0 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              title="Save task"
-              type="submit"
-              sx={{ textTransform: 'none', width: 100 }}
-            >
+            <Button variant="contained" color="primary" className="btn" title="Save task" type="submit">
               Save
             </Button>
 
             <Button
               variant="contained"
               color="custom"
+              className="btn"
               title="Cancel"
               type="button"
-              sx={{ textTransform: 'none', width: 100 }}
-              onClick={() => {
-                dispatch(closeEditPopup()); // Close popup without edit task
-              }}
+              onClick={() => dispatch(closeEditPopup())}
             >
               Cancel
             </Button>
@@ -102,4 +82,4 @@ const EditTaskPopup = () => {
   );
 };
 
-export default EditTaskPopup;
+export default EditToDoTask;

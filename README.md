@@ -8,7 +8,7 @@ Used **Redux**, **Redux-thunk** for state managing\
 Used **Firebase** as backend for authenticate
 
 Has 2 branches: **'master'** and **'app-context'**\
-**Weather** and **Tasks** pages with using 
+**Weather** and **ToDo** pages with using 
 **Context** instead **Redux** placed in 
 **'app-context'** branch
 

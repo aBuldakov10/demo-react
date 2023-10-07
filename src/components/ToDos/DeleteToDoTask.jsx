@@ -1,13 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  Button,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
 
 // Files
 import { deleteTask } from './api';
@@ -16,16 +9,15 @@ import { deleteTask } from './api';
 import { deletePopupSelector } from '../../store/tasks/selectors';
 import { closeDeletePopup, removeTask } from '../../store/tasks/actions';
 
-const DeleteTaskPopup = () => {
+const DeleteToDoTask = () => {
   const dispatch = useDispatch();
   const { id, title, state } = useSelector(deletePopupSelector);
 
   return (
     <Dialog
       open={state}
-      onClose={() => {
-        dispatch(closeDeletePopup());
-      }}
+      classes={{ paper: 'delete-to-do-task' }}
+      onClose={() => dispatch(closeDeletePopup())}
       aria-labelledby="alert-dialog-title"
       aria-describedby="alert-dialog-description"
     >
@@ -34,9 +26,7 @@ const DeleteTaskPopup = () => {
       </DialogTitle>
 
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">
-          Task name: "{title}"
-        </DialogContentText>
+        <DialogContentText id="alert-dialog-description">Task name: "{title}"</DialogContentText>
       </DialogContent>
 
       <DialogActions>
@@ -44,14 +34,12 @@ const DeleteTaskPopup = () => {
           variant="contained"
           color="delete"
           title="Delete"
-          sx={{ textTransform: 'none', width: 100 }}
+          className="btn"
           onClick={() => {
             dispatch(closeDeletePopup()); // Close popup
 
             // Delete task and rerender task list
-            deleteTask(id).then((taskList) => {
-              dispatch(removeTask(taskList));
-            });
+            deleteTask(id).then((taskList) => dispatch(removeTask(taskList)));
           }}
         >
           Delete
@@ -61,10 +49,8 @@ const DeleteTaskPopup = () => {
           variant="contained"
           color="custom"
           title="Cancel"
-          sx={{ textTransform: 'none', width: 100 }}
-          onClick={() => {
-            dispatch(closeDeletePopup()); // Close popup without delete task
-          }}
+          className="btn"
+          onClick={() => dispatch(closeDeletePopup())}
         >
           Cancel
         </Button>
@@ -73,4 +59,4 @@ const DeleteTaskPopup = () => {
   );
 };
 
-export default DeleteTaskPopup;
+export default DeleteToDoTask;
