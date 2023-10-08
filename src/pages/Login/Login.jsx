@@ -5,6 +5,7 @@ import { Alert, Box, Button, Typography } from '@mui/material';
 import { Field, Form, Formik } from 'formik';
 
 // Files
+import './Login.scss';
 import { loginValidation } from './validation';
 
 // Firebase
@@ -23,46 +24,43 @@ const Login = () => {
   const auth = getAuth(app);
   const dispatch = useDispatch();
   const isAuthError = useSelector(authErrorSelector);
+
+  /*** Handlers ***/
   const handleNoAuthError = () => isAuthError && dispatch(noAuthError());
 
+  const handleLogin = (auth, mail, pass) => {
+    signInWithEmailAndPassword(auth, mail, pass)
+      .then(({ user }) => {
+        const { uid, displayName, email, accessToken, metadata } = user;
+
+        localStorage.setItem('user_state', 'logged_in');
+
+        dispatch(loginUser(uid, displayName, email, accessToken, metadata.createdAt));
+      })
+      .catch((error) => {
+        let errorTExt = '';
+
+        if (error.code === AuthErrorCodes.INVALID_EMAIL) errorTExt = 'Invalid email';
+        if (error.code === AuthErrorCodes.INVALID_PASSWORD) errorTExt = 'Wrong password';
+        if (error.code === AuthErrorCodes.USER_DELETED) errorTExt = 'User not found. Enter correct email or register';
+
+        dispatch(authError(errorTExt));
+      });
+  };
+
   return (
-    <Box sx={{ py: 3, maxWidth: 700, m: '0 auto' }}>
-      <Typography variant="h5" component="h1" style={{ marginBottom: '.5em', fontWeight: 600 }}>
+    <Box className="login-page">
+      <Typography className="login-page__title" variant="h5" component="h1">
         Login
       </Typography>
 
       <Formik
         initialValues={{ email: '', password: '' }}
         validationSchema={loginValidation}
-        onSubmit={({ email, password }) => {
-          signInWithEmailAndPassword(auth, email, password)
-            .then(({ user }) => {
-              const { uid, displayName, email, accessToken, metadata } = user;
-
-              localStorage.setItem('user_state', 'logged_in');
-              dispatch(loginUser(uid, displayName, email, accessToken, metadata.createdAt));
-            })
-            .catch((error) => {
-              if (error.code === AuthErrorCodes.INVALID_EMAIL) {
-                dispatch(authError('Invalid email'));
-              }
-
-              if (error.code === AuthErrorCodes.INVALID_PASSWORD) {
-                dispatch(authError('Wrong password'));
-              }
-
-              if (error.code === AuthErrorCodes.USER_DELETED) {
-                dispatch(authError('User not found. Enter correct email or register'));
-              }
-            });
-        }}
+        onSubmit={({ email, password }) => handleLogin(auth, email, password)}
       >
-        <Form className="form" style={{ borderRadius: 4, backgroundColor: '#fff', padding: 16 }}>
-          {isAuthError && (
-            <Alert severity="error" sx={{ mb: 2 }}>
-              {isAuthError}
-            </Alert>
-          )}
+        <Form className="form">
+          {isAuthError && <Alert severity="error">{isAuthError}</Alert>}
 
           <Field id="loginMail" name="email" label="Email" placeholder="Email" component={Text} />
 
@@ -75,40 +73,18 @@ const Login = () => {
             component={Password}
           />
 
-          <Button
-            type="submit"
-            variant="contained"
-            color="custom"
-            sx={{ display: 'flex', ml: 'auto', fontSize: 16, textTransform: 'none' }}
-          >
+          <Button className="btn" type="submit" variant="contained" color="custom">
             Login
           </Button>
 
-          <Typography
-            variant="body"
-            component="p"
-            sx={{ fontSize: '14px', textAlign: 'center', mt: 2 }}
-            style={{ marginBottom: 0 }}
-          >
+          <Typography className="login-page__dont-have-account" variant="body" component="p">
             Don't have account?
-            <Link to="/registration" className="link" style={{ marginLeft: '10px' }} onClick={handleNoAuthError}>
+            <Link to="/registration" className="link" onClick={handleNoAuthError}>
               Register
             </Link>
           </Typography>
 
-          <Link
-            to="/resetPassword"
-            className="link"
-            style={{
-              position: 'relative',
-              transform: 'translateX(-50%)',
-              left: '50%',
-              display: 'inline-block',
-              marginTop: '16px',
-              fontSize: '14px',
-            }}
-            onClick={handleNoAuthError}
-          >
+          <Link to="/resetPassword" className="login-page__forget-password link" onClick={handleNoAuthError}>
             Forget password?
           </Link>
         </Form>

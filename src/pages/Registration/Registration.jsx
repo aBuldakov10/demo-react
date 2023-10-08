@@ -5,6 +5,7 @@ import { Box, Button, Typography, Alert } from '@mui/material';
 import { Field, Form, Formik } from 'formik';
 
 // Files
+import './Registration.scss';
 import { registerValidation } from './validation';
 
 // Firebase
@@ -24,40 +25,39 @@ const Registration = () => {
   const dispatch = useDispatch();
   const isAuthError = useSelector(authErrorSelector);
 
+  /*** Handlers ***/
+  const handleRegister = (auth, mail, pass) => {
+    createUserWithEmailAndPassword(auth, mail, pass)
+      .then(({ user }) => {
+        const { uid, displayName, email, accessToken, metadata } = user;
+
+        localStorage.setItem('user_state', 'logged_in');
+
+        dispatch(loginUser(uid, displayName, email, accessToken, metadata.createdAt));
+      })
+      .catch((error) => {
+        let errorTExt = '';
+
+        if (error.code === AuthErrorCodes.EMAIL_EXISTS) errorTExt = 'Email already in use';
+        if (error.code === AuthErrorCodes.INVALID_EMAIL) errorTExt = 'Invalid email';
+
+        dispatch(authError(errorTExt));
+      });
+  };
+
   return (
-    <Box sx={{ py: 3, maxWidth: 700, m: '0 auto' }}>
-      <Typography variant="h5" component="h1" style={{ marginBottom: '.5em', fontWeight: 600 }}>
+    <Box className="registration-page">
+      <Typography className="registration-page__title" variant="h5" component="h1">
         Registration
       </Typography>
 
       <Formik
         initialValues={{ email: '', password: '' }}
         validationSchema={registerValidation}
-        onSubmit={({ email, password }) => {
-          createUserWithEmailAndPassword(auth, email, password)
-            .then(({ user }) => {
-              const { uid, displayName, email, accessToken, metadata } = user;
-
-              localStorage.setItem('user_state', 'logged_in');
-              dispatch(loginUser(uid, displayName, email, accessToken, metadata.createdAt));
-            })
-            .catch((error) => {
-              if (error.code === AuthErrorCodes.EMAIL_EXISTS) {
-                dispatch(authError('Email already in use'));
-              }
-
-              if (error.code === AuthErrorCodes.INVALID_EMAIL) {
-                dispatch(authError('Invalid email'));
-              }
-            });
-        }}
+        onSubmit={({ email, password }) => handleRegister(auth, email, password)}
       >
-        <Form className="form" style={{ borderRadius: 4, backgroundColor: '#fff', padding: 16 }}>
-          {isAuthError && (
-            <Alert severity="error" sx={{ mb: 2 }}>
-              {isAuthError}
-            </Alert>
-          )}
+        <Form className="form">
+          {isAuthError && <Alert severity="error">{isAuthError}</Alert>}
 
           <Field id="registerMail" name="email" label="Email" placeholder="Email" component={Text} />
 
@@ -70,28 +70,13 @@ const Registration = () => {
             component={Password}
           />
 
-          <Button
-            type="submit"
-            variant="contained"
-            color="custom"
-            sx={{ display: 'flex', ml: 'auto', fontSize: 16, textTransform: 'none' }}
-          >
+          <Button className="btn" type="submit" variant="contained" color="custom">
             Register
           </Button>
 
-          <Typography
-            variant="body"
-            component="p"
-            sx={{ fontSize: '14px', textAlign: 'center', mt: 2 }}
-            style={{ marginBottom: 0 }}
-          >
+          <Typography className="registration-page__have-account" variant="body" component="p">
             Already have account?
-            <Link
-              to="/login"
-              className="link"
-              style={{ marginLeft: '10px' }}
-              onClick={() => isAuthError && dispatch(noAuthError())}
-            >
+            <Link to="/login" className="link" onClick={() => isAuthError && dispatch(noAuthError())}>
               Login
             </Link>
           </Typography>

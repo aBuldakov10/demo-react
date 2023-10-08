@@ -1,0 +1,20 @@
+@import "../../assets/scss/assets/variables";
+
+.user-icon.MuiIconButton-root {
+  color: inherit;
+
+  svg {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+#auth-menu,
+#user-profile-menu {
+  margin-top: 55px;
+}
+
+.user-avatar.MuiAvatar-circular {
+  background-color: $bg-clr;
+  color: $main-clr;
+}

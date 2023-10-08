@@ -1,0 +1,45 @@
+.login-page {
+  margin: 0 auto;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  max-width: 700px;
+
+  &__title.MuiTypography-h5 {
+    margin-bottom: 0.5em;
+    font-weight: 600;
+  }
+
+  .form {
+    padding: 16px;
+    border-radius: 4px;
+    background-color: rgb(255, 255, 255);
+
+    .btn {
+      display: flex;
+      margin-left: auto;
+    }
+  }
+
+  &__dont-have-account.MuiTypography-body {
+    margin-top: 15px;
+    margin-bottom: 0;
+    text-align: center;
+
+    a {
+      margin-left: 10px;
+    }
+  }
+
+  &__forget-password {
+    position: relative;
+    transform: translateX(-50%);
+    left: 50%;
+    display: inline-block;
+    margin-top: 16px;
+    font-size: 14px;
+  }
+
+  .MuiAlert-standardError {
+    margin-bottom: 15px;
+  }
+}

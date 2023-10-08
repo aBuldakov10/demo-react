@@ -5,6 +5,7 @@ import { Alert, Box, Button, Typography } from '@mui/material';
 import { Field, Form, Formik } from 'formik';
 
 // Files
+import './ResetPassword.scss';
 import { resetPasswordValidation } from './validation';
 
 // Firebase
@@ -23,66 +24,59 @@ const ResetPassword = () => {
   const dispatch = useDispatch();
   const isAuthError = useSelector(authErrorSelector);
   const resetPasswordState = useSelector(resetPasswordRequestSelector);
-
-  const handleNoAuthError = () => isAuthError && dispatch(noAuthError());
-
   auth.languageCode = 'ru';
 
+  /*** Handlers ***/
+  const handleNoAuthError = () => isAuthError && dispatch(noAuthError());
+
+  const handleResetPassword = (auth, mail) => {
+    sendPasswordResetEmail(auth, mail)
+      .then(() => {
+        handleNoAuthError();
+        dispatch(resetPassword(true));
+
+        setTimeout(() => dispatch(resetPassword(false)), 10000);
+      })
+      .catch((error) => {
+        let errorTExt = '';
+
+        if (error.code === AuthErrorCodes.INVALID_EMAIL) errorTExt = 'Invalid email';
+
+        dispatch(authError(errorTExt));
+      });
+  };
+
   return (
-    <Box sx={{ py: 3, maxWidth: 700, m: '0 auto' }}>
-      <Typography variant="h5" component="h1" style={{ marginBottom: '.5em', fontWeight: 600 }}>
+    <Box className="reset-password-page">
+      <Typography className="reset-password-page__title" variant="h5" component="h1">
         Reset password
       </Typography>
 
-      <Box sx={{ borderRadius: 1, backgroundColor: '#fff', p: 2 }}>
+      <Box className="reset-password-form-wrapper">
         {!resetPasswordState ? (
           <Formik
             initialValues={{ email: '' }}
             validationSchema={resetPasswordValidation}
-            onSubmit={({ email }) => {
-              sendPasswordResetEmail(auth, email)
-                .then(() => {
-                  handleNoAuthError();
-                  dispatch(resetPassword(true));
-
-                  setTimeout(() => {
-                    dispatch(resetPassword(false));
-                  }, 10000);
-                })
-                .catch((error) => {
-                  if (error.code === AuthErrorCodes.INVALID_EMAIL) {
-                    dispatch(authError('Invalid email'));
-                  }
-                });
-            }}
+            onSubmit={({ email }) => handleResetPassword(auth, email)}
           >
             <Form className="form">
-              {isAuthError && (
-                <Alert severity="error" sx={{ mb: 2 }}>
-                  {isAuthError}
-                </Alert>
-              )}
+              {isAuthError && <Alert severity="error">{isAuthError}</Alert>}
 
               <Field id="resetPasswordMail" name="email" label="Email" placeholder="Email" component={Text} />
 
-              <Button
-                type="submit"
-                variant="contained"
-                color="custom"
-                sx={{ display: 'flex', ml: 'auto', fontSize: 16, textTransform: 'none' }}
-              >
+              <Button className="btn" type="submit" variant="contained" color="custom">
                 Reset password
               </Button>
             </Form>
           </Formik>
         ) : (
-          <Typography variant="body" component="p" sx={{ fontSize: 14 }}>
+          <Typography className="reset-success" variant="body" component="p">
             The "Reset password" request was sent to your email successfully. Check your email and follow the
             instruction. Then you can log in with new password. You can create new account also.
           </Typography>
         )}
 
-        <Typography variant="body" component="p" sx={{ fontSize: 14, textAlign: 'center', mt: 2 }}>
+        <Typography className="login-or-register" variant="body" component="p">
           <Link to="/login" className="link" onClick={handleNoAuthError}>
             Login
           </Link>{' '}

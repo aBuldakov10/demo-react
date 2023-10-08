@@ -13,8 +13,10 @@ import { logoutUser } from '../../store/auth/action';
 const IsAuthUser = () => {
   const auth = getAuth(app);
   const dispatch = useDispatch();
+
   const [anchorElUser, setAnchorElUser] = useState(null);
 
+  /*** Handlers ***/
   const handleCloseUserMenu = () => setAnchorElUser(null);
 
   const handleLogout = () => {
@@ -31,24 +33,22 @@ const IsAuthUser = () => {
   return (
     <>
       <IconButton
-        size="large"
+        className="user-icon"
         aria-label="account of current user"
         aria-controls="user-profile-menu"
         aria-haspopup="true"
         onClick={(event) => setAnchorElUser(event.currentTarget)}
-        color="inherit"
       >
-        <Avatar sx={{ backgroundColor: '#eee', color: '#432874' }}>B</Avatar>
+        <Avatar className="user-avatar">B</Avatar>
       </IconButton>
 
       <Menu
         id="user-profile-menu"
-        sx={{ mt: '55px' }}
         anchorEl={anchorElUser}
         anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        keepMounted
         transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-        open={Boolean(anchorElUser)}
+        keepMounted
+        open={!!anchorElUser}
         onClose={handleCloseUserMenu}
       >
         <MenuItem onClick={handleCloseUserMenu}>
