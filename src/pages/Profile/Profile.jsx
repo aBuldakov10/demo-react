@@ -46,6 +46,7 @@ const Profile = () => {
   const confirmCredentialSuccessMessageState = useSelector(confirmCredentialSuccessMessageSelector); // Get credential success message state
   const createdAccountDate = new Date(+createdAt).toLocaleDateString(); // Get create account date
 
+  /*** Handlers ***/
   const handleChangePassword = async (newPassword) => {
     await updatePassword(auth.currentUser, newPassword)
       .then(() => {
@@ -54,43 +55,42 @@ const Profile = () => {
       })
       .catch((error) => dispatch(confirmCredentialPopup(true)));
   };
+  const handleToggleEditForm = () => dispatch(toggleEditProfileForm(true));
+  const handleDeletePopup = () => dispatch(toggleDeletePopup(true));
 
   return (
-    <Box sx={{ py: 3 }}>
+    <Box sx={{ py: 3 }} className="profile">
       <Grid container spacing={4}>
-        <Grid item xs={4}>
-          <Box sx={{ p: 2, borderRadius: 1, bgcolor: '#fff', boxShadow: '0px 2px 5px 0px #d2d2d2;', height: '100%' }}>
-            <Avatar
-              sx={{ backgroundColor: '#eee', color: '#432874', fontSize: 120, width: 200, height: 200, mx: 'auto' }}
-            >
-              B
-            </Avatar>
+        {/*** Profile sidebar ***/}
+        <Grid item xs={12} md={4}>
+          <Box className="profile__block profile__sidebar">
+            <Avatar className="profile__sidebar-avatar">B</Avatar>
 
-            <Typography
-              variant="body"
-              component="p"
-              style={{ marginTop: '.5em', fontSize: 12, textAlign: 'center', color: '#666' }}
-            >
+            <Typography className="profile__sidebar-info" variant="body" component="p">
               Account created at {createdAccountDate}
             </Typography>
           </Box>
         </Grid>
 
-        <Grid item xs={8}>
-          <Box sx={{ p: 2, borderRadius: 1, bgcolor: '#fff', boxShadow: '0px 2px 5px 0px #d2d2d2;' }}>
+        {/*** Profile content ***/}
+        <Grid item xs={12} md={8}>
+          <Box className="profile__block profile__content">
+            {/*** Credential success message ***/}
             {confirmCredentialSuccessMessageState && (
-              <Alert severity="success" sx={{ mb: 3 }}>
+              <Alert className="profile__content-alert" severity="success">
                 Confirm credential success
               </Alert>
             )}
 
+            {/*** Profile success message ***/}
             {profileSuccessMessageState && (
-              <Alert severity="success" sx={{ mb: 3 }}>
+              <Alert className="profile__content-alert" severity="success">
                 {profileSuccessMessageState}
               </Alert>
             )}
 
-            <Alert variant="outlined" severity="info" sx={{ mb: 3 }}>
+            {/*** Authenticate message ***/}
+            <Alert className="profile__content-alert" variant="outlined" severity="info">
               To edit profile and change password you may have to authenticate again.
             </Alert>
 
@@ -98,27 +98,22 @@ const Profile = () => {
             {editProfileFormState ? (
               <EditProfileForm />
             ) : (
-              <Box sx={{ position: 'relative' }}>
-                <Typography
-                  variant="h4"
-                  component="h1"
-                  data-user-id={id}
-                  style={{ marginBottom: '.5em', fontWeight: 600, paddingRight: 140 }}
-                >
+              <Box className="profile__content-item user-info">
+                <Typography className="user-info__username" variant="h4" component="h1" data-user-id={id}>
                   {userName ? userName : 'User Name'}
                 </Typography>
 
-                <Typography variant="body" component="p" style={{ display: 'flex', gap: '10px' }}>
+                <Typography className="user-info__usermail" variant="body" component="p">
                   <Email />
                   {email ? email : 'user@mail.com'}
                 </Typography>
 
                 <Button
+                  className="btn user-info__edit-btn"
                   variant="contained"
                   color="custom"
                   title="Edit user info"
-                  sx={{ position: 'absolute', top: 0, right: 0, textTransform: 'none' }}
-                  onClick={() => dispatch(toggleEditProfileForm(true))}
+                  onClick={handleToggleEditForm}
                 >
                   Edit profile
                 </Button>
@@ -128,12 +123,12 @@ const Profile = () => {
             <Divider sx={{ my: 3 }} />
 
             {/*** Change password ***/}
-            <Box sx={{ position: 'relative' }}>
-              <Typography variant="body" component="p" style={{ marginBottom: 0, fontWeight: 600 }}>
+            <Box className="profile__content-item">
+              <Typography className="profile__content-title" variant="body" component="p">
                 Change password
               </Typography>
 
-              <Typography variant="body" component="p" sx={{ color: '#666', fontSize: 12 }}>
+              <Typography className="profile__content-subtitle" variant="body" component="p">
                 Enter new password. You may have to authenticate again for security reasons.
               </Typography>
 
@@ -151,7 +146,7 @@ const Profile = () => {
                     placeholder="New password"
                     component={Password}
                   />
-                  <Button type="submit" variant="contained" color="custom" sx={{ fontSize: 16, textTransform: 'none' }}>
+                  <Button className="btn" type="submit" variant="contained" color="custom">
                     Update password
                   </Button>
                 </Form>
@@ -161,22 +156,17 @@ const Profile = () => {
             <Divider sx={{ my: 3 }} />
 
             {/*** Delete account ***/}
-            <Box sx={{ position: 'relative' }}>
-              <Typography variant="body" component="p" style={{ marginBottom: 0, fontWeight: 600, color: '#d32f2f' }}>
+            <Box className="profile__content-item">
+              <Typography className="profile__content-title" color="error" variant="body" component="p">
                 Delete account
               </Typography>
 
-              <Typography variant="body" component="p" sx={{ fontSize: 12, color: '#666' }}>
+              <Typography className="profile__content-subtitle" variant="body" component="p">
                 Once you delete your account, there is no going back. Please be certain. You may have to authenticate
                 again for security reasons.
               </Typography>
 
-              <Button
-                className="btn"
-                variant="contained"
-                color="error"
-                onClick={() => dispatch(toggleDeletePopup(true))}
-              >
+              <Button className="btn" variant="contained" color="error" onClick={handleDeletePopup}>
                 Delete
               </Button>
             </Box>

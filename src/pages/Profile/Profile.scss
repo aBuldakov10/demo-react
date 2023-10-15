@@ -1,9 +1,215 @@
 .change-password-form {
-  display: flex;
-  gap: 30px;
+  @media (min-width: 768px) {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+  }
 
   & > div {
-    flex-grow: 1;
-    margin-bottom: 0;
+    @media (min-width: 768px) {
+      flex-grow: 1;
+      margin-bottom: 0;
+    }
+  }
+}
+
+.profile {
+  &__block {
+    padding: 16px;
+    height: 100%;
+    border-radius: 4px;
+    background-color: #fff;
+    box-shadow: 0 2px 5px 0 #d2d2d2;
+  }
+
+  // Sidebar
+  &__sidebar {
+    @media (max-width: 899px) {
+      display: flex;
+      gap: 20px;
+    }
+
+    &-avatar.MuiAvatar-circular {
+      color: #432874;
+      background-color: #eee;
+
+      width: 60px;
+      height: 60px;
+      font-size: 34px;
+      margin: 0;
+
+      @media (min-width: 900px) {
+        margin-left: auto;
+        margin-right: auto;
+        width: 120px;
+        height: 120px;
+        font-size: 80px;
+      }
+
+      @media (min-width: 1200px) {
+        margin-left: auto;
+        margin-right: auto;
+        width: 200px;
+        height: 200px;
+        font-size: 120px;
+      }
+    }
+
+    &-info.MuiTypography-body {
+      font-size: 12px;
+      color: #666;
+
+      @media (min-width: 900px) {
+        margin-top: 0.5em;
+        text-align: center;
+      }
+    }
+  }
+
+  // Content
+  &__content {
+    &-alert {
+      margin-bottom: 24px;
+
+      &.MuiAlert-root {
+        @media (max-width: 767px) {
+          font-size: 12px;
+        }
+      }
+    }
+
+    &-item {
+      position: relative;
+    }
+
+    &-title.MuiTypography-body {
+      margin-bottom: 0;
+      font-weight: 600;
+    }
+
+    &-subtitle {
+      color: #666;
+      font-size: 12px;
+    }
+  }
+}
+
+.user-info {
+  position: relative;
+
+  &__username.MuiTypography-h4 {
+    margin-bottom: 0.5em;
+    font-weight: 600;
+
+    @media (max-width: 767px) {
+      font-size: 20px;
+    }
+
+    @media (min-width: 768px) {
+      padding-right: 140px;
+    }
+  }
+
+  &__usermail {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    @media (max-width: 767px) {
+      font-size: 14px;
+    }
+  }
+
+  &__edit-btn.MuiButton-root {
+    text-transform: none;
+
+    @media (min-width: 768px) {
+      position: absolute;
+      top: 0;
+      right: 0;
+    }
+  }
+}
+
+.change-password-form .btn {
+  text-transform: none;
+}
+
+// Confirm popup
+.confirm-popup {
+  &.MuiDialog-paper {
+    @media (max-width: 389px) {
+      margin: 20px;
+    }
+  }
+
+  .form {
+    padding: 16px;
+    max-width: 500px;
+    width: 100%;
+    border-radius: 4px;
+    background-color: rgb(255, 255, 255);
+    box-shadow: rgb(210, 210, 210) 0 2px 5px 0;
+  }
+
+  &__title.MuiTypography-h6 {
+    padding: 0 0 8px;
+  }
+
+  &__actions.MuiDialogActions-spacing {
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 0;
+  }
+
+  .form .btn {
+    margin-left: 0;
+    text-transform: none;
+
+    @media (min-width: 576px) {
+      max-width: 150px;
+    }
+  }
+}
+
+// Delete popup
+.delete-popup {
+  &.MuiDialog-paper {
+    @media (max-width: 389px) {
+      margin: 20px;
+    }
+  }
+
+  &__title.MuiTypography-h6 {
+    padding: 16px;
+    font-size: 18px;
+  }
+
+  &__actions.MuiDialogActions-spacing {
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 16px;
+
+    .btn {
+      margin-left: 0;
+      text-transform: none;
+
+      @media (min-width: 576px) {
+        max-width: 150px;
+      }
+    }
+  }
+}
+
+// Edit profile
+.edit-profile {
+  &__action {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+
+    .btn {
+      text-transform: none;
+    }
   }
 }

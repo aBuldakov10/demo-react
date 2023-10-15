@@ -1,7 +1,26 @@
-.input-error-message:first-letter {
-  text-transform: uppercase;
-}
-
 .form__password input {
   padding-right: 50px;
+}
+
+.input-error-message {
+  &:first-letter {
+    text-transform: uppercase;
+  }
+
+  &.MuiTypography-body1 {
+    position: absolute;
+    bottom: -20px;
+    font-size: 10px;
+
+    @media (min-width: 390px) {
+      font-size: 12px;
+    }
+  }
+}
+
+.password-icon.MuiIconButton-root {
+  transform: translateY(-50%);
+  position: absolute;
+  top: 50%;
+  right: 5px;
 }

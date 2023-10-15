@@ -34,10 +34,7 @@ const Text = ({
       />
 
       {(isRequiredOnSubmit || isError) && (
-        <Typography
-          className="input-error-message"
-          sx={{ position: 'absolute', bottom: -20, fontSize: 12, color: '#d32f2f' }}
-        >
+        <Typography color="error" className="input-error-message">
           {errorMessage}
         </Typography>
       )}

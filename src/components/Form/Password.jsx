@@ -17,6 +17,8 @@ const Password = ({
   const isError = errorMessage && isTouched;
   const isRequiredOnSubmit = errorMessage && !isTouched;
 
+  const togglePassIcon = () => setShowPassword(!showPassword);
+
   return (
     <Box sx={{ mb: 4, position: 'relative' }}>
       <TextField
@@ -33,19 +35,12 @@ const Password = ({
         fullWidth
         error={isError}
       />
-      <IconButton
-        style={{ position: 'absolute', top: '50%', right: '5px', transform: 'translateY(-50%)' }}
-        aria-label="toggle password visibility"
-        onClick={() => setShowPassword(!showPassword)}
-      >
+      <IconButton className="password-icon" aria-label="toggle password visibility" onClick={togglePassIcon}>
         {showPassword ? <VisibilityOff /> : <Visibility />}
       </IconButton>
 
       {(isRequiredOnSubmit || isError) && (
-        <Typography
-          className="input-error-message"
-          sx={{ position: 'absolute', bottom: -20, fontSize: 12, color: '#d32f2f' }}
-        >
+        <Typography className="input-error-message" color="error">
           {errorMessage}
         </Typography>
       )}

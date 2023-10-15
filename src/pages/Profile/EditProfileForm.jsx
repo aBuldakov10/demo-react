@@ -49,6 +49,7 @@ const EditProfileForm = () => {
       })
       .catch((error) => dispatch(confirmCredentialPopup(true))); // Show confirm credential popup
   };
+  const handleToggleEditForm = () => dispatch(toggleEditProfileForm(false));
 
   return (
     <Formik
@@ -57,28 +58,22 @@ const EditProfileForm = () => {
       // New user info values goes to handleUpdateProfile as parameters
       onSubmit={({ newUserName, newEmail }) => handleUpdateProfile(newUserName, newEmail)}
     >
-      <Form className="form">
+      <Form className="form edit-profile">
         <Field id="newUserName" name="newUserName" label="New username" placeholder="New username" component={Text} />
         <Field id="newEmail" name="newEmail" label="New email" placeholder="New email" component={Text} />
 
-        <Box sx={{ display: 'flex', gap: '15px', justifyContent: 'flex-end' }}>
-          <Button
-            variant="contained"
-            color="primary"
-            title="Save changes"
-            type="submit"
-            sx={{ textTransform: 'none', width: 100 }}
-          >
+        <Box className="edit-profile__action">
+          <Button className="btn" variant="contained" color="primary" title="Save changes" type="submit">
             Update
           </Button>
 
           <Button
+            className="btn"
             variant="contained"
             color="custom"
             title="Cancel"
             type="button"
-            sx={{ textTransform: 'none', width: 100 }}
-            onClick={() => dispatch(toggleEditProfileForm(false))}
+            onClick={handleToggleEditForm}
           >
             Cancel
           </Button>

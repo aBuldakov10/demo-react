@@ -30,27 +30,22 @@ const ConfirmDeleteProfilePopup = () => {
   };
 
   return (
-    <Dialog open={deleteProfilePopupState} aria-labelledby="alert-dialog-title" onClose={handleCloseDeletePopup}>
-      <DialogTitle id="alert-dialog-title">Are you sure you want to delete your account?</DialogTitle>
+    <Dialog
+      classes={{ paper: 'delete-popup' }}
+      open={deleteProfilePopupState}
+      aria-labelledby="alert-dialog-title"
+      onClose={handleCloseDeletePopup}
+    >
+      <DialogTitle id="alert-dialog-title" className="delete-popup__title">
+        Are you sure you want to delete your account?
+      </DialogTitle>
 
-      <DialogActions>
-        <Button
-          variant="contained"
-          color="delete"
-          title="Delete"
-          sx={{ textTransform: 'none', width: 100 }}
-          onClick={handleDeleteProfile}
-        >
+      <DialogActions className="delete-popup__actions">
+        <Button className="btn" variant="contained" color="delete" title="Delete" onClick={handleDeleteProfile}>
           Delete
         </Button>
 
-        <Button
-          variant="contained"
-          color="custom"
-          title="Cancel"
-          sx={{ textTransform: 'none', width: 100 }}
-          onClick={handleCloseDeletePopup}
-        >
+        <Button className="btn" variant="contained" color="custom" title="Cancel" onClick={handleCloseDeletePopup}>
           Cancel
         </Button>
       </DialogActions>

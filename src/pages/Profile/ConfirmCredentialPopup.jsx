@@ -48,39 +48,31 @@ const ConfirmCredentialPopup = () => {
         setTimeout(() => dispatch(confirmCredentialSuccessMessage(false)), 5000);
       })
       .catch((error) => {
-        if (error.code === AuthErrorCodes.INVALID_EMAIL) {
-          dispatch(authError('Invalid email'));
-        }
+        let errorTExt = '';
 
-        if (error.code === AuthErrorCodes.INVALID_PASSWORD) {
-          dispatch(authError('Wrong password'));
-        }
+        if (error.code === AuthErrorCodes.INVALID_EMAIL) errorTExt = 'Invalid email';
+        if (error.code === AuthErrorCodes.INVALID_PASSWORD) errorTExt = 'Wrong password';
+        if (error.code === AuthErrorCodes.USER_MISMATCH) errorTExt = 'The email you entered does not match yours';
 
-        if (error.code === AuthErrorCodes.USER_MISMATCH) {
-          dispatch(authError('The email you entered does not match yours'));
-        }
+        dispatch(authError(errorTExt));
       });
   };
 
   return (
-    <Dialog open={true} onClose={handleCloseConfirmPopup} aria-labelledby="alert-dialog-title">
+    <Dialog
+      open={true}
+      onClose={handleCloseConfirmPopup}
+      aria-labelledby="alert-dialog-title"
+      classes={{ paper: 'confirm-popup' }}
+    >
       <Formik
         initialValues={{ confirmEmail: '', confirmPassword: '' }}
         // Confirmation user mail and password values goes to handleReauthenticate as parameters
         onSubmit={({ confirmEmail, confirmPassword }) => handleReauthenticate(confirmEmail, confirmPassword)}
         validationSchema={confirmCredentialValidation}
       >
-        <Form
-          className="form"
-          style={{
-            width: 500,
-            borderRadius: 4,
-            backgroundColor: '#fff',
-            padding: 16,
-            boxShadow: '0px 2px 5px 0px #d2d2d2',
-          }}
-        >
-          <DialogTitle id="alert-dialog-title" sx={{ px: 0, pt: 0, pb: 1 }}>
+        <Form className="form">
+          <DialogTitle id="alert-dialog-title" className="confirm-popup__title">
             Confirm your credentials
           </DialogTitle>
 
@@ -106,23 +98,17 @@ const ConfirmCredentialPopup = () => {
             component={Password}
           />
 
-          <DialogActions sx={{ p: 0 }}>
-            <Button
-              variant="contained"
-              color="primary"
-              title="Save task"
-              type="submit"
-              sx={{ textTransform: 'none', width: 100 }}
-            >
+          <DialogActions className="confirm-popup__actions">
+            <Button variant="contained" color="primary" title="Save task" type="submit" className="btn">
               Confirm
             </Button>
 
             <Button
               variant="contained"
+              className="btn"
               color="custom"
               title="Cancel"
               type="button"
-              sx={{ textTransform: 'none', width: 100 }}
               onClick={handleCloseConfirmPopup}
             >
               Cancel
