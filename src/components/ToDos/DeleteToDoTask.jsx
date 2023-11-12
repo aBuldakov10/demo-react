@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 // Files
 import { deleteTask } from './api';
@@ -11,6 +12,7 @@ import { closeDeletePopup, removeTask } from '../../store/tasks/actions';
 
 const DeleteToDoTask = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { id, title, state } = useSelector(deletePopupSelector);
 
   return (
@@ -22,18 +24,20 @@ const DeleteToDoTask = () => {
       aria-describedby="alert-dialog-description"
     >
       <DialogTitle id="alert-dialog-title">
-        Are you sure you want to delete task <strong>#{id}</strong>?
+        {t('to-do.delete.title')} <strong>#{id}</strong>?
       </DialogTitle>
 
       <DialogContent>
-        <DialogContentText id="alert-dialog-description">Task name: "{title}"</DialogContentText>
+        <DialogContentText id="alert-dialog-description">
+          {t('to-do.delete.name')} "{title}"
+        </DialogContentText>
       </DialogContent>
 
       <DialogActions>
         <Button
           variant="contained"
           color="delete"
-          title="Delete"
+          title={t('to-do.delete.tip')}
           className="btn"
           onClick={() => {
             dispatch(closeDeletePopup()); // Close popup
@@ -42,17 +46,17 @@ const DeleteToDoTask = () => {
             deleteTask(id).then((taskList) => dispatch(removeTask(taskList)));
           }}
         >
-          Delete
+          {t('to-do.delete.button')}
         </Button>
 
         <Button
           variant="contained"
           color="custom"
-          title="Cancel"
+          title={t('to-do.cancel')}
           className="btn"
           onClick={() => dispatch(closeDeletePopup())}
         >
-          Cancel
+          {t('to-do.cancel')}
         </Button>
       </DialogActions>
     </Dialog>

@@ -1,5 +1,6 @@
 import React, { useRef, useLayoutEffect } from 'react';
 import { Typography, Box } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 // Components
 import Timer from '../components/Timer/Timer';
@@ -9,6 +10,7 @@ import useMedia from '../hooks/useMedia';
 
 const Home = () => {
   const h2ref = useRef(null);
+  const { t } = useTranslation();
 
   // при загрузке страницы фокус на элементе h2ref не зависимо от количества контента
   // не корректно работает при SPA
@@ -24,9 +26,9 @@ const Home = () => {
   return (
     <Box sx={{ py: 2 }} ref={h2ref}>
       <Typography variant="h6" component="p" align={'center'} style={{ fontWeight: 600 }}>
-        {small && 'Mobile version'}
-        {medium && 'Tablet version'}
-        {large && 'Desktop version'}
+        {small && t('home.device.mob')}
+        {medium && t('home.device.tab')}
+        {large && t('home.device.desk')}
       </Typography>
 
       {/*** Timer ***/}

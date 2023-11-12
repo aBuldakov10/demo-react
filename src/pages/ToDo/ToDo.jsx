@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Grid from '@mui/material/Unstable_Grid2';
 import { Box, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 // Files
 import './ToDo.scss';
@@ -20,6 +21,7 @@ import Loader from '../../components/Loader/Loader';
 
 const ToDo = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const loader = useSelector(taskLoaderSelector);
   const taskList = useSelector(taskListSelector);
 
@@ -37,7 +39,7 @@ const ToDo = () => {
         <Grid item xs={12} md={6} lg={8}>
           {/*** Task list title ***/}
           <Typography variant="h6" component="h2" className="to-do__title">
-            To Do list
+            {t('to-do.task-list.title')}
           </Typography>
 
           {/*** Loader / No tasks notification / Task list ***/}
@@ -50,7 +52,7 @@ const ToDo = () => {
           ) : Object.values(taskList).length === 0 ? (
             <Box className="to-do__no-tasks">
               <Typography variant="body1" align="center">
-                There are no tasks yet
+                {t('to-do.task-list.no-task')}
               </Typography>
             </Box>
           ) : (
@@ -64,7 +66,7 @@ const ToDo = () => {
           <Box className="task-form-wrapper">
             {/*** Task form title ***/}
             <Typography variant="h6" component="h2" className="to-do__title">
-              Create task
+              {t('to-do.create.title')}
             </Typography>
 
             {/*** Create task form ***/}

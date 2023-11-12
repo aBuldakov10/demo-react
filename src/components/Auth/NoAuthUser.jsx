@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -14,6 +14,7 @@ import { authErrorSelector } from '../../store/auth/selectors';
 const NoAuthUser = () => {
   const dispatch = useDispatch();
   const isAuthError = useSelector(authErrorSelector);
+  const { lng } = useParams();
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -43,13 +44,13 @@ const NoAuthUser = () => {
         onClose={handleCloseAuthMenu}
       >
         <MenuItem onClick={handleCloseAuthMenu}>
-          <Link to="/login" onClick={handleNoAuthError}>
+          <Link to={`/${lng}/login`} onClick={handleNoAuthError}>
             Login
           </Link>
         </MenuItem>
 
         <MenuItem onClick={handleCloseAuthMenu}>
-          <Link to="/registration" onClick={handleNoAuthError}>
+          <Link to={`/${lng}/registration`} onClick={handleNoAuthError}>
             Registration
           </Link>
         </MenuItem>

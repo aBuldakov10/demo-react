@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
+import { useParams, Navigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 // Files
 import './App.scss';
+import i18n from '../../constants/i18n';
 
 // Firebase
 import { app } from '../../constants/firebase';
@@ -17,13 +19,16 @@ import Footer from '../Footer/Footer';
 import RoutesList from '../../routes/RoutesList';
 
 const App = () => {
-  const auth = getAuth(app);
+  const { lng } = useParams();
   const dispatch = useDispatch();
+  const auth = getAuth(app);
+  const languages = ['en', 'ru'];
 
   useEffect(() => {
-    const locStr = localStorage.getItem('user_state');
+    const locStrUsr = localStorage.getItem('user_state');
+    const sesStrLang = sessionStorage.getItem('lang');
 
-    if (!!locStr) {
+    if (!!locStrUsr) {
       dispatch(userLoggedInState());
 
       onAuthStateChanged(auth, (user) => {
@@ -37,7 +42,16 @@ const App = () => {
         }
       });
     }
+
+    if (!sesStrLang) {
+      sessionStorage.setItem('lang', lng);
+      i18n.changeLanguage(lng);
+    }
   }, []);
+
+  if (!languages.includes(lng)) {
+    return <Navigate to="/ru" />;
+  }
 
   return (
     <>

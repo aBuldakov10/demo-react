@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert, Box, Button, Typography } from '@mui/material';
 import { Field, Form, Formik } from 'formik';
@@ -21,6 +21,7 @@ import Text from '../../components/Form/Text';
 
 const ResetPassword = () => {
   const auth = getAuth(app);
+  const { lng } = useParams();
   const dispatch = useDispatch();
   const isAuthError = useSelector(authErrorSelector);
   const resetPasswordState = useSelector(resetPasswordRequestSelector);
@@ -77,11 +78,11 @@ const ResetPassword = () => {
         )}
 
         <Typography className="login-or-register" variant="body" component="p">
-          <Link to="/login" className="link" onClick={handleNoAuthError}>
+          <Link to={`/${lng}/login`} className="link" onClick={handleNoAuthError}>
             Login
           </Link>{' '}
           or{' '}
-          <Link to="/registration" className="link" onClick={handleNoAuthError}>
+          <Link to={`/${lng}/registration`} className="link" onClick={handleNoAuthError}>
             Register
           </Link>
         </Typography>

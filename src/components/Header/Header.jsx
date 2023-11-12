@@ -12,6 +12,7 @@ import { isAuthUserSelector } from '../../store/auth/selectors';
 // Components
 import Logo from '../Logo/Logo';
 import Navigation from '../Navigation/Navigation';
+import LangSwitcher from '../LangSwitcher/LangSwitcher';
 import IsAuthUser from '../Auth/IsAuthUser';
 import NoAuthUser from '../Auth/NoAuthUser';
 
@@ -24,7 +25,11 @@ const Header = () => {
         <Box className="header-content">
           <Logo />
           <Navigation nav={headerNav} />
-          {loggedIn ? <IsAuthUser /> : <NoAuthUser />}
+
+          <Box>
+            <LangSwitcher />
+            {loggedIn ? <IsAuthUser /> : <NoAuthUser />}
+          </Box>
         </Box>
       </Box>
     </header>

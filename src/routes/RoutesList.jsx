@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, useParams } from 'react-router-dom';
 
 // Store
 import { isAuthUserSelector } from '../store/auth/selectors';
@@ -16,20 +16,20 @@ import Profile from '../pages/Profile/Profile';
 import PageNotFound from '../pages/PageNotFound';
 
 const RoutesList = () => {
+  const { lng } = useParams();
   const loggedIn = useSelector(isAuthUserSelector);
 
   return (
     <Routes>
-      <Route path="/" element={<Navigate to="/demo-react" />} />
-      <Route path="/demo-react" element={<Home />} />
+      <Route path="/" element={<Home />} />
       <Route path="/weather" element={<Weather />} />
       <Route path="/to-do" element={<ToDo />} />
-      <Route path="/login" element={loggedIn ? <Navigate to="/profile" /> : <Login />} />
-      <Route path="/register" element={<Navigate to="/registration" />} />
-      <Route path="/registration" element={loggedIn ? <Navigate to="/profile" /> : <Registration />} />
-      <Route path="/resetPassword" element={loggedIn ? <Navigate to="/profile" /> : <ResetPassword />} />
-      <Route path="/account" element={<Navigate to="/profile" />} />
-      <Route path="/profile" element={loggedIn ? <Profile /> : <Navigate to="/login" />} />
+      <Route path="/login" element={loggedIn ? <Navigate to={`/${lng}/profile`} /> : <Login />} />
+      <Route path="/register" element={<Navigate to={`/${lng}/registration`} />} />
+      <Route path="/registration" element={loggedIn ? <Navigate to={`/${lng}/profile`} /> : <Registration />} />
+      <Route path="/resetPassword" element={loggedIn ? <Navigate to={`/${lng}/profile`} /> : <ResetPassword />} />
+      <Route path="/account" element={<Navigate to={`/${lng}/profile`} />} />
+      <Route path="/profile" element={loggedIn ? <Profile /> : <Navigate to={`/${lng}/login`} />} />
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );

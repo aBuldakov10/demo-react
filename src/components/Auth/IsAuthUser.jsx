@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { IconButton, Avatar, Menu, MenuItem } from '@mui/material';
 
@@ -13,6 +13,7 @@ import { logoutUser } from '../../store/auth/action';
 const IsAuthUser = () => {
   const auth = getAuth(app);
   const dispatch = useDispatch();
+  const { lng } = useParams();
 
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -52,7 +53,7 @@ const IsAuthUser = () => {
         onClose={handleCloseUserMenu}
       >
         <MenuItem onClick={handleCloseUserMenu}>
-          <Link to="/profile">Profile</Link>
+          <Link to={`/${lng}/profile`}>Profile</Link>
         </MenuItem>
 
         <MenuItem onClick={handleLogout}>Logout</MenuItem>

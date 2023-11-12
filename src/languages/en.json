@@ -1,0 +1,57 @@
+{
+  "home": {
+    "device": {
+      "mob": "Mobile version",
+      "tab": "Tablet version",
+      "desk": "Desktop version"
+    }
+  },
+  "timer": {
+    "title": "Time left until the event...",
+    "day": "days",
+    "hours": "hours",
+    "minutes": "minutes",
+    "seconds": "seconds"
+  },
+  "to-do": {
+    "cancel": "Cancel",
+    "validation": {
+      "required": "This field is required",
+      "min": "Title must be at least",
+      "max": "Title must be at most",
+      "characters": "characters"
+    },
+    "task-list": {
+      "title": "To Do list",
+      "no-task": "There are no tasks yet"
+    },
+    "create": {
+      "title": "Create task",
+      "name": "Task name",
+      "name-placeholder": "Enter the task name",
+      "description": "Task description",
+      "description-placeholder": "Enter task description",
+      "button": "Create"
+    },
+    "edit": {
+      "state": "Edited",
+      "tip": "Edit",
+      "title": "Edit task",
+      "name": "New task name",
+      "name-placeholder": "Enter new the task name",
+      "description": "New task description",
+      "description-placeholder": "Enter new task description",
+      "button": "Save"
+    },
+    "delete": {
+      "title": "Are you sure you want to delete task",
+      "name": "The task name:",
+      "tip": "Delete",
+      "button": "Delete"
+    },
+    "done": {
+      "tip-done": "Done",
+      "tip-restore": "Restore"
+    }
+  }
+}

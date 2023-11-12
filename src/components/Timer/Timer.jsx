@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Box, Typography } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 // Files
 import './Timer.scss';
@@ -8,6 +9,7 @@ import { convertTime, initTimerState } from './index';
 const Timer = () => {
   const [timeLeft, setTimeLeft] = useState(initTimerState); // full time left in seconds
   const timerLeftRef = useRef(null);
+  const { t } = useTranslation();
 
   const daysLeft = timeLeft / 60 / 60 / 24; // days left decimal (days)
   const hoursLeftSec = timeLeft / 60 / 60; // full hours left decimal (seconds)
@@ -34,30 +36,30 @@ const Timer = () => {
   }, []);
 
   return (
-    <Box>
-      <Typography variant="h4" component="h4" align={'center'} style={{ fontWeight: 600, marginBottom: '.5em' }}>
-        До события осталось...
+    <Box className="timer-block">
+      <Typography variant="h4" component="h4" align={'center'}>
+        {t('timer.title')}
       </Typography>
 
       <Box className="timer">
         <Box className="timer__item">
           <span className="timer__value days">{convertTime(daysLeft)}</span>
-          <span className="timer__label">дней</span>
+          <span className="timer__label">{t('timer.day')}</span>
         </Box>
 
         <Box className="timer__item">
           <span className="timer__value hours">{convertTime(hoursLeft)}</span>
-          <span className="timer__label">часов</span>
+          <span className="timer__label">{t('timer.hours')}</span>
         </Box>
 
         <Box className="timer__item">
           <span className="timer__value minutes">{convertTime(minutesLeft)}</span>
-          <span className="timer__label">минут</span>
+          <span className="timer__label">{t('timer.minutes')}</span>
         </Box>
 
         <Box className="timer__item">
           <span className="timer__value seconds">{convertTime(secondsLeft)}</span>
-          <span className="timer__label">секунд</span>
+          <span className="timer__label">{t('timer.seconds')}</span>
         </Box>
       </Box>
     </Box>

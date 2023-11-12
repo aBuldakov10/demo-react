@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Typography } from '@mui/material';
 import { Delete, Done, Edit } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 // Files
 import './ToDos.scss';
@@ -13,6 +14,7 @@ import { openDeletePopup, openEditPopup, toggleDoneTask } from '../../store/task
 
 const ToDoList = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const taskList = useSelector(taskListSelector);
 
   return (
@@ -36,7 +38,7 @@ const ToDoList = () => {
 
               {/*** Task info ***/}
               <Typography variant="body1" className="todo-list__task-info">
-                {isEdited && <span style={{ color: '#777' }}>edited</span>}
+                {isEdited && <span style={{ color: '#777' }}>{t('to-do.edit.state')}</span>}
                 <span>{createDate}</span>
               </Typography>
 
@@ -46,7 +48,7 @@ const ToDoList = () => {
                 <Button
                   variant="contained"
                   color={isDoneTask}
-                  title="Done"
+                  title={isDone ? t('to-do.done.tip-restore') : t('to-do.done.tip-done')}
                   onClick={() => doneTask(id).then((taskList) => dispatch(toggleDoneTask(taskList)))}
                 >
                   <Done style={{ fontSize: 'inherit' }} />
@@ -56,7 +58,7 @@ const ToDoList = () => {
                 <Button
                   variant="contained"
                   color="primary"
-                  title="Edit"
+                  title={t('to-do.edit.tip')}
                   disabled={isDone}
                   onClick={() => dispatch(openEditPopup(id, title, description))}
                 >
@@ -67,7 +69,7 @@ const ToDoList = () => {
                 <Button
                   variant="contained"
                   color="delete"
-                  title="Delete"
+                  title={t('to-do.delete.tip')}
                   onClick={() => dispatch(openDeletePopup(id, title))}
                 >
                   <Delete style={{ fontSize: 'inherit' }} />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Typography, Alert } from '@mui/material';
 import { Field, Form, Formik } from 'formik';
@@ -22,6 +22,7 @@ import Password from '../../components/Form/Password';
 
 const Registration = () => {
   const auth = getAuth(app);
+  const { lng } = useParams();
   const dispatch = useDispatch();
   const isAuthError = useSelector(authErrorSelector);
 
@@ -76,7 +77,7 @@ const Registration = () => {
 
           <Typography className="registration-page__have-account" variant="body" component="p">
             Already have account?
-            <Link to="/login" className="link" onClick={() => isAuthError && dispatch(noAuthError())}>
+            <Link to={`/${lng}/login`} className="link" onClick={() => isAuthError && dispatch(noAuthError())}>
               Login
             </Link>
           </Typography>
