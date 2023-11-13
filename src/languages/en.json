@@ -1,4 +1,36 @@
 {
+  "auth": {
+    "validation": {
+      "min": "Title must be at least",
+      "characters": "characters",
+      "required": "This field is required"
+    },
+    "mail": "Email",
+    "mail-placeholder": "Email",
+    "password": "Password",
+    "password-placeholder": "Password",
+    "login": {
+      "title": "Login",
+      "register-msg": "Don't have account?",
+      "register-link": "Register",
+      "forget": "Forget password?",
+      "button": "Login"
+    },
+    "registration": {
+      "title": "Registration",
+      "login-msg": "Already have account?",
+      "login-link": "Login",
+      "button": "Register"
+    },
+    "restore": {
+      "title": "Reset password",
+      "login-link": "Login",
+      "or": "or",
+      "register-link": "Register",
+      "success-msg": "The \"Reset password\" request was sent to your email successfully. Check your email and follow the instruction. Then you can log in with new password. You can create new account also.",
+      "button": "Reset password"
+    }
+  },
   "home": {
     "device": {
       "mob": "Mobile version",

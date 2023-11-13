@@ -1,5 +1,5 @@
 // Create dates
-const endDate = new Date(2023, 11, 1, 0, 0); // end date
+const endDate = new Date(2023, 11, 29, 0, 0); // end date
 const currentDate = new Date(); // current date
 
 // Initial timer state in seconds: 'end date' or 0

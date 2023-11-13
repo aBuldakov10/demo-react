@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert, Box, Button, Typography } from '@mui/material';
 import { Field, Form, Formik } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 // Files
 import './Login.scss';
@@ -23,8 +24,14 @@ import Password from '../../components/Form/Password';
 const Login = () => {
   const auth = getAuth(app);
   const { lng } = useParams();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const isAuthError = useSelector(authErrorSelector);
+
+  // Validation
+  const validationMessages = {
+    required: t('auth.validation.required'),
+  };
 
   /*** Handlers ***/
   const handleNoAuthError = () => isAuthError && dispatch(noAuthError());
@@ -52,41 +59,47 @@ const Login = () => {
   return (
     <Box className="login-page">
       <Typography className="login-page__title" variant="h5" component="h1">
-        Login
+        {t('auth.login.title')}
       </Typography>
 
       <Formik
         initialValues={{ email: '', password: '' }}
-        validationSchema={loginValidation}
+        validationSchema={loginValidation(validationMessages)}
         onSubmit={({ email, password }) => handleLogin(auth, email, password)}
       >
         <Form className="form">
           {isAuthError && <Alert severity="error">{isAuthError}</Alert>}
 
-          <Field id="loginMail" name="email" label="Email" placeholder="Email" component={Text} />
+          <Field
+            id="loginMail"
+            name="email"
+            label={t('auth.mail')}
+            placeholder={t('auth.mail-placeholder')}
+            component={Text}
+          />
 
           <Field
             id="loginPassword"
             className="form__password"
             name="password"
-            label="Password"
-            placeholder="Password"
+            label={t('auth.password')}
+            placeholder={t('auth.password-placeholder')}
             component={Password}
           />
 
           <Button className="btn" type="submit" variant="contained" color="custom">
-            Login
+            {t('auth.login.button')}
           </Button>
 
           <Typography className="login-page__dont-have-account" variant="body" component="p">
-            Don't have account?
+            {t('auth.login.register-msg')}
             <Link to={`/${lng}/registration`} className="link" onClick={handleNoAuthError}>
-              Register
+              {t('auth.login.register-link')}
             </Link>
           </Typography>
 
           <Link to={`/${lng}/resetPassword`} className="login-page__forget-password link" onClick={handleNoAuthError}>
-            Forget password?
+            {t('auth.login.forget')}
           </Link>
         </Form>
       </Formik>

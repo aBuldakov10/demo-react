@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Alert, Box, Button, Typography } from '@mui/material';
 import { Field, Form, Formik } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 // Files
 import './ResetPassword.scss';
@@ -22,10 +23,16 @@ import Text from '../../components/Form/Text';
 const ResetPassword = () => {
   const auth = getAuth(app);
   const { lng } = useParams();
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const isAuthError = useSelector(authErrorSelector);
   const resetPasswordState = useSelector(resetPasswordRequestSelector);
   auth.languageCode = 'ru';
+
+  // Validation
+  const validationMessages = {
+    required: t('auth.validation.required'),
+  };
 
   /*** Handlers ***/
   const handleNoAuthError = () => isAuthError && dispatch(noAuthError());
@@ -50,40 +57,45 @@ const ResetPassword = () => {
   return (
     <Box className="reset-password-page">
       <Typography className="reset-password-page__title" variant="h5" component="h1">
-        Reset password
+        {t('auth.restore.title')}
       </Typography>
 
       <Box className="reset-password-form-wrapper">
         {!resetPasswordState ? (
           <Formik
             initialValues={{ email: '' }}
-            validationSchema={resetPasswordValidation}
+            validationSchema={resetPasswordValidation(validationMessages)}
             onSubmit={({ email }) => handleResetPassword(auth, email)}
           >
             <Form className="form">
               {isAuthError && <Alert severity="error">{isAuthError}</Alert>}
 
-              <Field id="resetPasswordMail" name="email" label="Email" placeholder="Email" component={Text} />
+              <Field
+                id="resetPasswordMail"
+                name="email"
+                label={t('auth.mail')}
+                placeholder={t('auth.mail-placeholder')}
+                component={Text}
+              />
 
               <Button className="btn" type="submit" variant="contained" color="custom">
-                Reset password
+                {t('auth.restore.button')}
               </Button>
             </Form>
           </Formik>
         ) : (
           <Typography className="reset-success" variant="body" component="p">
-            The "Reset password" request was sent to your email successfully. Check your email and follow the
-            instruction. Then you can log in with new password. You can create new account also.
+            {t('auth.restore.success-msg')}
           </Typography>
         )}
 
         <Typography className="login-or-register" variant="body" component="p">
           <Link to={`/${lng}/login`} className="link" onClick={handleNoAuthError}>
-            Login
+            {t('auth.restore.login-link')}
           </Link>{' '}
-          or{' '}
+          {t('auth.restore.or')}{' '}
           <Link to={`/${lng}/registration`} className="link" onClick={handleNoAuthError}>
-            Register
+            {t('auth.restore.register-link')}
           </Link>
         </Typography>
       </Box>
