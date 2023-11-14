@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Language } from '@mui/icons-material';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import i18n from '../../constants/i18n';
+import { useTranslation } from 'react-i18next';
 
 const LangSwitcher = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [anchorElLang, setAnchorElLang] = useState(null);
 
   /*** Handlers ***/
@@ -39,8 +41,8 @@ const LangSwitcher = () => {
       </IconButton>
 
       <Menu id="language-menu" anchorEl={anchorElLang} keepMounted open={!!anchorElLang} onClose={handleCloseLangMenu}>
-        <MenuItem onClick={() => handleChangeLang('ru')}>Ru</MenuItem>
-        <MenuItem onClick={() => handleChangeLang('en')}>En</MenuItem>
+        <MenuItem onClick={() => handleChangeLang('ru')}>{t('lang-switcher.ru')}</MenuItem>
+        <MenuItem onClick={() => handleChangeLang('en')}>{t('lang-switcher.en')}</MenuItem>
       </Menu>
     </>
   );

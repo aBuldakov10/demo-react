@@ -1,4 +1,15 @@
 {
+  "menu": {
+    "home": "Home",
+    "weather": "Weather",
+    "to-do": "To do"
+  },
+
+  "lang-switcher": {
+    "ru": "Ru",
+    "en": "En"
+  },
+
   "auth": {
     "menu": {
       "login": "Login",
