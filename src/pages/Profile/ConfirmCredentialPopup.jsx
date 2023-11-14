@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Dialog, DialogActions, DialogTitle, DialogContent, DialogContentText, Alert } from '@mui/material';
 import { Field, Form, Formik } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 // Files
 import { confirmCredentialValidation } from './validation';
@@ -25,9 +26,16 @@ import Password from '../../components/Form/Password';
 
 const ConfirmCredentialPopup = () => {
   const auth = getAuth(app);
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const isAuthError = useSelector(authErrorSelector);
 
+  // Validation
+  const validationMessages = {
+    required: t('profile.validation.required'),
+  };
+
+  /*** Handlers ***/
   // Custom close confirm popup function
   const handleCloseConfirmPopup = () => {
     isAuthError && dispatch(noAuthError()); // Remove auth error notification if it is
@@ -50,9 +58,9 @@ const ConfirmCredentialPopup = () => {
       .catch((error) => {
         let errorTExt = '';
 
-        if (error.code === AuthErrorCodes.INVALID_EMAIL) errorTExt = 'Invalid email';
-        if (error.code === AuthErrorCodes.INVALID_PASSWORD) errorTExt = 'Wrong password';
-        if (error.code === AuthErrorCodes.USER_MISMATCH) errorTExt = 'The email you entered does not match yours';
+        if (error.code === AuthErrorCodes.INVALID_EMAIL) errorTExt = t('profile.error.mail');
+        if (error.code === AuthErrorCodes.INVALID_PASSWORD) errorTExt = t('profile.error.password');
+        if (error.code === AuthErrorCodes.USER_MISMATCH) errorTExt = t('profile.error.mismatch');
 
         dispatch(authError(errorTExt));
       });
@@ -69,18 +77,15 @@ const ConfirmCredentialPopup = () => {
         initialValues={{ confirmEmail: '', confirmPassword: '' }}
         // Confirmation user mail and password values goes to handleReauthenticate as parameters
         onSubmit={({ confirmEmail, confirmPassword }) => handleReauthenticate(confirmEmail, confirmPassword)}
-        validationSchema={confirmCredentialValidation}
+        validationSchema={confirmCredentialValidation(validationMessages)}
       >
         <Form className="form">
           <DialogTitle id="alert-dialog-title" className="confirm-popup__title">
-            Confirm your credentials
+            {t('profile.confirm-cred.title')}
           </DialogTitle>
 
           <DialogContent sx={{ px: 0 }}>
-            <DialogContentText sx={{ fontSize: 14 }}>
-              If you want to change mail, password or delete account you have to authenticate again. After that can try
-              to change mail, password or delete account again.
-            </DialogContentText>
+            <DialogContentText sx={{ fontSize: 14 }}>{t('profile.confirm-cred.description')}</DialogContentText>
           </DialogContent>
 
           {isAuthError && (
@@ -89,29 +94,41 @@ const ConfirmCredentialPopup = () => {
             </Alert>
           )}
 
-          <Field id="confirmEmailId" name="confirmEmail" label="Email" placeholder="Email" component={Text} />
+          <Field
+            id="confirmEmailId"
+            name="confirmEmail"
+            label={t('profile.mail')}
+            placeholder={t('profile.mail-placeholder')}
+            component={Text}
+          />
           <Field
             id="confirmPasswordId"
             name="confirmPassword"
-            label="Password"
-            placeholder="Password"
+            label={t('profile.new-password')}
+            placeholder={t('profile.new-password-placeholder')}
             component={Password}
           />
 
           <DialogActions className="confirm-popup__actions">
-            <Button variant="contained" color="primary" title="Save task" type="submit" className="btn">
-              Confirm
+            <Button
+              variant="contained"
+              color="primary"
+              title={t('profile.confirm-cred.button')}
+              type="submit"
+              className="btn"
+            >
+              {t('profile.confirm-cred.button')}
             </Button>
 
             <Button
               variant="contained"
               className="btn"
               color="custom"
-              title="Cancel"
+              title={t('profile.cancel')}
               type="button"
               onClick={handleCloseConfirmPopup}
             >
-              Cancel
+              {t('profile.cancel')}
             </Button>
           </DialogActions>
         </Form>

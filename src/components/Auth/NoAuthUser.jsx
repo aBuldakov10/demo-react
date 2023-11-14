@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import { useTranslation } from 'react-i18next';
 
 // Files
 import './Auth.scss';
@@ -15,6 +16,7 @@ const NoAuthUser = () => {
   const dispatch = useDispatch();
   const isAuthError = useSelector(authErrorSelector);
   const { lng } = useParams();
+  const { t } = useTranslation();
 
   const [anchorEl, setAnchorEl] = useState(null);
 
@@ -45,13 +47,13 @@ const NoAuthUser = () => {
       >
         <MenuItem onClick={handleCloseAuthMenu}>
           <Link to={`/${lng}/login`} onClick={handleNoAuthError}>
-            Login
+            {t('auth.menu.login')}
           </Link>
         </MenuItem>
 
         <MenuItem onClick={handleCloseAuthMenu}>
           <Link to={`/${lng}/registration`} onClick={handleNoAuthError}>
-            Registration
+            {t('auth.menu.registration')}
           </Link>
         </MenuItem>
       </Menu>

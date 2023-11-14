@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button } from '@mui/material';
 import { Field, Form, Formik } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 // Files
 import { editProfileValidation } from './validation';
@@ -24,9 +25,18 @@ import Text from '../../components/Form/Text';
 
 const EditProfileForm = () => {
   const auth = getAuth(app);
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const { userName, email } = useSelector(userInfoSelector); // Previous user info values
 
+  // Validation
+  const validationMessages = {
+    required: t('profile.validation.required'),
+    max: t('profile.validation.max'),
+    characters: t('profile.validation.characters'),
+  };
+
+  /*** Handlers ***/
   // Upd user info function
   const handleUpdateProfile = async (newUserName, newEmail) => {
     const newUserInfo = {}; // Create obj for new user info
@@ -44,7 +54,7 @@ const EditProfileForm = () => {
         newUserInfo.newUserMail = newEmail;
         dispatch(updateUserInfo(newUserInfo)); // Update user info in store
         dispatch(toggleEditProfileForm(false)); // Close edit profile form
-        dispatch(profileSuccessMessage('Saved successfully')); // Show success message
+        dispatch(profileSuccessMessage(t('profile.edit-info.success'))); // Show success message
         setTimeout(() => dispatch(profileSuccessMessage()), 5000); // Hide success message
       })
       .catch((error) => dispatch(confirmCredentialPopup(true))); // Show confirm credential popup
@@ -54,28 +64,47 @@ const EditProfileForm = () => {
   return (
     <Formik
       initialValues={{ newUserName: userName, newEmail: email }} // Set previous user info values
-      validationSchema={editProfileValidation}
+      validationSchema={editProfileValidation(validationMessages)}
       // New user info values goes to handleUpdateProfile as parameters
       onSubmit={({ newUserName, newEmail }) => handleUpdateProfile(newUserName, newEmail)}
     >
       <Form className="form edit-profile">
-        <Field id="newUserName" name="newUserName" label="New username" placeholder="New username" component={Text} />
-        <Field id="newEmail" name="newEmail" label="New email" placeholder="New email" component={Text} />
+        <Field
+          id="newUserName"
+          name="newUserName"
+          label={t('profile.new-username')}
+          placeholder={t('profile.new-username-placeholder')}
+          component={Text}
+        />
+
+        <Field
+          id="newEmail"
+          name="newEmail"
+          label={t('profile.new-mail')}
+          placeholder={t('profile.new-mail-placeholder')}
+          component={Text}
+        />
 
         <Box className="edit-profile__action">
-          <Button className="btn" variant="contained" color="primary" title="Save changes" type="submit">
-            Update
+          <Button
+            className="btn"
+            variant="contained"
+            color="primary"
+            title={t('profile.edit-info.confirm-button')}
+            type="submit"
+          >
+            {t('profile.edit-info.confirm-button')}
           </Button>
 
           <Button
             className="btn"
             variant="contained"
             color="custom"
-            title="Cancel"
+            title={t('profile.cancel')}
             type="button"
             onClick={handleToggleEditForm}
           >
-            Cancel
+            {t('profile.cancel')}
           </Button>
         </Box>
       </Form>

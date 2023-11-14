@@ -1,6 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 // Firebase
 import { app } from '../../constants/firebase';
@@ -12,9 +13,11 @@ import { deleteProfilePopupSelector } from '../../store/auth/selectors';
 
 const ConfirmDeleteProfilePopup = () => {
   const auth = getAuth(app);
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const deleteProfilePopupState = useSelector(deleteProfilePopupSelector); // Get delete profile popup state
 
+  /*** Handlers ***/
   const handleCloseDeletePopup = () => dispatch(toggleDeletePopup(false));
   const handleDeleteProfile = () => {
     deleteUser(auth.currentUser)
@@ -37,16 +40,28 @@ const ConfirmDeleteProfilePopup = () => {
       onClose={handleCloseDeletePopup}
     >
       <DialogTitle id="alert-dialog-title" className="delete-popup__title">
-        Are you sure you want to delete your account?
+        {t('profile.delete.confirm-delete')}
       </DialogTitle>
 
       <DialogActions className="delete-popup__actions">
-        <Button className="btn" variant="contained" color="delete" title="Delete" onClick={handleDeleteProfile}>
-          Delete
+        <Button
+          className="btn"
+          variant="contained"
+          color="delete"
+          title={t('profile.delete.button')}
+          onClick={handleDeleteProfile}
+        >
+          {t('profile.delete.button')}
         </Button>
 
-        <Button className="btn" variant="contained" color="custom" title="Cancel" onClick={handleCloseDeletePopup}>
-          Cancel
+        <Button
+          className="btn"
+          variant="contained"
+          color="custom"
+          title={t('profile.cancel')}
+          onClick={handleCloseDeletePopup}
+        >
+          {t('profile.cancel')}
         </Button>
       </DialogActions>
     </Dialog>

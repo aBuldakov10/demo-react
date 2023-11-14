@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { IconButton, Avatar, Menu, MenuItem } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 // Firebase
 import { app } from '../../constants/firebase';
@@ -14,6 +15,7 @@ const IsAuthUser = () => {
   const auth = getAuth(app);
   const dispatch = useDispatch();
   const { lng } = useParams();
+  const { t } = useTranslation();
 
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -53,10 +55,10 @@ const IsAuthUser = () => {
         onClose={handleCloseUserMenu}
       >
         <MenuItem onClick={handleCloseUserMenu}>
-          <Link to={`/${lng}/profile`}>Profile</Link>
+          <Link to={`/${lng}/profile`}>{t('auth.menu.profile')}</Link>
         </MenuItem>
 
-        <MenuItem onClick={handleLogout}>Logout</MenuItem>
+        <MenuItem onClick={handleLogout}>{t('auth.menu.logout')}</MenuItem>
       </Menu>
     </>
   );

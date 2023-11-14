@@ -4,6 +4,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { Avatar, Box, Button, Divider, Typography, Alert } from '@mui/material';
 import { Email } from '@mui/icons-material';
 import { Field, Form, Formik } from 'formik';
+import { useTranslation } from 'react-i18next';
 
 // Files
 import './Profile.scss';
@@ -37,6 +38,7 @@ import EditProfileForm from './EditProfileForm';
 
 const Profile = () => {
   const auth = getAuth(app);
+  const { t } = useTranslation();
   const dispatch = useDispatch();
   const editProfileFormState = useSelector(editProfileFormSelector); // Get edit profile form state
   const deleteProfilePopupState = useSelector(deleteProfilePopupSelector); // Get delete profile popup state
@@ -45,6 +47,13 @@ const Profile = () => {
   const confirmCredentialPopupState = useSelector(confirmCredentialPopupSelector); // Get confirm credential popup state
   const confirmCredentialSuccessMessageState = useSelector(confirmCredentialSuccessMessageSelector); // Get credential success message state
   const createdAccountDate = new Date(+createdAt).toLocaleDateString(); // Get create account date
+
+  // Validation
+  const validationMessages = {
+    required: t('profile.validation.required'),
+    min: t('profile.validation.min'),
+    characters: t('profile.validation.characters'),
+  };
 
   /*** Handlers ***/
   const handleChangePassword = async (newPassword) => {
@@ -67,7 +76,7 @@ const Profile = () => {
             <Avatar className="profile__sidebar-avatar">B</Avatar>
 
             <Typography className="profile__sidebar-info" variant="body" component="p">
-              Account created at {createdAccountDate}
+              {t('profile.created')} {createdAccountDate}
             </Typography>
           </Box>
         </Grid>
@@ -78,7 +87,7 @@ const Profile = () => {
             {/*** Credential success message ***/}
             {confirmCredentialSuccessMessageState && (
               <Alert className="profile__content-alert" severity="success">
-                Confirm credential success
+                {t('profile.confirm-cred.notify')}
               </Alert>
             )}
 
@@ -91,7 +100,7 @@ const Profile = () => {
 
             {/*** Authenticate message ***/}
             <Alert className="profile__content-alert" variant="outlined" severity="info">
-              To edit profile and change password you may have to authenticate again.
+              {t('profile.warning')}
             </Alert>
 
             {/*** User info or update info form ***/}
@@ -112,10 +121,10 @@ const Profile = () => {
                   className="btn user-info__edit-btn"
                   variant="contained"
                   color="custom"
-                  title="Edit user info"
+                  title={t('profile.edit-info.button')}
                   onClick={handleToggleEditForm}
                 >
-                  Edit profile
+                  {t('profile.edit-info.button')}
                 </Button>
               </Box>
             )}
@@ -125,16 +134,16 @@ const Profile = () => {
             {/*** Change password ***/}
             <Box className="profile__content-item">
               <Typography className="profile__content-title" variant="body" component="p">
-                Change password
+                {t('profile.change-pass.title')}
               </Typography>
 
               <Typography className="profile__content-subtitle" variant="body" component="p">
-                Enter new password. You may have to authenticate again for security reasons.
+                {t('profile.change-pass.description')}
               </Typography>
 
               <Formik
                 initialValues={{ newPassword: '' }}
-                validationSchema={changePasswordValidation}
+                validationSchema={changePasswordValidation(validationMessages)}
                 onSubmit={({ newPassword }, { resetForm }) => handleChangePassword(newPassword).then(() => resetForm())}
               >
                 <Form className="form change-password-form">
@@ -142,12 +151,18 @@ const Profile = () => {
                     id="newPassword"
                     className="form__password"
                     name="newPassword"
-                    label="New password"
-                    placeholder="New password"
+                    label={t('profile.new-password')}
+                    placeholder={t('profile.new-password-placeholder')}
                     component={Password}
                   />
-                  <Button className="btn" type="submit" variant="contained" color="custom">
-                    Update password
+                  <Button
+                    className="btn"
+                    type="submit"
+                    title={t('profile.change-pass.button')}
+                    variant="contained"
+                    color="custom"
+                  >
+                    {t('profile.change-pass.button')}
                   </Button>
                 </Form>
               </Formik>
@@ -158,16 +173,21 @@ const Profile = () => {
             {/*** Delete account ***/}
             <Box className="profile__content-item">
               <Typography className="profile__content-title" color="error" variant="body" component="p">
-                Delete account
+                {t('profile.delete.title')}
               </Typography>
 
               <Typography className="profile__content-subtitle" variant="body" component="p">
-                Once you delete your account, there is no going back. Please be certain. You may have to authenticate
-                again for security reasons.
+                {t('profile.delete.description')}
               </Typography>
 
-              <Button className="btn" variant="contained" color="error" onClick={handleDeletePopup}>
-                Delete
+              <Button
+                className="btn"
+                variant="contained"
+                title={t('profile.delete.button')}
+                color="error"
+                onClick={handleDeletePopup}
+              >
+                {t('profile.delete.button')}
               </Button>
             </Box>
           </Box>

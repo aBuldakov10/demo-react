@@ -48,9 +48,9 @@ const Login = () => {
       .catch((error) => {
         let errorTExt = '';
 
-        if (error.code === AuthErrorCodes.INVALID_EMAIL) errorTExt = 'Invalid email';
-        if (error.code === AuthErrorCodes.INVALID_PASSWORD) errorTExt = 'Wrong password';
-        if (error.code === AuthErrorCodes.USER_DELETED) errorTExt = 'User not found. Enter correct email or register';
+        if (error.code === AuthErrorCodes.INVALID_EMAIL) errorTExt = t('auth.error.mail');
+        if (error.code === AuthErrorCodes.INVALID_PASSWORD) errorTExt = t('auth.error.password');
+        if (error.code === AuthErrorCodes.USER_DELETED) errorTExt = t('auth.error.no-user');
 
         dispatch(authError(errorTExt));
       });

@@ -48,8 +48,8 @@ const Registration = () => {
       .catch((error) => {
         let errorTExt = '';
 
-        if (error.code === AuthErrorCodes.EMAIL_EXISTS) errorTExt = 'Email already in use';
-        if (error.code === AuthErrorCodes.INVALID_EMAIL) errorTExt = 'Invalid email';
+        if (error.code === AuthErrorCodes.EMAIL_EXISTS) errorTExt = t('auth.error.exist');
+        if (error.code === AuthErrorCodes.INVALID_EMAIL) errorTExt = t('auth.error.mail');
 
         dispatch(authError(errorTExt));
       });

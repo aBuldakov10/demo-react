@@ -1,9 +1,21 @@
 {
   "auth": {
+    "menu": {
+      "login": "Login",
+      "registration": "Registration",
+      "profile": "Profile",
+      "logout": "Logout"
+    },
     "validation": {
       "min": "Title must be at least",
       "characters": "characters",
       "required": "This field is required"
+    },
+    "error": {
+      "mail": "Invalid email",
+      "password": "Wrong password",
+      "no-user": "User not found. Enter correct email or register",
+      "exist": "Email already in use"
     },
     "mail": "Email",
     "mail-placeholder": "Email",
@@ -31,6 +43,7 @@
       "button": "Reset password"
     }
   },
+
   "home": {
     "device": {
       "mob": "Mobile version",
@@ -38,6 +51,7 @@
       "desk": "Desktop version"
     }
   },
+
   "timer": {
     "title": "Time left until the event...",
     "day": "days",
@@ -45,6 +59,7 @@
     "minutes": "minutes",
     "seconds": "seconds"
   },
+
   "to-do": {
     "cancel": "Cancel",
     "validation": {
@@ -84,6 +99,55 @@
     "done": {
       "tip-done": "Done",
       "tip-restore": "Restore"
+    }
+  },
+
+  "profile": {
+    "cancel": "Cancel",
+    "created": "Account created at",
+    "warning": "To edit profile and change password you may have to authenticate again.",
+    "new-username": "New username",
+    "new-username-placeholder": "New username",
+    "mail": "Email",
+    "mail-placeholder": "Email",
+    "new-mail": "New email",
+    "new-mail-placeholder": "New email",
+    "password": "Password",
+    "password-placeholder": "Password",
+    "new-password": "New password",
+    "new-password-placeholder": "New password",
+    "validation": {
+      "min": "Password must be at least",
+      "max": "Username must be at most",
+      "characters": "characters",
+      "required": "This field is required"
+    },
+    "error": {
+      "mail": "Invalid email",
+      "password": "Wrong password",
+      "mismatch": "The email you entered does not match yours"
+    },
+    "confirm-cred": {
+      "notify": "Confirm credential success",
+      "title": "Confirm your credentials",
+      "description": "If you want to change mail, password or delete account you have to authenticate again. After that can try to change mail, password or delete account again.",
+      "button": "Confirm"
+    },
+    "edit-info": {
+      "success": "Saved successfully",
+      "button": "Edit profile",
+      "confirm-button": "Update"
+    },
+    "change-pass": {
+      "title": "Change password",
+      "description": "Enter new password. You may have to authenticate again for security reasons.",
+      "button": "Update password"
+    },
+    "delete": {
+      "title": "Delete account",
+      "confirm-delete": "Are you sure you want to delete your account?",
+      "description": "Once you delete your account, there is no going back. Please be certain. You may have to authenticate again for security reasons.",
+      "button": "Delete"
     }
   }
 }
