@@ -1,7 +1,8 @@
 export const cities = [
   {
     id: 524894,
-    name: 'Moscow',
+    nameRu: 'Москва',
+    nameEn: 'Moscow',
     state: '',
     country: 'RU',
     coord: {
@@ -11,7 +12,8 @@ export const cities = [
   },
   {
     id: 1496747,
-    name: 'Novosibirsk',
+    nameRu: 'Новосибирск',
+    nameEn: 'Novosibirsk',
     state: '',
     country: 'RU',
     coord: {
@@ -21,7 +23,8 @@ export const cities = [
   },
   {
     id: 524305,
-    name: 'Murmansk',
+    nameRu: 'Мурманск',
+    nameEn: 'Murmansk',
     state: '',
     country: 'RU',
     coord: {
@@ -31,7 +34,8 @@ export const cities = [
   },
   {
     id: 2950159,
-    name: 'Berlin',
+    nameRu: 'Берлин',
+    nameEn: 'Berlin',
     state: '',
     country: 'DE',
     coord: {
@@ -41,7 +45,8 @@ export const cities = [
   },
   {
     id: 360630,
-    name: 'Cairo',
+    nameRu: 'Каир',
+    nameEn: 'Cairo',
     state: '',
     country: 'EG',
     coord: {
@@ -51,7 +56,8 @@ export const cities = [
   },
   {
     id: 1816670,
-    name: 'Beijing',
+    nameRu: 'Пекин',
+    nameEn: 'Beijing',
     state: '',
     country: 'CN',
     coord: {
@@ -61,7 +67,8 @@ export const cities = [
   },
   {
     id: 1275339,
-    name: 'Mumbai',
+    nameRu: 'Мумбай',
+    nameEn: 'Mumbai',
     state: '',
     country: 'IN',
     coord: {
@@ -71,7 +78,8 @@ export const cities = [
   },
   {
     id: 2147714,
-    name: 'Sydney',
+    nameRu: 'Сидней',
+    nameEn: 'Sydney',
     state: '',
     country: 'AU',
     coord: {
@@ -81,7 +89,8 @@ export const cities = [
   },
   {
     id: 5368361,
-    name: 'Los Angeles',
+    nameRu: 'Лос-Анджелес',
+    nameEn: 'Los Angeles',
     state: 'CA',
     country: 'US',
     coord: {
@@ -91,7 +100,8 @@ export const cities = [
   },
   {
     id: 3451190,
-    name: 'Rio de Janeiro',
+    nameRu: 'Рио-де-Жанейро',
+    nameEn: 'Rio de Janeiro',
     state: '',
     country: 'BR',
     coord: {

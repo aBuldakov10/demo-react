@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Grid from '@mui/material/Unstable_Grid2';
 import { Box } from '@mui/material';
@@ -22,16 +23,17 @@ import YaMap from '../../components/YaMap/YaMap';
 
 const Weather = () => {
   const dispatch = useDispatch();
+  const { lng } = useParams();
   const loader = useSelector(weatherLoader);
   const { activeCityId } = useSelector(activeCitySelector);
   const { isLocation } = useSelector(locationDataSelector);
 
   useEffect(() => {
-    fetchWeather(activeCityId).then((cityWeather) => {
+    fetchWeather(activeCityId, lng).then((cityWeather) => {
       dispatch(getWeatherCity(cityWeather));
       dispatch(weatherLoaded());
     });
-  }, [activeCityId]);
+  }, [activeCityId, lng]);
 
   return (
     <Box sx={{ py: 2 }}>

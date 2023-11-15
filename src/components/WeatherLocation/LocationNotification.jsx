@@ -1,11 +1,13 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Alert, AlertTitle, Box, Divider } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 
 // Files
 import { cityWeatherSelector, locationDataSelector } from '../../store/weather/selectors';
 
 const LocationNotification = () => {
+  const { t } = useTranslation();
   const { name } = useSelector(cityWeatherSelector);
   const { coordinates, errorMessage, enabledInBrowser } = useSelector(locationDataSelector);
 
@@ -15,14 +17,15 @@ const LocationNotification = () => {
 
       {enabledInBrowser ? (
         <Alert severity="info" variant="outlined" sx={{ backgroundColor: '#fff' }}>
-          <AlertTitle>Notification</AlertTitle>
-          Your location is: latitude <strong>{coordinates.lat}</strong> and longitude <strong>{coordinates.lon}</strong>
-          . The nearest weather data location is <strong>{name}</strong>.
+          <AlertTitle>{t('weather.location.title-enabled')}</AlertTitle>
+          {t('weather.location.enabled-msg-start')} {t('weather.location.lat')} <strong>{coordinates.lat}</strong>{' '}
+          {t('weather.location.lon')} <strong>{coordinates.lon}</strong>. {t('weather.location.enabled-msg-end')}{' '}
+          <strong>{name}</strong>.
         </Alert>
       ) : (
         <Alert severity="warning" variant="outlined" sx={{ backgroundColor: '#fff' }}>
-          <AlertTitle>{errorMessage}</AlertTitle>
-          You should to enable geolocation in your browser to see your weather location data
+          <AlertTitle>{t('weather.location.title-disabled')}</AlertTitle>
+          {t('weather.location.disabled-msg')}
         </Alert>
       )}
     </Box>

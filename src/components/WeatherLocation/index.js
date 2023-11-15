@@ -1,7 +1,7 @@
 import { fetchLocationWeather } from './api';
 
 /*** Fetch current location weather ***/
-export const chooseMyCity = async () => {
+export const chooseMyCity = async (lang) => {
   const geolocationResult = await new Promise((resolve) => {
     navigator.geolocation.getCurrentPosition(
       ({ coords }) => {
@@ -9,6 +9,7 @@ export const chooseMyCity = async () => {
         const coord = {
           lat: coords.latitude,
           lon: coords.longitude,
+          lng: lang,
         };
 
         resolve(coord);

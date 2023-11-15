@@ -4,8 +4,8 @@ export const apiDomain = 'https://api.openweathermap.org/data/2.5';
 export const weatherIconUrl = 'http://openweathermap.org/img';
 
 /*** Get weather data by city id ***/
-export const fetchWeather = async (cityId) => {
-  const apiRequest = `${apiDomain}/weather?id=${cityId}&appid=${apiKey}&units=metric`;
+export const fetchWeather = async (cityId, lng) => {
+  const apiRequest = `${apiDomain}/weather?id=${cityId}&appid=${apiKey}&lang=${lng}&units=metric`;
   const data = await fetch(apiRequest);
 
   return await data.json();

@@ -1,7 +1,9 @@
 import React from 'react';
+import { useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { Button } from '@mui/material';
 import { LocationOn } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 // Files
 import './WeatherLocation.scss';
@@ -12,6 +14,8 @@ import { disabledLocation, getWeatherLocation, weatherLoaded, weatherLoading } f
 
 const LocationButton = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+  const { lng } = useParams();
 
   return (
     <Button
@@ -24,7 +28,7 @@ const LocationButton = () => {
 
         // Get location error or location data if enabled
         // Return object with location data - id, coords, weather
-        const locationData = await chooseMyCity();
+        const locationData = await chooseMyCity(lng);
 
         // Disabled location
         if (locationData.enabledInBrowser === false) {
@@ -41,7 +45,7 @@ const LocationButton = () => {
         dispatch(weatherLoaded());
       }}
     >
-      My location
+      {t('weather.location.button')}
     </Button>
   );
 };

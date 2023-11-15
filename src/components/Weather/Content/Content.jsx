@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Box, Divider, Typography } from '@mui/material';
 import { AccessTime, Air, ExploreOutlined, Opacity, RemoveRedEyeOutlined, SouthOutlined } from '@mui/icons-material';
+import { useTranslation } from 'react-i18next';
 
 // Files
 import './Content.scss';
@@ -13,8 +14,12 @@ import { weatherIconUrl } from '../../../pages/Weather/api';
 import { cityWeatherSelector } from '../../../store/weather/selectors';
 
 const Content = () => {
+  const { t } = useTranslation();
   const { name, dt, weather, main, clouds, sys, wind, visibility } = useSelector(cityWeatherSelector);
-  const visibleDistance = visibility >= 1000 ? `${visibility / 1000} km` : `${visibility} m`;
+  const visibleDistance =
+    visibility >= 1000
+      ? `${visibility / 1000} ${t('weather.visible-unit-km')}`
+      : `${visibility} ${t('weather.visible-unit-m')}`;
 
   return (
     <Box className="weather-content">
@@ -30,8 +35,12 @@ const Content = () => {
           <AccessTime />
 
           <Box>
-            <time>current: {getTime()}</time>
-            <time>data calculation: {getTime(dt)}</time>
+            <time>
+              {t('weather.current-time')} {getTime()}
+            </time>
+            <time>
+              {t('weather.data-calc')} {getTime(dt)}
+            </time>
           </Box>
         </Box>
 
@@ -41,7 +50,7 @@ const Content = () => {
 
           return (
             <span key={id} style={{ fontSize: 14 }}>
-              Description: {description}
+              {t('weather.weather-desc')} {description}
             </span>
           );
         })}
@@ -67,17 +76,24 @@ const Content = () => {
 
           <Box className="weather-feels">
             <div style={{ fontSize: 22 }}>
-              Feels like <span style={{ fontWeight: 'bolder' }}>{Math.round(main.feels_like)} &#8451;</span>
+              {t('weather.feels-like')}{' '}
+              <span style={{ fontWeight: 'bolder' }}>{Math.round(main.feels_like)} &#8451;</span>
             </div>
 
-            <div style={{ fontSize: 14 }}>Clouds {clouds.all} %</div>
+            <div style={{ fontSize: 14 }}>
+              {t('weather.clouds')} {clouds.all} %
+            </div>
           </Box>
         </Box>
 
         {/* Sun */}
         <Box>
-          <div>Sunrise: {getTime(sys.sunrise)}</div>
-          <div>Sunset: {getTime(sys.sunset)}</div>
+          <div>
+            {t('weather.sunrise')} {getTime(sys.sunrise)}
+          </div>
+          <div>
+            {t('weather.sunset')} {getTime(sys.sunset)}
+          </div>
         </Box>
       </Box>
 
@@ -91,8 +107,14 @@ const Content = () => {
             <Air />
 
             <Box>
-              <div>speed: {wind.speed} m/s</div>
-              {wind.gust && <div>gust: {wind.gust} m/s</div>}
+              <div>
+                {t('weather.speed')} {wind.speed} {t('weather.wind-unit')}
+              </div>
+              {wind.gust && (
+                <div>
+                  {t('weather.gust')} {wind.gust} {t('weather.wind-unit')}
+                </div>
+              )}
             </Box>
           </Box>
 
@@ -113,7 +135,7 @@ const Content = () => {
 
         {/* Pressure */}
         <Box className="weather-informers__item" title="pressure">
-          <ExploreOutlined /> {Math.round(main.pressure / 1.333)} mmHg
+          <ExploreOutlined /> {Math.round(main.pressure / 1.333)} {t('weather.pressure-unit')}
         </Box>
       </Box>
     </Box>
