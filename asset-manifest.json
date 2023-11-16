@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.css": "/demo-react/static/css/main.0a16e77a.css",
-    "main.js": "/demo-react/static/js/main.92725035.js",
+    "main.css": "/demo-react/static/css/main.3e3d180f.css",
+    "main.js": "/demo-react/static/js/main.b44bc7b1.js",
     "static/media/weather-bg.jpg": "/demo-react/static/media/weather-bg.9eabdc2256eb44e43379.jpg",
     "static/media/logo.jpg": "/demo-react/static/media/logo.98c4f5fa275a5ec5a4ab.jpg",
     "static/media/montserrat-regular.woff": "/demo-react/static/media/montserrat-regular.281179d375517d9c131b.woff",
     "static/media/montserrat-regular.woff2": "/demo-react/static/media/montserrat-regular.acb6629fe45c43ad5d8b.woff2",
     "index.html": "/demo-react/index.html",
-    "main.0a16e77a.css.map": "/demo-react/static/css/main.0a16e77a.css.map",
-    "main.92725035.js.map": "/demo-react/static/js/main.92725035.js.map"
+    "main.3e3d180f.css.map": "/demo-react/static/css/main.3e3d180f.css.map",
+    "main.b44bc7b1.js.map": "/demo-react/static/js/main.b44bc7b1.js.map"
   },
   "entrypoints": [
-    "static/css/main.0a16e77a.css",
-    "static/js/main.92725035.js"
+    "static/css/main.3e3d180f.css",
+    "static/js/main.b44bc7b1.js"
   ]
 }
