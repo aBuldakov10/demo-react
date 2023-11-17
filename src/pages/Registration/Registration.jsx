@@ -18,6 +18,7 @@ import { authError, loginUser, noAuthError } from '../../store/auth/action';
 import { authErrorSelector } from '../../store/auth/selectors';
 
 // Components
+import HeadPage from '../../components/HeadPage';
 import Text from '../../components/Form/Text';
 import Password from '../../components/Form/Password';
 
@@ -33,6 +34,14 @@ const Registration = () => {
     required: t('auth.validation.required'),
     min: t('auth.validation.min'),
     characters: t('auth.validation.characters'),
+  };
+
+  // Page head meta data
+  const pageHeadData = {
+    title: t('auth.registration.page.title'),
+    description: t('auth.registration.page.description'),
+    keywords: t('auth.registration.page.keywords'),
+    bodyAttributes: { class: 'registration-page' },
   };
 
   /*** Handlers ***/
@@ -56,8 +65,11 @@ const Registration = () => {
   };
 
   return (
-    <Box className="registration-page">
-      <Typography className="registration-page__title" variant="h5" component="h1">
+    <Box className="registration">
+      {/*** Head ***/}
+      <HeadPage headPageData={pageHeadData} />
+
+      <Typography className="registration__title" variant="h5" component="h1">
         {t('auth.registration.title')}
       </Typography>
 
@@ -90,7 +102,7 @@ const Registration = () => {
             {t('auth.registration.button')}
           </Button>
 
-          <Typography className="registration-page__have-account" variant="body" component="p">
+          <Typography className="registration__have-account" variant="body" component="p">
             {t('auth.registration.login-msg')}
             <Link to={`/${lng}/login`} className="link" onClick={() => isAuthError && dispatch(noAuthError())}>
               {t('auth.registration.login-link')}

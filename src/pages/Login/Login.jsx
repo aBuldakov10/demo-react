@@ -18,6 +18,7 @@ import { authError, loginUser, noAuthError } from '../../store/auth/action';
 import { authErrorSelector } from '../../store/auth/selectors';
 
 // Components
+import HeadPage from '../../components/HeadPage';
 import Text from '../../components/Form/Text';
 import Password from '../../components/Form/Password';
 
@@ -27,6 +28,14 @@ const Login = () => {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const isAuthError = useSelector(authErrorSelector);
+
+  // Page head meta data
+  const pageHeadData = {
+    title: t('auth.login.page.title'),
+    description: t('auth.login.page.description'),
+    keywords: t('auth.login.page.keywords'),
+    bodyAttributes: { class: 'login-page' },
+  };
 
   // Validation
   const validationMessages = {
@@ -57,8 +66,11 @@ const Login = () => {
   };
 
   return (
-    <Box className="login-page">
-      <Typography className="login-page__title" variant="h5" component="h1">
+    <Box className="login">
+      {/*** Head ***/}
+      <HeadPage headPageData={pageHeadData} />
+
+      <Typography className="login__title" variant="h5" component="h1">
         {t('auth.login.title')}
       </Typography>
 
@@ -91,14 +103,14 @@ const Login = () => {
             {t('auth.login.button')}
           </Button>
 
-          <Typography className="login-page__dont-have-account" variant="body" component="p">
+          <Typography className="login__dont-have-account" variant="body" component="p">
             {t('auth.login.register-msg')}
             <Link to={`/${lng}/registration`} className="link" onClick={handleNoAuthError}>
               {t('auth.login.register-link')}
             </Link>
           </Typography>
 
-          <Link to={`/${lng}/resetPassword`} className="login-page__forget-password link" onClick={handleNoAuthError}>
+          <Link to={`/${lng}/resetPassword`} className="login__forget-password link" onClick={handleNoAuthError}>
             {t('auth.login.forget')}
           </Link>
         </Form>

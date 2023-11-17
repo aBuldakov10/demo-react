@@ -13,6 +13,7 @@ import { getTasks, loaded } from '../../store/tasks/actions';
 import { taskListSelector, taskLoaderSelector } from '../../store/tasks/selectors';
 
 // Components
+import HeadPage from '../../components/HeadPage';
 import ToDoList from '../../components/ToDos/ToDoList';
 import CreateToDoTask from '../../components/ToDos/CreateToDoTask';
 import DeleteToDoTask from '../../components/ToDos/DeleteToDoTask';
@@ -25,6 +26,14 @@ const ToDo = () => {
   const loader = useSelector(taskLoaderSelector);
   const taskList = useSelector(taskListSelector);
 
+  // Page head meta data
+  const pageHeadData = {
+    title: t('to-do.page.title'),
+    description: t('to-do.page.description'),
+    keywords: t('to-do.page.keywords'),
+    bodyAttributes: { class: 'to-do-page' },
+  };
+
   // Set task list state on load page
   useEffect(() => {
     getTask().then((taskList) => {
@@ -35,6 +44,9 @@ const ToDo = () => {
 
   return (
     <Box className="to-do" sx={{ py: 2 }}>
+      {/*** Head ***/}
+      <HeadPage headPageData={pageHeadData} />
+
       <Grid container spacing={4}>
         <Grid item xs={12} md={6} lg={8}>
           {/*** Task list title ***/}

@@ -6,7 +6,9 @@ Used **MUI** for styling without adaptive and minimum SCSS.\
 Used **Formik** and **Yup** for validation forms\
 Used **Redux**, **Redux-thunk** for state managing\
 Used **Firebase** as backend for authenticate\
-Used **i18n** for internationalization
+Used **i18n** for internationalization\
+Used **react-helmet** for change head pages data for more
+friendly SEO
 
 Has 2 branches: **'master'** and **'app-context'**\
 **Weather** and **ToDo** pages with using 

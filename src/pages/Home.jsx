@@ -3,6 +3,7 @@ import { Typography, Box } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 // Components
+import HeadPage from '../components/HeadPage';
 import Timer from '../components/Timer/Timer';
 
 // Hooks
@@ -11,6 +12,14 @@ import useMedia from '../hooks/useMedia';
 const Home = () => {
   const h2ref = useRef(null);
   const { t } = useTranslation();
+
+  // Page head meta data
+  const pageHeadData = {
+    title: t('home.page.title'),
+    description: t('home.page.description'),
+    keywords: t('home.page.keywords'),
+    bodyAttributes: { class: 'main-page' },
+  };
 
   // при загрузке страницы фокус на элементе h2ref не зависимо от количества контента
   // не корректно работает при SPA
@@ -25,6 +34,9 @@ const Home = () => {
 
   return (
     <Box sx={{ py: 2 }} ref={h2ref}>
+      {/*** Head ***/}
+      <HeadPage headPageData={pageHeadData} />
+
       <Typography variant="h6" component="p" align={'center'} style={{ fontWeight: 600 }}>
         {small && t('home.device.mob')}
         {medium && t('home.device.tab')}

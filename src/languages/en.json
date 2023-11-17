@@ -33,6 +33,11 @@
     "password": "Password",
     "password-placeholder": "Password",
     "login": {
+      "page": {
+        "title": "Login",
+        "description": "Login page to get and edit user account data",
+        "keywords": "login page"
+      },
       "title": "Login",
       "register-msg": "Don't have account?",
       "register-link": "Register",
@@ -40,12 +45,22 @@
       "button": "Login"
     },
     "registration": {
+      "page": {
+        "title": "Registration",
+        "description": "Registration page for create new user",
+        "keywords": "registration page"
+      },
       "title": "Registration",
       "login-msg": "Already have account?",
       "login-link": "Login",
       "button": "Register"
     },
     "restore": {
+      "page": {
+        "title": "Reset password",
+        "description": "Restore password page for reset password if user forget it",
+        "keywords": "restore password page"
+      },
       "title": "Reset password",
       "login-link": "Login",
       "or": "or",
@@ -56,6 +71,11 @@
   },
 
   "home": {
+    "page": {
+      "title": "Main page",
+      "description": "Main page. Demonstration of different functionality",
+      "keywords": "device detect, timer"
+    },
     "device": {
       "mob": "Mobile version",
       "tab": "Tablet version",
@@ -72,6 +92,11 @@
   },
 
   "weather": {
+    "page": {
+      "title": "Weather page",
+      "description": "Weather page. Getting weather data for different cities and current location with map",
+      "keywords": "weather, weather location, cities, map"
+    },
     "current-time": "Current:",
     "data-calc": "Data calculation:",
     "weather-desc": "Description:",
@@ -98,6 +123,11 @@
   },
 
   "to-do": {
+    "page": {
+      "title": "To do page",
+      "description": "To do page. Create, edit, delete tasks, mark as done",
+      "keywords": "tasks, create/delete/edit tasks"
+    },
     "cancel": "Cancel",
     "validation": {
       "required": "This field is required",
@@ -140,6 +170,11 @@
   },
 
   "profile": {
+    "page": {
+      "title": "Profile",
+      "description": "Profile page. User data",
+      "keywords": "profile, user data"
+    },
     "cancel": "Cancel",
     "created": "Account created at",
     "warning": "To edit profile and change password you may have to authenticate again.",
@@ -188,5 +223,12 @@
     }
   },
 
-  "no-page": "Page not found"
+  "no-page": {
+    "page": {
+      "title": "Page not found",
+      "description": "Page not found. Incorrect page",
+      "keywords": "page not found"
+    },
+    "title": "Page not found"
+  }
 }

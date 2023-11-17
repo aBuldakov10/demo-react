@@ -31,6 +31,7 @@ import {
 } from '../../store/auth/selectors';
 
 // Components
+import HeadPage from '../../components/HeadPage';
 import Password from '../../components/Form/Password';
 import ConfirmCredentialPopup from './ConfirmCredentialPopup';
 import ConfirmDeleteProfilePopup from './ConfirmDeleteProfilePopup';
@@ -47,6 +48,14 @@ const Profile = () => {
   const confirmCredentialPopupState = useSelector(confirmCredentialPopupSelector); // Get confirm credential popup state
   const confirmCredentialSuccessMessageState = useSelector(confirmCredentialSuccessMessageSelector); // Get credential success message state
   const createdAccountDate = new Date(+createdAt).toLocaleDateString(); // Get create account date
+
+  // Page head meta data
+  const pageHeadData = {
+    title: t('profile.page.title'),
+    description: t('profile.page.description'),
+    keywords: t('profile.page.keywords'),
+    bodyAttributes: { class: 'profile-page' },
+  };
 
   // Validation
   const validationMessages = {
@@ -69,6 +78,9 @@ const Profile = () => {
 
   return (
     <Box sx={{ py: 3 }} className="profile">
+      {/*** Head ***/}
+      <HeadPage headPageData={pageHeadData} />
+
       <Grid container spacing={4}>
         {/*** Profile sidebar ***/}
         <Grid item xs={12} md={4}>

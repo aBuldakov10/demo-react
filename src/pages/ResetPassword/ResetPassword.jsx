@@ -18,6 +18,7 @@ import { authError, noAuthError, resetPassword } from '../../store/auth/action';
 import { authErrorSelector, resetPasswordRequestSelector } from '../../store/auth/selectors';
 
 // Components
+import HeadPage from '../../components/HeadPage';
 import Text from '../../components/Form/Text';
 
 const ResetPassword = () => {
@@ -28,6 +29,14 @@ const ResetPassword = () => {
   const isAuthError = useSelector(authErrorSelector);
   const resetPasswordState = useSelector(resetPasswordRequestSelector);
   auth.languageCode = 'ru';
+
+  // Page head meta data
+  const pageHeadData = {
+    title: t('auth.restore.page.title'),
+    description: t('auth.restore.page.description'),
+    keywords: t('auth.restore.page.keywords'),
+    bodyAttributes: { class: 'restore-password-page' },
+  };
 
   // Validation
   const validationMessages = {
@@ -55,8 +64,11 @@ const ResetPassword = () => {
   };
 
   return (
-    <Box className="reset-password-page">
-      <Typography className="reset-password-page__title" variant="h5" component="h1">
+    <Box className="reset-password">
+      {/*** Head ***/}
+      <HeadPage headPageData={pageHeadData} />
+
+      <Typography className="reset-password__title" variant="h5" component="h1">
         {t('auth.restore.title')}
       </Typography>
 
