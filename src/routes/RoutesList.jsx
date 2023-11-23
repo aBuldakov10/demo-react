@@ -9,6 +9,7 @@ import { isAuthUserSelector } from '../store/auth/selectors';
 import Home from '../pages/Home';
 import Weather from '../pages/Weather/Weather';
 import ToDo from '../pages/ToDo/ToDo';
+import Orders from '../pages/Orders/Orders';
 import Login from '../pages/Login/Login';
 import Registration from '../pages/Registration/Registration';
 import ResetPassword from '../pages/ResetPassword/ResetPassword';
@@ -24,6 +25,7 @@ const RoutesList = () => {
       <Route path="/" element={<Home />} />
       <Route path="/weather" element={<Weather />} />
       <Route path="/to-do" element={<ToDo />} />
+      <Route path="/orders" element={<Orders />} />
       <Route path="/login" element={loggedIn ? <Navigate to={`/${lng}/profile`} /> : <Login />} />
       <Route path="/register" element={<Navigate to={`/${lng}/registration`} />} />
       <Route path="/registration" element={loggedIn ? <Navigate to={`/${lng}/profile`} /> : <Registration />} />

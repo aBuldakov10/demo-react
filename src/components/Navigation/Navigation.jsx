@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useParams } from 'react-router-dom';
-import PropTypes, { objectOf } from 'prop-types';
+import PropTypes from 'prop-types';
 
 const Navigation = ({ nav }) => {
   const { lng } = useParams();
@@ -22,8 +22,14 @@ const Navigation = ({ nav }) => {
   );
 };
 
+// Array of object props
 Navigation.propTypes = {
-  nav: objectOf(PropTypes.string.isRequired),
+  nav: PropTypes.arrayOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      link: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 export default Navigation;

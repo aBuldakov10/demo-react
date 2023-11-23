@@ -33,6 +33,10 @@ const Header = () => {
       title: t('menu.to-do'),
       link: '/to-do',
     },
+    {
+      title: t('menu.orders'),
+      link: '/orders',
+    },
     // {
     //   title: 'Example',
     //   link: '/example',

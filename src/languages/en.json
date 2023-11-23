@@ -2,7 +2,8 @@
   "menu": {
     "home": "Home",
     "weather": "Weather",
-    "to-do": "To do"
+    "to-do": "To do",
+    "orders": "Orders"
   },
 
   "lang-switcher": {
@@ -166,6 +167,14 @@
     "done": {
       "tip-done": "Done",
       "tip-restore": "Restore"
+    }
+  },
+
+  "orders": {
+    "page": {
+      "title": "Orders page",
+      "description": "Orders page. Create, edit, delete, sort, search orders",
+      "keywords": "orders, create/delete/edit orders"
     }
   },
 

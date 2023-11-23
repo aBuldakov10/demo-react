@@ -32,6 +32,22 @@ body {
   letter-spacing: .7px;
 }
 
+// Scrollbar
+* {
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+    background-color: rgba(0, 0, 0, .4);
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: $main-clr;
+  }
+
+  // Для firefox
+  scrollbar-color: $main-clr rgba(0, 0, 0, .4);
+}
+
 // Block style
 .block {
   margin-bottom: 30px;
