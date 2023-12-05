@@ -1,4 +1,13 @@
-import { PAGINATION_ACTIVE_PAGE, PAGINATION_ADD, PAGINATION_REMOVE, SET_ACTIVE_ORDERS, SET_ORDERS } from './types';
+import { PAGINATION_ACTIVE_PAGE, PAGINATION, SET_ACTIVE_ORDERS, SET_ORDERS, SORT_ORDERS } from './types';
+
+// Sort
+export const sortOrders = (by = '', direction = '') => {
+  return {
+    type: SORT_ORDERS,
+    by: by,
+    direction: direction,
+  };
+};
 
 // Orders
 export const setOrdersList = (ordersList) => {
@@ -16,16 +25,10 @@ export const setActiveOrders = (activeOrders) => {
 };
 
 // Pagination
-export const addPagination = (countPages) => {
+export const pagination = (countPages) => {
   return {
-    type: PAGINATION_ADD,
+    type: PAGINATION,
     countPages: countPages,
-  };
-};
-
-export const removePagination = () => {
-  return {
-    type: PAGINATION_REMOVE,
   };
 };
 

@@ -1,3 +1,8 @@
+// Get sorted type data
+export const sortedSelector = ({ orders }) => {
+  return orders.sortedBy;
+};
+
 // Get active orders block
 export const activeOrdersSelector = ({ orders }) => {
   return orders.activeOrders;

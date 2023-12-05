@@ -1,12 +1,34 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Checkbox, Divider } from '@mui/material';
 import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 
+// Files
+import { sortOrdersFn } from './index';
+
+// Store
+import { setActiveOrders, sortOrders } from '../../store/orders/action';
+import { activeOrdersSelector, sortedSelector } from '../../store/orders/selectors';
+
 const OrdersTableHead = () => {
+  const dispatch = useDispatch();
+
+  const activeOrders = useSelector(activeOrdersSelector); // active orders
+  const sortedDirection = useSelector(sortedSelector);
+
   const [checked, setChecked] = useState(false);
 
   const handleChange = (event) => {
     setChecked(event.target.checked);
+  };
+
+  /*** Handlers ***/
+  const handleSortOrders = (orderField, direction) => {
+    // функция сортировки возвращает отсортированный массив
+    const res = sortOrdersFn(activeOrders, orderField, direction);
+
+    dispatch(setActiveOrders(res)); // обновить состояние отсортированных заказов
+    dispatch(sortOrders(orderField, direction)); // обновить маркер отсортированности заказов
   };
 
   return (
@@ -23,11 +45,21 @@ const OrdersTableHead = () => {
         <span>ID</span>
 
         <div className="orders-table__sort">
-          <div className="orders-table__sort-elem orders-table__sort-elem--asc">
+          <div
+            className={`orders-table__sort-elem orders-table__sort-elem--asc ${
+              sortedDirection.id === 'id-asc' ? 'disabled' : ''
+            }`}
+            onClick={() => handleSortOrders('id', 'asc')}
+          >
             <ArrowDropUp />
           </div>
 
-          <div className="orders-table__sort-elem orders-table__sort-elem--desc">
+          <div
+            className={`orders-table__sort-elem orders-table__sort-elem--desc ${
+              sortedDirection.id === 'id-desc' ? 'disabled' : ''
+            }`}
+            onClick={() => handleSortOrders('id', 'desc')}
+          >
             <ArrowDropDown />
           </div>
         </div>
@@ -35,16 +67,26 @@ const OrdersTableHead = () => {
 
       <Divider orientation="vertical" flexItem />
 
-      {/* Order name */}
+      {/* Order title */}
       <div className="orders-table__col orders-name">
         <span>Order name</span>
 
         <div className="orders-table__sort">
-          <div className="orders-table__sort-elem orders-table__sort-elem--asc">
+          <div
+            className={`orders-table__sort-elem orders-table__sort-elem--asc ${
+              sortedDirection.title === 'title-asc' ? 'disabled' : ''
+            }`}
+            onClick={() => handleSortOrders('title', 'asc')}
+          >
             <ArrowDropUp />
           </div>
 
-          <div className="orders-table__sort-elem orders-table__sort-elem--desc">
+          <div
+            className={`orders-table__sort-elem orders-table__sort-elem--desc ${
+              sortedDirection.title === 'title-desc' ? 'disabled' : ''
+            }`}
+            onClick={() => handleSortOrders('title', 'desc')}
+          >
             <ArrowDropDown />
           </div>
         </div>
@@ -57,11 +99,21 @@ const OrdersTableHead = () => {
         <span>Client name</span>
 
         <div className="orders-table__sort">
-          <div className="orders-table__sort-elem orders-table__sort-elem--asc">
+          <div
+            className={`orders-table__sort-elem orders-table__sort-elem--asc ${
+              sortedDirection.client === 'client-asc' ? 'disabled' : ''
+            }`}
+            onClick={() => handleSortOrders('client', 'asc')}
+          >
             <ArrowDropUp />
           </div>
 
-          <div className="orders-table__sort-elem orders-table__sort-elem--desc">
+          <div
+            className={`orders-table__sort-elem orders-table__sort-elem--desc ${
+              sortedDirection.client === 'client-desc' ? 'disabled' : ''
+            }`}
+            onClick={() => handleSortOrders('client', 'desc')}
+          >
             <ArrowDropDown />
           </div>
         </div>
@@ -79,11 +131,21 @@ const OrdersTableHead = () => {
         <span>Date</span>
 
         <div className="orders-table__sort">
-          <div className="orders-table__sort-elem orders-table__sort-elem--asc">
+          <div
+            className={`orders-table__sort-elem orders-table__sort-elem--asc ${
+              sortedDirection.date === 'date-asc' ? 'disabled' : ''
+            }`}
+            onClick={() => handleSortOrders('date', 'asc')}
+          >
             <ArrowDropUp />
           </div>
 
-          <div className="orders-table__sort-elem orders-table__sort-elem--desc">
+          <div
+            className={`orders-table__sort-elem orders-table__sort-elem--desc ${
+              sortedDirection.date === 'date-desc' ? 'disabled' : ''
+            }`}
+            onClick={() => handleSortOrders('date', 'desc')}
+          >
             <ArrowDropDown />
           </div>
         </div>
@@ -96,11 +158,21 @@ const OrdersTableHead = () => {
         <span>Order sum</span>
 
         <div className="orders-table__sort">
-          <div className="orders-table__sort-elem orders-table__sort-elem--asc">
+          <div
+            className={`orders-table__sort-elem orders-table__sort-elem--asc ${
+              sortedDirection.sum === 'sum-asc' ? 'disabled' : ''
+            }`}
+            onClick={() => handleSortOrders('sum', 'asc')}
+          >
             <ArrowDropUp />
           </div>
 
-          <div className="orders-table__sort-elem orders-table__sort-elem--desc">
+          <div
+            className={`orders-table__sort-elem orders-table__sort-elem--desc ${
+              sortedDirection.sum === 'sum-desc' ? 'disabled' : ''
+            }`}
+            onClick={() => handleSortOrders('sum', 'desc')}
+          >
             <ArrowDropDown />
           </div>
         </div>

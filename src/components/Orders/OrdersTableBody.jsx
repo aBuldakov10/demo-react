@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Button, Checkbox, Divider } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
-import { useSelector } from 'react-redux';
+
+// Files
+import { formatDate } from '../../constants/constants';
+
+// Store
 import { activeOrdersSelector } from '../../store/orders/selectors';
 
 const OrdersTableBody = () => {
@@ -48,7 +53,7 @@ const OrdersTableBody = () => {
             <Divider orientation="vertical" flexItem />
 
             {/* Date */}
-            <div className="orders-table__col orders-date">{date}</div>
+            <div className="orders-table__col orders-date">{formatDate(date)}</div>
 
             <Divider orientation="vertical" flexItem />
 

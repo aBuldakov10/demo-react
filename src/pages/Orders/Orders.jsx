@@ -8,7 +8,13 @@ import './Orders.scss';
 import { orders } from './data';
 
 // Store
-import { addPagination, changePaginationPage, setActiveOrders, setOrdersList } from '../../store/orders/action';
+import {
+  pagination,
+  changePaginationPage,
+  setActiveOrders,
+  setOrdersList,
+  sortOrders,
+} from '../../store/orders/action';
 import { activePageSelector, paginationPagesSelector, paginationStateSelector } from '../../store/orders/selectors';
 
 // Components
@@ -46,11 +52,19 @@ const Orders = () => {
     dispatch(setOrdersList(ordersList));
     dispatch(setActiveOrders(ordersList[1]));
 
-    if (Object.keys(orders).length > 1) dispatch(addPagination(Object.keys(orders).length)); // Set pagination
+    if (Object.keys(orders).length > 1) dispatch(pagination(Object.keys(orders).length)); // Set pagination
   }, []);
 
   /*** Handlers ***/
-  const handleChangePage = (event, value) => dispatch(changePaginationPage(value)); // Change page
+  const handleChangePage = (event, value) => {
+    if (activePage === value) return;
+
+    const ordersList = JSON.parse(sessionStorage.getItem('orders')); // get from storage
+
+    dispatch(changePaginationPage(value));
+    dispatch(setActiveOrders(ordersList[value]));
+    dispatch(sortOrders()); // set default sort buttons
+  }; // Change page
 
   return (
     <Box className="orders">
