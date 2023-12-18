@@ -29,3 +29,18 @@ export const sortOrdersFn = (ordersList, orderField, direction) => {
 
   return result;
 };
+
+/*** Edit order input options ***/
+export const clientNameOpt = {
+  required: 'Required field',
+  minLength: { value: 5, message: 'Minimum 5 symbols' },
+};
+
+export const clientEmailOpt = {
+  required: 'Required field',
+  pattern: {
+    value: /([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\.[a-zA-Z0-9_-]+)/gm,
+    message: 'Enter correct email',
+  },
+  minLength: { value: 7, message: 'Minimum 7 symbols' },
+};

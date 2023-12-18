@@ -1,11 +1,19 @@
-import { PAGINATION_ACTIVE_PAGE, PAGINATION, SET_ACTIVE_ORDERS, SET_ORDERS, SORT_ORDERS } from './types';
+import {
+  PAGINATION_ACTIVE_PAGE,
+  PAGINATION,
+  SET_ACTIVE_ORDERS,
+  SET_ORDERS,
+  SORT_ORDERS,
+  OPEN_EDIT_ORDER_POPUP,
+  CLOSE_EDIT_ORDER_POPUP,
+} from './types';
 
 // Sort
 export const sortOrders = (by = '', direction = '') => {
   return {
     type: SORT_ORDERS,
-    by: by,
-    direction: direction,
+    by,
+    direction,
   };
 };
 
@@ -24,17 +32,33 @@ export const setActiveOrders = (activeOrders) => {
   };
 };
 
+// Edit orders
+export const openEditOrderPopup = (orderId, clientName = '', clientMail = '') => {
+  return {
+    type: OPEN_EDIT_ORDER_POPUP,
+    orderId,
+    clientName,
+    clientMail,
+  };
+};
+
+export const closeEditOrderPopup = () => {
+  return {
+    type: CLOSE_EDIT_ORDER_POPUP,
+  };
+};
+
 // Pagination
 export const pagination = (countPages) => {
   return {
     type: PAGINATION,
-    countPages: countPages,
+    countPages,
   };
 };
 
 export const changePaginationPage = (pageNumber) => {
   return {
     type: PAGINATION_ACTIVE_PAGE,
-    pageNumber: pageNumber,
+    pageNumber,
   };
 };

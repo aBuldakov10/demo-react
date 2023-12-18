@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Checkbox, Divider } from '@mui/material';
 import { Delete, Edit } from '@mui/icons-material';
 
@@ -8,8 +8,10 @@ import { formatDate } from '../../constants/constants';
 
 // Store
 import { activeOrdersSelector } from '../../store/orders/selectors';
+import { openEditOrderPopup } from '../../store/orders/action';
 
 const OrdersTableBody = () => {
+  const dispatch = useDispatch();
   const activeOrders = useSelector(activeOrdersSelector); // active orders
 
   const [checked, setChecked] = useState(false);
@@ -64,12 +66,13 @@ const OrdersTableBody = () => {
 
             {/* Action */}
             <div className="orders-table__col orders-action">
-              <Button variant="contained" color="primary" title="Edit order">
+              <Button
+                variant="contained"
+                color="primary"
+                title="Edit order"
+                onClick={() => dispatch(openEditOrderPopup(id, client.name, client.email))}
+              >
                 <Edit style={{ fontSize: 'inherit' }} />
-              </Button>
-
-              <Button variant="contained" color="delete" title="Delete order">
-                <Delete style={{ fontSize: 'inherit' }} />
               </Button>
             </div>
           </div>

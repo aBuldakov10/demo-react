@@ -1,3 +1,4 @@
+/*** Orders ***/
 // Get sorted type data
 export const sortedSelector = ({ orders }) => {
   return orders.sortedBy;
@@ -8,6 +9,18 @@ export const activeOrdersSelector = ({ orders }) => {
   return orders.activeOrders;
 };
 
+/*** Edit ***/
+// Edit orders
+export const editOrderPopupSelector = ({ orders }) => {
+  return {
+    id: orders.editOrder.id,
+    name: orders.editOrder.userName,
+    email: orders.editOrder.userMail,
+    state: orders.editOrder.isOpen,
+  };
+};
+
+/*** Pagination ***/
 // Get pagination state
 export const paginationStateSelector = ({ orders }) => {
   return orders.pagination.state;

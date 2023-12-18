@@ -21,6 +21,7 @@ import { activePageSelector, paginationPagesSelector, paginationStateSelector } 
 import HeadPage from '../../components/HeadPage';
 import OrdersTableHead from '../../components/Orders/OrdersTableHead';
 import OrdersTableBody from '../../components/Orders/OrdersTableBody';
+import EditOrder from '../../components/Orders/EditOrder';
 
 const Orders = () => {
   const dispatch = useDispatch();
@@ -64,7 +65,7 @@ const Orders = () => {
     dispatch(changePaginationPage(value));
     dispatch(setActiveOrders(ordersList[value]));
     dispatch(sortOrders()); // set default sort buttons
-  }; // Change page
+  };
 
   return (
     <Box className="orders">
@@ -107,6 +108,9 @@ const Orders = () => {
           <Pagination count={countPages} page={activePage} onChange={handleChangePage} />
         </Box>
       )}
+
+      {/*** Edit order ***/}
+      <EditOrder />
     </Box>
   );
 };

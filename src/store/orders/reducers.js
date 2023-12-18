@@ -1,4 +1,12 @@
-import { PAGINATION_ACTIVE_PAGE, PAGINATION, SET_ACTIVE_ORDERS, SET_ORDERS, SORT_ORDERS } from './types';
+import {
+  PAGINATION_ACTIVE_PAGE,
+  PAGINATION,
+  SET_ACTIVE_ORDERS,
+  SET_ORDERS,
+  SORT_ORDERS,
+  OPEN_EDIT_ORDER_POPUP,
+  CLOSE_EDIT_ORDER_POPUP,
+} from './types';
 
 const initialOrderState = {
   pagination: {
@@ -15,9 +23,40 @@ const initialOrderState = {
     date: false,
     sum: false,
   },
+  editOrder: {
+    id: null,
+    userName: null,
+    userMail: null,
+    isOpen: false,
+  },
 };
 
 export const ordersReducer = (state = initialOrderState, action) => {
+  // edit
+  if (action.type === OPEN_EDIT_ORDER_POPUP) {
+    return {
+      ...state,
+      editOrder: {
+        id: action.orderId,
+        userName: action.clientName,
+        userMail: action.clientMail,
+        isOpen: true,
+      },
+    };
+  }
+
+  if (action.type === CLOSE_EDIT_ORDER_POPUP) {
+    return {
+      ...state,
+      editOrder: {
+        id: null,
+        userName: null,
+        userMail: null,
+        isOpen: false,
+      },
+    };
+  }
+
   // sort orders
   if (action.type === SORT_ORDERS) {
     if (action.by === 'id') {
