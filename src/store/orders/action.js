@@ -4,8 +4,10 @@ import {
   SET_ACTIVE_ORDERS,
   SET_ORDERS,
   SORT_ORDERS,
-  OPEN_EDIT_ORDER_POPUP,
-  CLOSE_EDIT_ORDER_POPUP,
+  EDIT_OPEN_ORDER_POPUP,
+  EDIT_CLOSE_ORDER_POPUP,
+  ADD_OPEN_ORDER_POPUP,
+  ADD_CLOSE_ORDER_POPUP,
 } from './types';
 
 // Sort
@@ -35,7 +37,7 @@ export const setActiveOrders = (activeOrders) => {
 // Edit orders
 export const openEditOrderPopup = (orderId, clientName = '', clientMail = '') => {
   return {
-    type: OPEN_EDIT_ORDER_POPUP,
+    type: EDIT_OPEN_ORDER_POPUP,
     orderId,
     clientName,
     clientMail,
@@ -44,7 +46,20 @@ export const openEditOrderPopup = (orderId, clientName = '', clientMail = '') =>
 
 export const closeEditOrderPopup = () => {
   return {
-    type: CLOSE_EDIT_ORDER_POPUP,
+    type: EDIT_CLOSE_ORDER_POPUP,
+  };
+};
+
+// Add orders
+export const openAddOrderPopup = () => {
+  return {
+    type: ADD_OPEN_ORDER_POPUP,
+  };
+};
+
+export const closeAddOrderPopup = () => {
+  return {
+    type: ADD_CLOSE_ORDER_POPUP,
   };
 };
 

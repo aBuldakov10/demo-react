@@ -14,6 +14,7 @@ import {
   setActiveOrders,
   setOrdersList,
   sortOrders,
+  openAddOrderPopup,
 } from '../../store/orders/action';
 import { activePageSelector, paginationPagesSelector, paginationStateSelector } from '../../store/orders/selectors';
 
@@ -22,6 +23,7 @@ import HeadPage from '../../components/HeadPage';
 import OrdersTableHead from '../../components/Orders/OrdersTableHead';
 import OrdersTableBody from '../../components/Orders/OrdersTableBody';
 import EditOrder from '../../components/Orders/EditOrder';
+import AddOrder from '../../components/Orders/AddOrder';
 
 const Orders = () => {
   const dispatch = useDispatch();
@@ -50,13 +52,14 @@ const Orders = () => {
       ordersList = JSON.parse(sessionStorage.getItem('orders')); // get from storage
     }
 
-    dispatch(setOrdersList(ordersList));
-    dispatch(setActiveOrders(ordersList[1]));
+    dispatch(setOrdersList(ordersList)); // закинуть в store все заказы
+    dispatch(setActiveOrders(ordersList[1])); // закинуть в store активные заказы
 
-    if (Object.keys(orders).length > 1) dispatch(pagination(Object.keys(orders).length)); // Set pagination
+    if (Object.keys(ordersList).length > 1) dispatch(pagination(Object.keys(ordersList).length)); // Set pagination
   }, []);
 
   /*** Handlers ***/
+  const handleOpenAddOrderPopup = () => dispatch(openAddOrderPopup()); // Open add popup
   const handleChangePage = (event, value) => {
     if (activePage === value) return;
 
@@ -86,8 +89,14 @@ const Orders = () => {
           placeholder="Search by name..."
         />
 
-        <Button className="btn orders__heading-add" variant="contained" color="custom" title="Add">
-          Add
+        <Button
+          className="btn orders__heading-add"
+          variant="contained"
+          color="success"
+          title="Add"
+          onClick={handleOpenAddOrderPopup}
+        >
+          New order
         </Button>
       </Box>
 
@@ -111,6 +120,9 @@ const Orders = () => {
 
       {/*** Edit order ***/}
       <EditOrder />
+
+      {/*** Add order ***/}
+      <AddOrder />
     </Box>
   );
 };

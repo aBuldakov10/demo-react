@@ -30,7 +30,46 @@ export const sortOrdersFn = (ordersList, orderField, direction) => {
   return result;
 };
 
+/*** Add new order function ***/
+// принимает данные формы в виде объекта
+export const createOrder = (newOrderData) => {
+  const createOrderDate = Date.now(); // get current date
+  const storageOrders = JSON.parse(sessionStorage.getItem('orders')); // get orders from session storage
+  const ordersPagesCount = +Object.keys(storageOrders).reverse()[0]; // find orders object last key
+
+  // найти максимальный id в массиве объектов
+  const lastOrderId = Object.values(storageOrders)
+    .flat() // развернуть многомерный массив в одномерный массив объектов
+    .reduce((acc, prev) => (acc.id > prev.id ? acc : prev)).id; // найти объект в максимальным id и получить его id
+
+  // create new order object
+  const newOrderObj = {
+    id: lastOrderId + 1,
+    title: newOrderData.orderName,
+    date: createOrderDate,
+    client: {
+      name: newOrderData.clientName,
+      email: newOrderData.clientEmail,
+    },
+    sum: newOrderData.orderSum,
+  };
+
+  // создать новый ключ с пустым массивом, если значения последнего ключа заполнены полсностью
+  if (storageOrders[ordersPagesCount].length === 4) storageOrders[ordersPagesCount + 1] = [];
+
+  // добавить new order object в массив последнего ключа
+  storageOrders[+Object.keys(storageOrders).reverse()[0]].push(newOrderObj);
+  sessionStorage.setItem('orders', JSON.stringify(storageOrders)); // set to storage
+
+  return storageOrders; // возвращает объект всех заказов после создания новго заказа
+};
+
 /*** Edit order input options ***/
+export const orderNameOpt = {
+  required: 'Required field',
+  minLength: { value: 5, message: 'Minimum 5 symbols' },
+};
+
 export const clientNameOpt = {
   required: 'Required field',
   minLength: { value: 5, message: 'Minimum 5 symbols' },
@@ -43,4 +82,12 @@ export const clientEmailOpt = {
     message: 'Enter correct email',
   },
   minLength: { value: 7, message: 'Minimum 7 symbols' },
+};
+
+export const orderSumOpt = {
+  required: 'Required field',
+  pattern: {
+    value: /^[0-9]+([.,][0-9]{2})?$/gm,
+    message: 'Enter correct format sum number like 0 or 0.00',
+  },
 };

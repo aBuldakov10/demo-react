@@ -74,7 +74,7 @@ const EditOrder = () => {
           {/* New client name */}
           <div className="form__group">
             <label htmlFor="newClientName" className="form__label">
-              New client name
+              New client name <span style={{ color: 'red' }}>*</span>
             </label>
 
             <input
@@ -90,7 +90,7 @@ const EditOrder = () => {
           {/* New client email */}
           <div className="form__group">
             <label htmlFor="newClientEmail" className="form__label">
-              New client email
+              New client email <span style={{ color: 'red' }}>*</span>
             </label>
 
             <input

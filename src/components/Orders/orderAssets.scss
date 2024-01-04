@@ -64,15 +64,14 @@
 }
 
 // Edit
-.edit-popup {
+.edit-popup,
+.add-popup {
   padding: 16px;
+  width: 100%;
 
   &__content.MuiDialogContent-root {
     padding-right: 0;
     padding-left: 0;
-
-    .form {
-      min-width: 500px;
-    }
+    overflow: initial;
   }
 }

@@ -4,8 +4,10 @@ import {
   SET_ACTIVE_ORDERS,
   SET_ORDERS,
   SORT_ORDERS,
-  OPEN_EDIT_ORDER_POPUP,
-  CLOSE_EDIT_ORDER_POPUP,
+  EDIT_OPEN_ORDER_POPUP,
+  EDIT_CLOSE_ORDER_POPUP,
+  ADD_OPEN_ORDER_POPUP,
+  ADD_CLOSE_ORDER_POPUP,
 } from './types';
 
 const initialOrderState = {
@@ -29,11 +31,14 @@ const initialOrderState = {
     userMail: null,
     isOpen: false,
   },
+  addOrder: {
+    isOpen: false,
+  },
 };
 
 export const ordersReducer = (state = initialOrderState, action) => {
   // edit
-  if (action.type === OPEN_EDIT_ORDER_POPUP) {
+  if (action.type === EDIT_OPEN_ORDER_POPUP) {
     return {
       ...state,
       editOrder: {
@@ -45,13 +50,32 @@ export const ordersReducer = (state = initialOrderState, action) => {
     };
   }
 
-  if (action.type === CLOSE_EDIT_ORDER_POPUP) {
+  if (action.type === EDIT_CLOSE_ORDER_POPUP) {
     return {
       ...state,
       editOrder: {
         id: null,
         userName: null,
         userMail: null,
+        isOpen: false,
+      },
+    };
+  }
+
+  // add orders
+  if (action.type === ADD_OPEN_ORDER_POPUP) {
+    return {
+      ...state,
+      addOrder: {
+        isOpen: true,
+      },
+    };
+  }
+
+  if (action.type === ADD_CLOSE_ORDER_POPUP) {
+    return {
+      ...state,
+      addOrder: {
         isOpen: false,
       },
     };

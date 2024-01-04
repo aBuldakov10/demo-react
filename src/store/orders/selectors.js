@@ -20,6 +20,12 @@ export const editOrderPopupSelector = ({ orders }) => {
   };
 };
 
+/*** Add ***/
+// Add popup state
+export const addOrderPopupSelector = ({ orders }) => {
+  return orders.addOrder.isOpen;
+};
+
 /*** Pagination ***/
 // Get pagination state
 export const paginationStateSelector = ({ orders }) => {
