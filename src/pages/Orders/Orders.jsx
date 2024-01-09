@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box, Button, Typography, TextField, Pagination } from '@mui/material';
+import { Add, Delete } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 
 // Files
@@ -91,7 +92,7 @@ const Orders = () => {
       {/*** Orders page heading ***/}
       <Box className="orders__heading">
         <Typography className="orders__heading-title" variant="h4" component="h1" gutterBottom>
-          Total orders
+          Orders
         </Typography>
 
         <TextField
@@ -103,25 +104,33 @@ const Orders = () => {
         />
 
         <Button
-          className="btn orders__heading-add"
+          className="btn orders__heading-btn orders__heading-btn--add"
           variant="contained"
           color="success"
-          title="Add"
+          title="New order"
           onClick={handleOpenAddOrderPopup}
         >
-          New order
+          <span className="orders__heading-btn-icon">
+            <Add />
+          </span>
+
+          <span className="orders__heading-btn-name">New order</span>
         </Button>
 
         {/* Show delete button after select order */}
         {isDeleteOrderButton.length > 0 && (
           <Button
-            className="btn orders__heading-add"
+            className="btn orders__heading-btn orders__heading-btn--delete"
             variant="contained"
             color="error"
-            title="Delete"
+            title="Delete order"
             onClick={handleOpenDeleteOrderPopup}
           >
-            delete
+            <span className="orders__heading-btn-icon">
+              <Delete />
+            </span>
+
+            <span className="orders__heading-btn-name">delete</span>
           </Button>
         )}
       </Box>
