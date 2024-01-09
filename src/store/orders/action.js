@@ -1,23 +1,17 @@
 import {
-  PAGINATION_ACTIVE_PAGE,
-  PAGINATION,
-  SET_ACTIVE_ORDERS,
   SET_ORDERS,
+  SET_ACTIVE_ORDERS,
   SORT_ORDERS,
-  EDIT_OPEN_ORDER_POPUP,
-  EDIT_CLOSE_ORDER_POPUP,
   ADD_OPEN_ORDER_POPUP,
   ADD_CLOSE_ORDER_POPUP,
+  EDIT_OPEN_ORDER_POPUP,
+  EDIT_CLOSE_ORDER_POPUP,
+  DELETE_OPEN_ORDER_POPUP,
+  DELETE_CLOSE_ORDER_POPUP,
+  DELETE_SELECT_ALL_ORDERS,
+  PAGINATION,
+  PAGINATION_ACTIVE_PAGE,
 } from './types';
-
-// Sort
-export const sortOrders = (by = '', direction = '') => {
-  return {
-    type: SORT_ORDERS,
-    by,
-    direction,
-  };
-};
 
 // Orders
 export const setOrdersList = (ordersList) => {
@@ -31,6 +25,28 @@ export const setActiveOrders = (activeOrders) => {
   return {
     type: SET_ACTIVE_ORDERS,
     listActive: activeOrders,
+  };
+};
+
+// Sort
+export const sortOrders = (by = '', direction = '') => {
+  return {
+    type: SORT_ORDERS,
+    by,
+    direction,
+  };
+};
+
+// Add orders
+export const openAddOrderPopup = () => {
+  return {
+    type: ADD_OPEN_ORDER_POPUP,
+  };
+};
+
+export const closeAddOrderPopup = () => {
+  return {
+    type: ADD_CLOSE_ORDER_POPUP,
   };
 };
 
@@ -50,16 +66,23 @@ export const closeEditOrderPopup = () => {
   };
 };
 
-// Add orders
-export const openAddOrderPopup = () => {
+// Delete orders
+export const openDeleteOrderPopup = () => {
   return {
-    type: ADD_OPEN_ORDER_POPUP,
+    type: DELETE_OPEN_ORDER_POPUP,
   };
 };
 
-export const closeAddOrderPopup = () => {
+export const closeDeleteOrderPopup = () => {
   return {
-    type: ADD_CLOSE_ORDER_POPUP,
+    type: DELETE_CLOSE_ORDER_POPUP,
+  };
+};
+
+export const selectAll = (selectedArr) => {
+  return {
+    type: DELETE_SELECT_ALL_ORDERS,
+    selectedArr,
   };
 };
 

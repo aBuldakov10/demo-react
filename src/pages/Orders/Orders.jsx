@@ -9,27 +9,38 @@ import { orders } from './data';
 
 // Store
 import {
+  setOrdersList,
+  setActiveOrders,
+  sortOrders,
   pagination,
   changePaginationPage,
-  setActiveOrders,
-  setOrdersList,
-  sortOrders,
   openAddOrderPopup,
+  openDeleteOrderPopup,
+  selectAll,
 } from '../../store/orders/action';
-import { activePageSelector, paginationPagesSelector, paginationStateSelector } from '../../store/orders/selectors';
+import {
+  paginationStateSelector,
+  paginationPagesSelector,
+  activePageSelector,
+  deleteOrderSelectedAll,
+  activeOrdersSelector,
+} from '../../store/orders/selectors';
 
 // Components
 import HeadPage from '../../components/HeadPage';
 import OrdersTableHead from '../../components/Orders/OrdersTableHead';
 import OrdersTableBody from '../../components/Orders/OrdersTableBody';
-import EditOrder from '../../components/Orders/EditOrder';
 import AddOrder from '../../components/Orders/AddOrder';
+import EditOrder from '../../components/Orders/EditOrder';
+import DeleteOrder from '../../components/Orders/DeleteOrder';
 
 const Orders = () => {
   const dispatch = useDispatch();
+  const activeOrders = useSelector(activeOrdersSelector); // active orders
   const isOrderPagination = useSelector(paginationStateSelector); // pagination state
-  const activePage = useSelector(activePageSelector); // active pagination page
   const countPages = useSelector(paginationPagesSelector); // count pagination page
+  const activePage = useSelector(activePageSelector); // active pagination page
+  const isDeleteOrderButton = useSelector(deleteOrderSelectedAll); // selected orders for delete
   const { t } = useTranslation();
 
   // Page head meta data
@@ -60,14 +71,16 @@ const Orders = () => {
 
   /*** Handlers ***/
   const handleOpenAddOrderPopup = () => dispatch(openAddOrderPopup()); // Open add popup
+  const handleOpenDeleteOrderPopup = () => dispatch(openDeleteOrderPopup()); // Open delete popup
   const handleChangePage = (event, value) => {
     if (activePage === value) return;
 
     const ordersList = JSON.parse(sessionStorage.getItem('orders')); // get from storage
 
-    dispatch(changePaginationPage(value));
-    dispatch(setActiveOrders(ordersList[value]));
+    dispatch(changePaginationPage(value)); // смена страницы пагинации
+    dispatch(setActiveOrders(ordersList[value])); // смена активной страницы пагинации
     dispatch(sortOrders()); // set default sort buttons
+    dispatch(selectAll([])); // очистить массив заказов для удаления
   };
 
   return (
@@ -98,16 +111,37 @@ const Orders = () => {
         >
           New order
         </Button>
+
+        {/* Show delete button after select order */}
+        {isDeleteOrderButton.length > 0 && (
+          <Button
+            className="btn orders__heading-add"
+            variant="contained"
+            color="error"
+            title="Delete"
+            onClick={handleOpenDeleteOrderPopup}
+          >
+            delete
+          </Button>
+        )}
       </Box>
 
       {/*** Orders page body ***/}
       <div className="table-wrapper">
         <Box className="orders__body orders-table">
-          {/* Table heading */}
-          <OrdersTableHead />
+          {activeOrders ? (
+            <>
+              {/* Table heading */}
+              <OrdersTableHead />
 
-          {/* Table body */}
-          <OrdersTableBody />
+              {/* Table body */}
+              <OrdersTableBody />
+            </>
+          ) : (
+            <Typography variant="body" component="h2" align="center">
+              Заказов нет
+            </Typography>
+          )}
         </Box>
       </div>
 
@@ -118,11 +152,14 @@ const Orders = () => {
         </Box>
       )}
 
+      {/*** Add order ***/}
+      <AddOrder />
+
       {/*** Edit order ***/}
       <EditOrder />
 
-      {/*** Add order ***/}
-      <AddOrder />
+      {/*** Delete order ***/}
+      <DeleteOrder />
     </Box>
   );
 };

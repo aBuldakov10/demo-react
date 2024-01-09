@@ -1,23 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Checkbox, Divider } from '@mui/material';
-import { Delete, Edit } from '@mui/icons-material';
+import { Edit } from '@mui/icons-material';
 
 // Files
 import { formatDate } from '../../constants/constants';
 
 // Store
-import { activeOrdersSelector } from '../../store/orders/selectors';
-import { openEditOrderPopup } from '../../store/orders/action';
+import { openEditOrderPopup, selectAll } from '../../store/orders/action';
+import { activeOrdersSelector, deleteOrderSelectedAll } from '../../store/orders/selectors';
 
 const OrdersTableBody = () => {
   const dispatch = useDispatch();
   const activeOrders = useSelector(activeOrdersSelector); // active orders
+  const selectedOrders = useSelector(deleteOrderSelectedAll); // selected orders for delete
 
-  const [checked, setChecked] = useState(false);
+  const handleSelectOrder = (event, id) => {
+    // отметить чекбокс заказа и его нет в массиве выбранных
+    const addOrderForDelete = event.target.checked && !selectedOrders.includes(id);
+    // отметить чекбокс заказа и он есть в массиве выбранных или снять чекбокс заказа
+    const removeOrderForDelete = (event.target.checked && selectedOrders.includes(id)) || !event.target.checked;
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
+    // отменить выбор заказа для удаления
+    if (removeOrderForDelete) {
+      const filteredSelectedOrders = selectedOrders.filter((item) => item !== id);
+
+      dispatch(selectAll(filteredSelectedOrders));
+    }
+
+    // выбрать заказ для удаления
+    if (addOrderForDelete) dispatch(selectAll([...selectedOrders, id]));
   };
 
   return (
@@ -27,7 +39,11 @@ const OrdersTableBody = () => {
           <div className="orders-table__body-item" key={id}>
             {/* Check */}
             <div className="orders-table__col orders-check">
-              <Checkbox checked={checked} onChange={handleChange} inputProps={{ 'aria-label': 'controlled' }} />
+              <Checkbox
+                checked={selectedOrders.includes(id)} // состояние в соответствии с selectedOrders для удаления
+                onChange={(e) => handleSelectOrder(e, id)} // добавление/удаление в selectedOrders
+                inputProps={{ 'aria-label': 'controlled' }}
+              />
             </div>
 
             <Divider orientation="vertical" flexItem />

@@ -36,15 +36,23 @@ export const createOrder = (newOrderData) => {
   const createOrderDate = Date.now(); // get current date
   const storageOrders = JSON.parse(sessionStorage.getItem('orders')); // get orders from session storage
   const ordersPagesCount = +Object.keys(storageOrders).reverse()[0]; // find orders object last key
+  let generateId; // новый id заказа
 
-  // найти максимальный id в массиве объектов
-  const lastOrderId = Object.values(storageOrders)
-    .flat() // развернуть многомерный массив в одномерный массив объектов
-    .reduce((acc, prev) => (acc.id > prev.id ? acc : prev)).id; // найти объект в максимальным id и получить его id
+  // создать id, увеличенный на 1 от максимального, или сгенеровать новый, если объект orders пустой
+  if (Object.keys(storageOrders).length) {
+    generateId =
+      Object.values(storageOrders)
+        .flat() // развернуть многомерный массив в одномерный массив объектов
+        // найти объект в максимальным id и получить его id увеличенный на 1
+        .reduce((acc, prev) => (acc.id > prev.id ? acc : prev)).id + 1;
+  } else {
+    // сгенерировать случайное 4х-значное число от 1000 до 9999
+    generateId = Math.floor(Math.random() * (9999 - 1000 + 1)) + 1000;
+  }
 
   // create new order object
   const newOrderObj = {
-    id: lastOrderId + 1,
+    id: generateId,
     title: newOrderData.orderName,
     date: createOrderDate,
     client: {
@@ -55,13 +63,20 @@ export const createOrder = (newOrderData) => {
   };
 
   // создать новый ключ с пустым массивом, если значения последнего ключа заполнены полсностью
-  if (storageOrders[ordersPagesCount].length === 4) storageOrders[ordersPagesCount + 1] = [];
+  if (storageOrders[ordersPagesCount] && storageOrders[ordersPagesCount].length === 4)
+    storageOrders[ordersPagesCount + 1] = [];
 
-  // добавить new order object в массив последнего ключа
-  storageOrders[+Object.keys(storageOrders).reverse()[0]].push(newOrderObj);
+  // добавить объект заказов в массив последнего ключа или создать новый
+  if (Object.keys(storageOrders).length) {
+    // добавить new order object в массив последнего ключа
+    storageOrders[+Object.keys(storageOrders).reverse()[0]].push(newOrderObj);
+  } else {
+    storageOrders[1] = [newOrderObj]; // добавить new order object в пустой массив, когда объект заказов пустой
+  }
+
   sessionStorage.setItem('orders', JSON.stringify(storageOrders)); // set to storage
 
-  return storageOrders; // возвращает объект всех заказов после создания новго заказа
+  return storageOrders; // возвращает объект всех заказов после создания нового заказа
 };
 
 /*** Edit order input options ***/
@@ -90,4 +105,33 @@ export const orderSumOpt = {
     value: /^[0-9]+([.,][0-9]{2})?$/gm,
     message: 'Enter correct format sum number like 0 or 0.00',
   },
+};
+
+/*** Delete order function ***/
+export const deleteOrder = (selectedOrders) => {
+  const storageOrders = JSON.parse(sessionStorage.getItem('orders')); // get orders from session storage
+  const newOrdersObj = {}; // новый объект заказов
+  let newOrdersObjKey = 1; // первый ключ объекта заказов
+  let newOrdersObjValue = []; // первое значение объекта заказов
+
+  // сформировать массив всех заказов после удаления
+  const newOrdersArr = Object.values(storageOrders)
+    .flat() // развернуть многомерный массив в одномерный массив объектов
+    .filter((item) => !selectedOrders.includes(item.id)); // отфильтровать массив заказов. без выбранных для удаления
+
+  // сформировать новый объект заказов после удаления
+  newOrdersArr.forEach((item) => {
+    // если массив полный (4 элемента), очистить массив и увеличить ключ на 1
+    if (newOrdersObjValue.length === 4) {
+      newOrdersObjValue = [];
+      newOrdersObjKey++;
+    }
+
+    newOrdersObjValue.push(item); // добавить заказ в массив значений объекта
+    newOrdersObj[newOrdersObjKey] = newOrdersObjValue; // добавить значение объекта соответствующему ключу
+  });
+
+  sessionStorage.setItem('orders', JSON.stringify(newOrdersObj)); // set to storage
+
+  return newOrdersObj; // возвращает объект всех заказов после удаления заказов
 };

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Checkbox, Divider } from '@mui/material';
 import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
@@ -7,19 +7,20 @@ import { ArrowDropDown, ArrowDropUp } from '@mui/icons-material';
 import { sortOrdersFn } from './index';
 
 // Store
-import { setActiveOrders, sortOrders } from '../../store/orders/action';
-import { activeOrdersSelector, sortedSelector } from '../../store/orders/selectors';
+import { setActiveOrders, sortOrders, selectAll } from '../../store/orders/action';
+import { activeOrdersSelector, sortedSelector, deleteOrderSelectedAll } from '../../store/orders/selectors';
 
 const OrdersTableHead = () => {
   const dispatch = useDispatch();
-
   const activeOrders = useSelector(activeOrdersSelector); // active orders
-  const sortedDirection = useSelector(sortedSelector);
+  const sortedDirection = useSelector(sortedSelector); // направление сортировки
+  const selectedOrders = useSelector(deleteOrderSelectedAll); // selected orders for delete
 
-  const [checked, setChecked] = useState(false);
+  const handleSelectAllOrders = (event) => {
+    // пустой массив или массив с id активных заказов
+    const selectedId = event.target.checked ? activeOrders.reduce((accum, current) => [...accum, current.id], []) : [];
 
-  const handleChange = (event) => {
-    setChecked(event.target.checked);
+    dispatch(selectAll(selectedId));
   };
 
   /*** Handlers ***/
@@ -35,7 +36,12 @@ const OrdersTableHead = () => {
     <div className="orders-table__heading">
       {/* Check */}
       <div className="orders-table__col orders-check">
-        <Checkbox checked={checked} onChange={handleChange} inputProps={{ 'aria-label': 'controlled' }} />
+        <Checkbox
+          onChange={handleSelectAllOrders}
+          checked={selectedOrders.length === activeOrders.length} // выделены все
+          indeterminate={selectedOrders.length > 0 && selectedOrders.length < activeOrders.length} // выделены не все
+          inputProps={{ 'aria-label': 'controlled' }}
+        />
       </div>
 
       <Divider orientation="vertical" flexItem />

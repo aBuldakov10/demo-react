@@ -1,12 +1,18 @@
 /*** Orders ***/
+// Get active orders block
+export const activeOrdersSelector = ({ orders }) => {
+  return orders.activeOrders;
+};
+
 // Get sorted type data
 export const sortedSelector = ({ orders }) => {
   return orders.sortedBy;
 };
 
-// Get active orders block
-export const activeOrdersSelector = ({ orders }) => {
-  return orders.activeOrders;
+/*** Add ***/
+// Add popup state
+export const addOrderPopupSelector = ({ orders }) => {
+  return orders.addOrder.isOpen;
 };
 
 /*** Edit ***/
@@ -20,10 +26,13 @@ export const editOrderPopupSelector = ({ orders }) => {
   };
 };
 
-/*** Add ***/
-// Add popup state
-export const addOrderPopupSelector = ({ orders }) => {
-  return orders.addOrder.isOpen;
+/*** Delete ***/
+export const deleteOrderPopupSelector = ({ orders }) => {
+  return orders.deleteOrder.isOpen;
+};
+
+export const deleteOrderSelectedAll = ({ orders }) => {
+  return orders.deleteOrder.selected;
 };
 
 /*** Pagination ***/

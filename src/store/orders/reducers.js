@@ -1,21 +1,19 @@
 import {
-  PAGINATION_ACTIVE_PAGE,
-  PAGINATION,
-  SET_ACTIVE_ORDERS,
   SET_ORDERS,
+  SET_ACTIVE_ORDERS,
   SORT_ORDERS,
-  EDIT_OPEN_ORDER_POPUP,
-  EDIT_CLOSE_ORDER_POPUP,
   ADD_OPEN_ORDER_POPUP,
   ADD_CLOSE_ORDER_POPUP,
+  EDIT_OPEN_ORDER_POPUP,
+  EDIT_CLOSE_ORDER_POPUP,
+  DELETE_OPEN_ORDER_POPUP,
+  DELETE_CLOSE_ORDER_POPUP,
+  DELETE_SELECT_ALL_ORDERS,
+  PAGINATION,
+  PAGINATION_ACTIVE_PAGE,
 } from './types';
 
 const initialOrderState = {
-  pagination: {
-    state: false,
-    activePage: null,
-    count: null,
-  },
   ordersList: {},
   activeOrders: [],
   sortedBy: {
@@ -25,59 +23,39 @@ const initialOrderState = {
     date: false,
     sum: false,
   },
+  addOrder: {
+    isOpen: false,
+  },
   editOrder: {
     id: null,
     userName: null,
     userMail: null,
     isOpen: false,
   },
-  addOrder: {
+  deleteOrder: {
     isOpen: false,
+    selected: [],
+  },
+  pagination: {
+    state: false,
+    activePage: null,
+    count: null,
   },
 };
 
 export const ordersReducer = (state = initialOrderState, action) => {
-  // edit
-  if (action.type === EDIT_OPEN_ORDER_POPUP) {
+  // orders
+  if (action.type === SET_ORDERS) {
     return {
       ...state,
-      editOrder: {
-        id: action.orderId,
-        userName: action.clientName,
-        userMail: action.clientMail,
-        isOpen: true,
-      },
+      ordersList: action.list,
     };
   }
 
-  if (action.type === EDIT_CLOSE_ORDER_POPUP) {
+  if (action.type === SET_ACTIVE_ORDERS) {
     return {
       ...state,
-      editOrder: {
-        id: null,
-        userName: null,
-        userMail: null,
-        isOpen: false,
-      },
-    };
-  }
-
-  // add orders
-  if (action.type === ADD_OPEN_ORDER_POPUP) {
-    return {
-      ...state,
-      addOrder: {
-        isOpen: true,
-      },
-    };
-  }
-
-  if (action.type === ADD_CLOSE_ORDER_POPUP) {
-    return {
-      ...state,
-      addOrder: {
-        isOpen: false,
-      },
+      activeOrders: action.listActive,
     };
   }
 
@@ -163,32 +141,102 @@ export const ordersReducer = (state = initialOrderState, action) => {
     }
   }
 
-  // orders
-  if (action.type === SET_ORDERS) {
+  // add orders
+  if (action.type === ADD_OPEN_ORDER_POPUP) {
     return {
       ...state,
-      ordersList: action.list,
+      addOrder: {
+        isOpen: true,
+      },
     };
   }
 
-  if (action.type === SET_ACTIVE_ORDERS) {
+  if (action.type === ADD_CLOSE_ORDER_POPUP) {
     return {
       ...state,
-      activeOrders: action.listActive,
+      addOrder: {
+        isOpen: false,
+      },
+    };
+  }
+
+  // edit
+  if (action.type === EDIT_OPEN_ORDER_POPUP) {
+    return {
+      ...state,
+      editOrder: {
+        id: action.orderId,
+        userName: action.clientName,
+        userMail: action.clientMail,
+        isOpen: true,
+      },
+    };
+  }
+
+  if (action.type === EDIT_CLOSE_ORDER_POPUP) {
+    return {
+      ...state,
+      editOrder: {
+        id: null,
+        userName: null,
+        userMail: null,
+        isOpen: false,
+      },
+    };
+  }
+
+  // delete orders
+  if (action.type === DELETE_OPEN_ORDER_POPUP) {
+    return {
+      ...state,
+      deleteOrder: {
+        ...state.deleteOrder,
+        isOpen: true,
+      },
+    };
+  }
+
+  if (action.type === DELETE_CLOSE_ORDER_POPUP) {
+    return {
+      ...state,
+      deleteOrder: {
+        ...state.deleteOrder,
+        isOpen: false,
+      },
+    };
+  }
+
+  if (action.type === DELETE_SELECT_ALL_ORDERS) {
+    return {
+      ...state,
+      deleteOrder: {
+        ...state.deleteOrder,
+        selected: action.selectedArr,
+      },
     };
   }
 
   // pagination
   if (action.type === PAGINATION) {
-    return {
-      ...state,
-      pagination: {
-        ...state.pagination,
-        state: true,
-        activePage: 1,
-        count: action.countPages,
-      },
-    };
+    if (action.countPages > 1) {
+      return {
+        ...state,
+        pagination: {
+          state: true,
+          activePage: 1,
+          count: action.countPages,
+        },
+      };
+    } else {
+      return {
+        ...state,
+        pagination: {
+          state: false,
+          activePage: null,
+          count: null,
+        },
+      };
+    }
   }
 
   if (action.type === PAGINATION_ACTIVE_PAGE) {
