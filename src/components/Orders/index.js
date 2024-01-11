@@ -30,6 +30,34 @@ export const sortOrdersFn = (ordersList, orderField, direction) => {
   return result;
 };
 
+/*** Search order function ***/
+// принимает объект заказов, в котором надо искать, и объект с искомой строкой
+export const searchOrder = (searchData) => {
+  const searchSrc = JSON.parse(sessionStorage.getItem('orders')); // get orders from session storage
+  const newOrdersObj = {}; // новый объект заказов
+  let newOrdersObjKey = 1; // первый ключ объекта заказов
+  let newOrdersObjValue = []; // первое значение объекта заказов
+
+  // отфильтрованный массив с именами клиента в соответствии с поисковым запросом
+  const ordersSrcSearch = Object.values(searchSrc)
+    .flat() // развернуть многомерный массив в одномерный массив
+    .filter((item) => item.client.name.toLowerCase().includes(searchData.searchOrder.toLowerCase()));
+
+  // сформировать новый объект заказов после поиска
+  ordersSrcSearch.forEach((item) => {
+    // если массив полный (4 элемента), очистить массив и увеличить ключ на 1
+    if (newOrdersObjValue.length === 4) {
+      newOrdersObjValue = [];
+      newOrdersObjKey++;
+    }
+
+    newOrdersObjValue.push(item); // добавить заказ в массив значений объекта
+    newOrdersObj[newOrdersObjKey] = newOrdersObjValue; // добавить значение объекта соответствующему ключу
+  });
+
+  return newOrdersObj; // возвращает объект всех заказов после поиска
+};
+
 /*** Add new order function ***/
 // принимает данные формы в виде объекта
 export const createOrder = (newOrderData) => {
@@ -42,7 +70,7 @@ export const createOrder = (newOrderData) => {
   if (Object.keys(storageOrders).length) {
     generateId =
       Object.values(storageOrders)
-        .flat() // развернуть многомерный массив в одномерный массив объектов
+        .flat() // развернуть многомерный массив в одномерный массив
         // найти объект в максимальным id и получить его id увеличенный на 1
         .reduce((acc, prev) => (acc.id > prev.id ? acc : prev)).id + 1;
   } else {
@@ -116,7 +144,7 @@ export const deleteOrder = (selectedOrders) => {
 
   // сформировать массив всех заказов после удаления
   const newOrdersArr = Object.values(storageOrders)
-    .flat() // развернуть многомерный массив в одномерный массив объектов
+    .flat() // развернуть многомерный массив в одномерный массив
     .filter((item) => !selectedOrders.includes(item.id)); // отфильтровать массив заказов. без выбранных для удаления
 
   // сформировать новый объект заказов после удаления

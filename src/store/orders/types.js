@@ -1,5 +1,6 @@
 const namespace = 'ORDERS';
 const orders = '_ORDERS';
+const search = '_SEARCH';
 const add = '_ADD';
 const edit = '_EDIT';
 const remove = '_DELETE';
@@ -9,6 +10,9 @@ const pagination = '_PAGINATION';
 export const SET_ORDERS = `${namespace}${orders}_SET`;
 export const SET_ACTIVE_ORDERS = `${namespace}${orders}_SET_ACTIVE`;
 export const SORT_ORDERS = `${namespace}${orders}_SORT`;
+
+// Search
+export const SEARCH_ORDER = `${namespace}${search}_SEARCH`;
 
 // Add
 export const ADD_OPEN_ORDER_POPUP = `${namespace}${add}_OPEN_POPUP`;

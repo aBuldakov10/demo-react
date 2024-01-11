@@ -2,7 +2,7 @@
 @import '../../assets/scss/assets/util';
 
 .table-wrapper {
-  margin: 30px 0;
+  margin: 50px 0 30px;
   overflow-x: auto;
 }
 
@@ -24,15 +24,6 @@
 
       @include media(max, 390) {
         font-size: 28px;
-      }
-    }
-
-    &-search {
-      flex-grow: 1;
-
-      @include media(max, $lg) {
-        order: 1;
-        width: 100%;
       }
     }
 

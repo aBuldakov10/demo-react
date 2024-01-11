@@ -1,6 +1,7 @@
 import {
   SET_ORDERS,
   SET_ACTIVE_ORDERS,
+  SEARCH_ORDER,
   SORT_ORDERS,
   ADD_OPEN_ORDER_POPUP,
   ADD_CLOSE_ORDER_POPUP,
@@ -22,6 +23,10 @@ const initialOrderState = {
     client: false,
     date: false,
     sum: false,
+  },
+  search: {
+    state: false,
+    request: '',
   },
   addOrder: {
     isOpen: false,
@@ -56,6 +61,18 @@ export const ordersReducer = (state = initialOrderState, action) => {
     return {
       ...state,
       activeOrders: action.listActive,
+    };
+  }
+
+  // search
+  if (action.type === SEARCH_ORDER) {
+    return {
+      ...state,
+      search: {
+        ...state.search,
+        state: !!action.searchRequest?.searchOrder,
+        request: action.searchRequest?.searchOrder,
+      },
     };
   }
 

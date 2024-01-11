@@ -1,4 +1,9 @@
 /*** Orders ***/
+// Get all orders
+export const ordersSelector = ({ orders }) => {
+  return orders.ordersList;
+};
+
 // Get active orders block
 export const activeOrdersSelector = ({ orders }) => {
   return orders.activeOrders;
@@ -7,6 +12,11 @@ export const activeOrdersSelector = ({ orders }) => {
 // Get sorted type data
 export const sortedSelector = ({ orders }) => {
   return orders.sortedBy;
+};
+
+/*** Orders ***/
+export const searchSelector = ({ orders }) => {
+  return orders.search;
 };
 
 /*** Add ***/

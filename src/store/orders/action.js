@@ -2,6 +2,7 @@ import {
   SET_ORDERS,
   SET_ACTIVE_ORDERS,
   SORT_ORDERS,
+  SEARCH_ORDER,
   ADD_OPEN_ORDER_POPUP,
   ADD_CLOSE_ORDER_POPUP,
   EDIT_OPEN_ORDER_POPUP,
@@ -25,6 +26,14 @@ export const setActiveOrders = (activeOrders) => {
   return {
     type: SET_ACTIVE_ORDERS,
     listActive: activeOrders,
+  };
+};
+
+// Search
+export const searchOrderAction = (searchRequest) => {
+  return {
+    type: SEARCH_ORDER,
+    searchRequest,
   };
 };
 

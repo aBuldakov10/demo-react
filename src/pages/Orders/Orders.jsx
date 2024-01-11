@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Box, Button, Typography, TextField, Pagination } from '@mui/material';
+import { Box, Button, Typography, Pagination } from '@mui/material';
 import { Add, Delete } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 
@@ -31,6 +31,7 @@ import {
 import HeadPage from '../../components/HeadPage';
 import OrdersTableHead from '../../components/Orders/OrdersTableHead';
 import OrdersTableBody from '../../components/Orders/OrdersTableBody';
+import SearchOrder from '../../components/Orders/SearchOrder';
 import AddOrder from '../../components/Orders/AddOrder';
 import EditOrder from '../../components/Orders/EditOrder';
 import DeleteOrder from '../../components/Orders/DeleteOrder';
@@ -95,13 +96,8 @@ const Orders = () => {
           Orders
         </Typography>
 
-        <TextField
-          id="outlined-basic"
-          className="orders__heading-search"
-          label="Search by name"
-          variant="outlined"
-          placeholder="Search by name..."
-        />
+        {/*** Search order ***/}
+        <SearchOrder />
 
         <Button
           className="btn orders__heading-btn orders__heading-btn--add"
