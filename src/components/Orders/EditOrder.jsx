@@ -8,13 +8,14 @@ import './orderAssets.scss';
 import { clientEmailOpt, clientNameOpt } from './index';
 
 // Store
-import { closeEditOrderPopup, setActiveOrders } from '../../store/orders/action';
-import { activePageSelector, editOrderPopupSelector } from '../../store/orders/selectors';
+import { closeEditOrderPopup, setActiveOrders, setOrdersList } from '../../store/orders/action';
+import { activePageSelector, editOrderPopupSelector, searchSelector } from '../../store/orders/selectors';
 
 const EditOrder = () => {
   const dispatch = useDispatch();
   const { id, name, email, state } = useSelector(editOrderPopupSelector);
   const activePage = useSelector(activePageSelector);
+  const searchData = useSelector(searchSelector);
   const {
     register,
     handleSubmit,
@@ -34,28 +35,99 @@ const EditOrder = () => {
     dispatch(closeEditOrderPopup()); // close popup
   };
   const handleEditOrder = (data) => {
-    const storageOrders = JSON.parse(sessionStorage.getItem('orders')); // get orders from session storage
+    // обновление заказа без результатов поиска
+    if (!searchData.state) {
+      const storageOrders = JSON.parse(sessionStorage.getItem('orders')); // get orders from session storage
 
-    // перезаписать активные заказы
-    storageOrders[activePage] = storageOrders[activePage].reduce((accum, current) => {
-      if (current.id === id) {
-        const newClientInfo = {
-          ...current,
-          client: {
-            name: data.clientName,
-            email: data.clientEmail,
-          },
-        };
+      // перезаписать активные заказы
+      storageOrders[activePage] = storageOrders[activePage].reduce((accum, current) => {
+        if (current.id === id) {
+          const newClientInfo = {
+            ...current,
+            client: {
+              name: data.clientName,
+              email: data.clientEmail,
+            },
+          };
 
-        return [...accum, newClientInfo];
-      }
+          return [...accum, newClientInfo];
+        }
 
-      return [...accum, current];
-    }, []);
+        return [...accum, current];
+      }, []);
 
-    sessionStorage.setItem('orders', JSON.stringify(storageOrders)); // set to the session storage instead backend
-    dispatch(setActiveOrders(storageOrders[activePage])); // Set new active orders
-    dispatch(closeEditOrderPopup()); // close popup
+      sessionStorage.setItem('orders', JSON.stringify(storageOrders)); // set to the session storage instead backend
+      dispatch(setActiveOrders(storageOrders[activePage])); // Set new active orders
+      dispatch(closeEditOrderPopup()); // close popup
+    }
+
+    // обновление заказа с результатами поиска
+    if (searchData.state) {
+      const storageOrders = JSON.parse(sessionStorage.getItem('orders'));
+
+      const newOrdersObj = {}; // новый объект заказов после изменения
+      let newOrdersObjKey = 1; // первый ключ объекта заказов после изменения
+      let newOrdersObjValue = []; // первое значение объекта заказов после изменения
+
+      const newSearchOrdersObj = {}; // новый объект заказов поиска
+      let newSearchOrdersObjKey = 1; // первый ключ объекта заказов поиска
+      let newSearchOrdersObjValue = []; // первое значение объекта заказов поиска
+
+      // обновить данные после изменения
+      const updatedOrdersArr = Object.values(storageOrders)
+        .flat()
+        .reduce((accum, current) => {
+          if (current.id === id) {
+            const newClientInfo = {
+              ...current,
+              client: {
+                name: data.clientName,
+                email: data.clientEmail,
+              },
+            };
+
+            return [...accum, newClientInfo];
+          }
+
+          return [...accum, current];
+        }, []);
+
+      // сформировать новый объект заказов после изменения
+      updatedOrdersArr.forEach((item) => {
+        // если массив полный (4 элемента), очистить массив и увеличить ключ на 1
+        if (newOrdersObjValue.length === 4) {
+          newOrdersObjValue = [];
+          newOrdersObjKey++;
+        }
+
+        newOrdersObjValue.push(item); // добавить заказ в массив значений объекта
+        newOrdersObj[newOrdersObjKey] = newOrdersObjValue; // добавить значение объекта соответствующему ключу
+      });
+
+      sessionStorage.setItem('orders', JSON.stringify(newOrdersObj));
+
+      // заново отфильтрованный массив с именами клиента в соответствии с поисковым запросом
+      const ordersSrcSearch = Object.values(newOrdersObj)
+        .flat()
+        .filter((item) => item.client.name.toLowerCase().includes(searchData.request.toLowerCase()));
+
+      // сформировать новый объект измененных заказов для повторного поиска
+      ordersSrcSearch.forEach((item) => {
+        // если массив полный (4 элемента), очистить массив и увеличить ключ на 1
+        if (newSearchOrdersObjValue.length === 4) {
+          newSearchOrdersObjValue = [];
+          newSearchOrdersObjKey++;
+        }
+
+        newSearchOrdersObjValue.push(item); // добавить заказ в массив значений объекта
+        // добавить значение объекта соответствующему ключу
+        newSearchOrdersObj[newSearchOrdersObjKey] = newSearchOrdersObjValue;
+      });
+
+      dispatch(setOrdersList(newSearchOrdersObj)); // закинуть в store все заказы в соответствии с поиском
+      dispatch(setActiveOrders(newSearchOrdersObj[activePage])); // закинуть в store активные заказы в соответствии с поиском
+      dispatch(closeEditOrderPopup()); // close popup
+    }
   };
 
   return (

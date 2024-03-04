@@ -24,7 +24,9 @@ import {
   paginationPagesSelector,
   activePageSelector,
   deleteOrderSelectedAll,
+  ordersSelector,
   activeOrdersSelector,
+  searchSelector,
 } from '../../store/orders/selectors';
 
 // Components
@@ -38,11 +40,13 @@ import DeleteOrder from '../../components/Orders/DeleteOrder';
 
 const Orders = () => {
   const dispatch = useDispatch();
+  const allOrders = useSelector(ordersSelector); // all orders
   const activeOrders = useSelector(activeOrdersSelector); // active orders
   const isOrderPagination = useSelector(paginationStateSelector); // pagination state
   const countPages = useSelector(paginationPagesSelector); // count pagination page
   const activePage = useSelector(activePageSelector); // active pagination page
   const isDeleteOrderButton = useSelector(deleteOrderSelectedAll); // selected orders for delete
+  const searchData = useSelector(searchSelector);
   const { t } = useTranslation();
 
   // Page head meta data
@@ -77,7 +81,10 @@ const Orders = () => {
   const handleChangePage = (event, value) => {
     if (activePage === value) return;
 
-    const ordersList = JSON.parse(sessionStorage.getItem('orders')); // get from storage
+    let ordersList;
+
+    // список заказов взять из результатов поиска или из sessionStorage
+    searchData.state ? (ordersList = allOrders) : (ordersList = JSON.parse(sessionStorage.getItem('orders')));
 
     dispatch(changePaginationPage(value)); // смена страницы пагинации
     dispatch(setActiveOrders(ordersList[value])); // смена активной страницы пагинации
