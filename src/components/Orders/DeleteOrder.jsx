@@ -13,28 +13,69 @@ import {
   selectAll,
   pagination,
 } from '../../store/orders/action';
-import { deleteOrderPopupSelector, deleteOrderSelectedAll } from '../../store/orders/selectors';
+import { deleteOrderPopupSelector, deleteOrderSelectedAll, searchSelector } from '../../store/orders/selectors';
 
 const DeleteOrder = () => {
   const dispatch = useDispatch();
   const selectedOrders = useSelector(deleteOrderSelectedAll); // selected orders for delete
   const popupState = useSelector(deleteOrderPopupSelector);
+  const searchData = useSelector(searchSelector);
 
   /*** Handlers ***/
   const handleCloseDeleteOrderPopup = () => dispatch(closeDeleteOrderPopup());
   const handleDeleteOrder = () => {
-    const deleteOrderData = deleteOrder(selectedOrders); // объект всех заказов после удаления заказов
+    // удаление заказов без результатов поиска
+    if (!searchData.state) {
+      const deleteOrderData = deleteOrder(selectedOrders); // объект всех заказов после удаления заказов
 
-    dispatch(setOrdersList(deleteOrderData)); // закинуть в store все заказы
-    dispatch(setActiveOrders(deleteOrderData[1])); // закинуть в store активные заказы
-    dispatch(selectAll([])); // очистить массив выбранных заказов для удаления
+      dispatch(setOrdersList(deleteOrderData)); // закинуть в store все заказы
+      dispatch(setActiveOrders(deleteOrderData[1])); // закинуть в store активные заказы
+      dispatch(selectAll([])); // очистить массив выбранных заказов для удаления
 
-    // Обновить пагинацию
-    Object.keys(deleteOrderData).length > 1
-      ? dispatch(pagination(Object.keys(deleteOrderData).length))
-      : dispatch(pagination(1));
+      // Обновить пагинацию
+      Object.keys(deleteOrderData).length > 1
+        ? dispatch(pagination(Object.keys(deleteOrderData).length))
+        : dispatch(pagination(1));
 
-    handleCloseDeleteOrderPopup(); // close popup
+      handleCloseDeleteOrderPopup(); // close popup
+    }
+
+    // удаление заказов с результатами поиска
+    if (searchData.state) {
+      const deleteOrderData = deleteOrder(selectedOrders); // объект всех заказов после удаления заказов
+      const newSearchOrdersObj = {}; // новый объект заказов поиска
+      let newSearchOrdersObjKey = 1; // первый ключ объекта заказов поиска
+      let newSearchOrdersObjValue = []; // первое значение объекта заказов поиска
+
+      // заново отфильтрованный массив с именами клиента в соответствии с поисковым запросом
+      const ordersSrcSearch = Object.values(deleteOrderData)
+        .flat()
+        .filter((item) => item.client.name.toLowerCase().includes(searchData.request.toLowerCase()));
+
+      // сформировать новый объект заказов после удаления и после повторного поиска
+      ordersSrcSearch.forEach((item) => {
+        // если массив полный (4 элемента), очистить массив и увеличить ключ на 1
+        if (newSearchOrdersObjValue.length === 4) {
+          newSearchOrdersObjValue = [];
+          newSearchOrdersObjKey++;
+        }
+
+        newSearchOrdersObjValue.push(item); // добавить заказ в массив значений объекта
+        // добавить значение объекта соответствующему ключу
+        newSearchOrdersObj[newSearchOrdersObjKey] = newSearchOrdersObjValue;
+      });
+
+      dispatch(setOrdersList(newSearchOrdersObj)); // закинуть в store все заказы в соответствии с поиском
+      dispatch(setActiveOrders(newSearchOrdersObj[1])); // закинуть в store активные заказы в соответствии с поиском
+      dispatch(selectAll([])); // очистить массив выбранных заказов для удаления
+
+      // Обновить пагинацию
+      Object.keys(newSearchOrdersObj).length > 1
+        ? dispatch(pagination(Object.keys(newSearchOrdersObj).length))
+        : dispatch(pagination(1));
+
+      handleCloseDeleteOrderPopup(); // close popup
+    }
   };
 
   return (

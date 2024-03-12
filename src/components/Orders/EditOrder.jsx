@@ -111,7 +111,7 @@ const EditOrder = () => {
         .flat()
         .filter((item) => item.client.name.toLowerCase().includes(searchData.request.toLowerCase()));
 
-      // сформировать новый объект измененных заказов для повторного поиска
+      // сформировать новый объект измененных заказов после повторного поиска
       ordersSrcSearch.forEach((item) => {
         // если массив полный (4 элемента), очистить массив и увеличить ключ на 1
         if (newSearchOrdersObjValue.length === 4) {
