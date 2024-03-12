@@ -32,7 +32,6 @@ const SearchOrder = () => {
     document.activeElement.blur(); // убрать фокус с input
 
     dispatch(searchOrderAction(data)); // set search data to the store
-    // dispatch(searchOrderAction()); // clear search store
   };
 
   const handleClearSearch = () => {

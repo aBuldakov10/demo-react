@@ -8,11 +8,12 @@ import { clientEmailOpt, clientNameOpt, createOrder, orderNameOpt, orderSumOpt }
 
 // Store
 import { closeAddOrderPopup, pagination, setActiveOrders, setOrdersList } from '../../store/orders/action';
-import { addOrderPopupSelector } from '../../store/orders/selectors';
+import { addOrderPopupSelector, searchSelector } from '../../store/orders/selectors';
 
 const AddOrder = () => {
   const dispatch = useDispatch();
   const popupState = useSelector(addOrderPopupSelector);
+  const searchData = useSelector(searchSelector);
   const {
     handleSubmit,
     control,
@@ -23,17 +24,56 @@ const AddOrder = () => {
   /*** Handlers ***/
   const handleCloseAddOrderPopup = () => dispatch(closeAddOrderPopup());
   const handleAddOrder = (data) => {
-    const createOrderData = createOrder(data); // объект всех заказов с новым созданным заказом
+    // удаление заказов без результатов поиска
+    if (!searchData.state) {
+      const createOrderData = createOrder(data); // объект всех заказов с новым созданным заказом
 
-    dispatch(setOrdersList(createOrderData)); // закинуть в store все заказы
-    dispatch(setActiveOrders(createOrderData[1])); // закинуть в store активные заказы
+      dispatch(setOrdersList(createOrderData)); // закинуть в store все заказы
+      dispatch(setActiveOrders(createOrderData[1])); // закинуть в store активные заказы
 
-    // Обновить пагинацию
-    if (Object.keys(createOrderData).length > 1) dispatch(pagination(Object.keys(createOrderData).length));
+      // Обновить пагинацию
+      if (Object.keys(createOrderData).length > 1) dispatch(pagination(Object.keys(createOrderData).length));
 
-    reset({ orderName: '', clientName: '', clientEmail: '', orderSum: '' }); // очистить поля
+      reset({ orderName: '', clientName: '', clientEmail: '', orderSum: '' }); // очистить поля
 
-    handleCloseAddOrderPopup(); // close popup
+      handleCloseAddOrderPopup(); // close popup
+    }
+
+    // удаление заказов с результатами поиска
+    if (searchData.state) {
+      const createOrderData = createOrder(data); // объект всех заказов с новым созданным заказом
+      const newSearchOrdersObj = {}; // новый объект заказов поиска
+      let newSearchOrdersObjKey = 1; // первый ключ объекта заказов поиска
+      let newSearchOrdersObjValue = []; // первое значение объекта заказов поиска
+
+      // заново отфильтрованный массив с именами клиента в соответствии с поисковым запросом
+      const ordersSrcSearch = Object.values(createOrderData)
+        .flat()
+        .filter((item) => item.client.name.toLowerCase().includes(searchData.request.toLowerCase()));
+
+      // сформировать новый объект заказов после удаления и после повторного поиска
+      ordersSrcSearch.forEach((item) => {
+        // если массив полный (4 элемента), очистить массив и увеличить ключ на 1
+        if (newSearchOrdersObjValue.length === 4) {
+          newSearchOrdersObjValue = [];
+          newSearchOrdersObjKey++;
+        }
+
+        newSearchOrdersObjValue.push(item); // добавить заказ в массив значений объекта
+        // добавить значение объекта соответствующему ключу
+        newSearchOrdersObj[newSearchOrdersObjKey] = newSearchOrdersObjValue;
+      });
+
+      dispatch(setOrdersList(newSearchOrdersObj)); // закинуть в store все заказы
+      dispatch(setActiveOrders(newSearchOrdersObj[1])); // закинуть в store активные заказы
+
+      // Обновить пагинацию
+      if (Object.keys(newSearchOrdersObj).length > 1) dispatch(pagination(Object.keys(newSearchOrdersObj).length));
+
+      reset({ orderName: '', clientName: '', clientEmail: '', orderSum: '' }); // очистить поля
+
+      handleCloseAddOrderPopup(); // close popup
+    }
   };
 
   return (
