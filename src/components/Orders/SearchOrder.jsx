@@ -5,15 +5,15 @@ import { Button, TextField } from '@mui/material';
 import { Search } from '@mui/icons-material';
 
 // Files
+import { orders } from '../../pages/Orders/data';
 import { searchOrder } from './index';
 
 // Store
 import { pagination, searchOrderAction, setActiveOrders, setOrdersList } from '../../store/orders/action';
-import { ordersSelector, searchSelector } from '../../store/orders/selectors';
+import { searchSelector } from '../../store/orders/selectors';
 
 const SearchOrder = () => {
   const dispatch = useDispatch();
-  const allOrders = useSelector(ordersSelector);
   const searchData = useSelector(searchSelector);
   const { handleSubmit, control, reset } = useForm();
 
@@ -29,12 +29,31 @@ const SearchOrder = () => {
       ? dispatch(pagination(Object.keys(searchResult).length))
       : dispatch(pagination(1));
 
-    reset({ searchOrder: '' }); // очистить поле поиска
-
     document.activeElement.blur(); // убрать фокус с input
 
     dispatch(searchOrderAction(data)); // set search data to the store
     // dispatch(searchOrderAction()); // clear search store
+  };
+
+  const handleClearSearch = () => {
+    let ordersList; // orders list
+
+    reset({ searchOrder: '' }); // очистить поле поиска
+    dispatch(searchOrderAction()); // clear search store
+
+    // Set orders
+    if (!sessionStorage.getItem('orders')) {
+      ordersList = orders; // set default orders from data file
+
+      sessionStorage.setItem('orders', JSON.stringify(orders)); // set to storage
+    } else {
+      ordersList = JSON.parse(sessionStorage.getItem('orders')); // get from storage
+    }
+
+    dispatch(setOrdersList(ordersList)); // закинуть в store все заказы
+    dispatch(setActiveOrders(ordersList[1])); // закинуть в store активные заказы
+
+    if (Object.keys(ordersList).length > 1) dispatch(pagination(Object.keys(ordersList).length)); // Set pagination
   };
 
   return (
@@ -70,7 +89,7 @@ const SearchOrder = () => {
               The search result by: <strong>"{searchData.request}"</strong>
             </span>
 
-            <button className="orders-search__notification-btn" type="submit">
+            <button className="orders-search__notification-btn" type="button" onClick={handleClearSearch}>
               Reset
             </button>
           </div>
