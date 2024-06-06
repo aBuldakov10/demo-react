@@ -10,16 +10,13 @@ Used **i18n** for internationalization\
 Used **react-helmet** for change head pages data for more
 friendly SEO
 
-_Has 2 branches: **'master'** and **'app-context'**\
+Has 2 branches: **'master'** and **'app-context'**\
 **Weather** and **ToDo** pages with using 
 **Context** instead **Redux** placed in 
-**'app-context'** branch_
+**'app-context'** branch
 
 Has **weather**, **to-do** and **authentication** 
 routes:
-
-> [!NOTE]
-> tooltip.
 
 #### Home
 - Default page.
