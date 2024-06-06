@@ -1,44 +1,71 @@
 ## Demo react app
+
+Follow the [demo-app](https://abuldakov10.github.io/demo-react/#/ru) 
+link to see the project. It has _**'Home'**_, _**'Weather'**_,
+ _**'To Do'**_, _**'Orders'**_ and _**authentication**_ pages.
+
 #### Environment
-Based on create-react-app.
-
+Based on create-react-app.\
 Used **MUI** for styling without adaptive and minimum SCSS.\
-Used **Formik** and **Yup** for validation forms\
-Used **Redux**, **Redux-thunk** for state managing\
-Used **Firebase** as backend for authenticate\
-Used **i18n** for internationalization\
-Used **react-helmet** for change head pages data for more
-friendly SEO
+Used **Redux** for state managing.\
+Used native **Fetch** in **async/await** functions for http
+ requests.\
+Used **Formik** and **Yup** for validation forms.\
+Used **Firebase** as backend for authenticate.\
+Used **Session storage** as backend for orders.\
+Used **i18n** for internationalization (Ru/En).\
+Used **YaMap** for displaying selected city on the _weather_ page.\
+Used **react-helmet** for change head pages data for more 
+friendly SEO.\
+Used **prettier** for js linting.
 
-Has 2 branches: **'master'** and **'app-context'**\
-**Weather** and **ToDo** pages with using 
-**Context** instead **Redux** placed in 
-**'app-context'** branch
+> [!NOTE]
+> Has 2 branches: _'master'_ and _'app-context'_.
+  _**Weather**_ and _**ToDo**_ pages with using 
+  **Context** instead **Redux** placed in 
+  _'app-context'_ branch
 
-Has **weather**, **to-do** and **authentication** 
-routes:
+#### Pages:
+##### Home
+- Displays **device version** on resize (mobile, tablet or desktop)
+- Shows **timer** until some event
+- Has internationalization. 
+- No adaptive.
 
-#### Home
-- Default page.
-
-#### Weather
+##### Weather
 - Used [open weather map](https://openweathermap.org/) api.
-- The cities list renders data from the js file.
-- Location button allows to define your location and provide
-the weather data according your coordinates.
+- The city list renders data from the js file. 10 cities by default.
+- Location button **allows to define your location** and provide
+the weather data according your coordinates. (must be enabled
+ geolocation in your browser).
 - Check if geolocation is enabled in your browser otherwise
 you'll get the error notification.
+- **Map** allows to see the selected city on the _weather_ page.
+- Has internationalization. 
+- Full adaptive.
 
-#### To do list
-- Used backend on [render](https://render.com/) service.
+##### To do list
+- Used my backend on [render](https://render.com/) service.
 It **disabled by default** (in sleep mode) that's why it 
 can take a few minutes to start server. Or you can 
 create tasks while server starting and wait a few minutes.
 - Allows create/delete/edit and mark as done tasks.
+- Has internationalization. 
+- Full adaptive.
 
-#### Authentication
-- **Authenticate** user icon is displaying in the 
-header.
+##### Orders
+- Show orders table data rendered from js file.
+- **Custom** table **without MUI**.
+- **Pagination** with **MUI**.
+- **Sort** by asc/desc in column.
+- **Search** by 'Client name' column.
+- Add, edit and delete(one or more at once) orders.
+- Used **session storage** instead backend.
+- No internationalization. 
+- Full adaptive.
+
+##### Authentication
+- **Authenticate** user icon is displaying in the header.
 - **Registration** with email and password. Redirect 
 to **Profile** page after user has been registered.
 - **Log in** with email and password. Redirect 
@@ -48,13 +75,10 @@ create a new one without being logged in.
 - **Profile** page displays user info. Here you can change
  user info, password and delete account. Default user name is
 "Unknown user", you can change it in profile page.
+- Has internationalization. 
+- Full adaptive.
 
-#### Change language
-- It has 2 **language versions**: **'ru'** and **'en'**. It 
-is displaying in the application url. App has 2 dynamic 
-language routes.
+##### Change language
 - **Switch language** icon is displaying in the 
 header.
 - **Languages** content is in local lang files.
-- **Translation** is using for the **Weather**, **To do**,
-**Authentication** and **Home** pages.

@@ -49,7 +49,13 @@ const ToDoList = () => {
                   variant="contained"
                   color={isDoneTask}
                   title={isDone ? t('to-do.done.tip-restore') : t('to-do.done.tip-done')}
-                  onClick={() => doneTask(id).then((taskList) => dispatch(toggleDoneTask(taskList)))}
+                  onClick={() =>
+                    doneTask(id)
+                      .then((taskList) => dispatch(toggleDoneTask(taskList)))
+                      .catch((e) => {
+                        alert('Check if CORS error or something went wrong...');
+                      })
+                  }
                 >
                   <Done style={{ fontSize: 'inherit' }} />
                 </Button>
