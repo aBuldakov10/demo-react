@@ -2,7 +2,7 @@
 #### Environment
 Based on create-react-app.
 
-_Used_ **MUI** for styling without adaptive and minimum SCSS.\
+Used **MUI** for styling without adaptive and minimum SCSS.\
 Used **Formik** and **Yup** for validation forms\
 Used **Redux**, **Redux-thunk** for state managing\
 Used **Firebase** as backend for authenticate\
@@ -10,10 +10,10 @@ Used **i18n** for internationalization\
 Used **react-helmet** for change head pages data for more
 friendly SEO
 
-Has 2 branches: **'master'** and **'app-context'**\
+_Has 2 branches: **'master'** and **'app-context'**\
 **Weather** and **ToDo** pages with using 
 **Context** instead **Redux** placed in 
-**'app-context'** branch
+**'app-context'** branch_
 
 Has **weather**, **to-do** and **authentication** 
 routes:
