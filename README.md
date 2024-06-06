@@ -2,7 +2,7 @@
 #### Environment
 Based on create-react-app.
 
-Used **MUI** for styling without adaptive and minimum SCSS.\
+_Used_ **MUI** for styling without adaptive and minimum SCSS.\
 Used **Formik** and **Yup** for validation forms\
 Used **Redux**, **Redux-thunk** for state managing\
 Used **Firebase** as backend for authenticate\
