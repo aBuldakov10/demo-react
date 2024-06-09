@@ -4,16 +4,28 @@
 .timer {
   display: flex;
   justify-content: center;
-  gap: 60px;
+  gap: 20px;
   margin: 30px 0;
 
+  @include media(min, $sm) {
+    gap: 60px;
+  }
+
   &-block h4 {
-    font-weight: 600;
     margin-bottom: 0.5em;
+    font-weight: 600;
+
+    @include media(max, $sm) {
+      @include font-size(20);
+    }
   }
 
   &__item {
-    min-width: 90px;
+    min-width: 50px;
+
+    @include media(min, $sm) {
+      min-width: 90px;
+    }
   }
 
   &__value,
@@ -25,6 +37,10 @@
 
   &__value {
     font-size: 60px;
+
+    @include media(max, $sm) {
+      @include font-size(20);
+    }
   }
 
   &__label {

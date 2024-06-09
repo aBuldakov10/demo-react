@@ -30,7 +30,7 @@ Used **prettier** for js linting.
 - Displays **device version** on resize (mobile, tablet or desktop)
 - Shows **timer** until some event
 - Has internationalization. 
-- No adaptive.
+- Full adaptive.
 
 ##### Weather
 - Used [open weather map](https://openweathermap.org/) api.
