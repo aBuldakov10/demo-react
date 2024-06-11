@@ -1,0 +1,108 @@
+// Import mixins and variables
+@import '../../assets/scss/assets/util';
+
+.main-slider {
+  margin-bottom: 30px;
+
+  @include media(min, $md) {
+    margin-bottom: 50px;
+  }
+
+  &__item {
+    position: relative;
+    height: 700px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    &--thumb {
+      height: 100px;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #432874;
+        opacity: .5;
+        transition: opacity .2s ease;
+      }
+    }
+  }
+
+  .swiper-button {
+    &-next,
+    &-prev {
+      background-color: #432874;
+      padding: 10px 20px;
+      width: auto;
+      height: auto;
+
+      @include media(max, $md) {
+        top: auto;
+        bottom: 20px;
+        padding: 0 10px;
+        width: 50px;
+        height: 50px;
+      }
+
+      &:after {
+        color: #eee;
+
+        @include media(max, $md) {
+          font-size: 22px;
+        }
+      }
+    }
+
+    &-next {
+      right: 20px;
+    }
+
+    &-prev {
+      left: 20px;
+    }
+  }
+}
+
+.swiper-slide-thumb-active .main-slider__item--thumb:before {
+  opacity: 0;
+}
+
+.slide-content {
+  transform: translateX(-50%);
+  position: absolute;
+  left: 50%;
+  z-index: 1;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.7);
+
+  width: 85%;
+  padding: 25px;
+  top: 20px;
+
+  @include media(min, $md) {
+    top: 100px;
+    padding: 35px;
+    width: 65%;
+  }
+
+  @include media(min, $lg) {
+    padding: 50px;
+    width: 75%;
+  }
+
+  h3, p {
+    transition: .8s ease;
+  }
+
+  &.fade h3,
+  &.fade p {
+    opacity: 0;
+  }
+}

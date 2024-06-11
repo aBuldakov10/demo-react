@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 // Components
 import HeadPage from '../components/HeadPage';
 import Timer from '../components/Timer/Timer';
+import MainSlider from '../components/MainSlider/MainSlider';
 
 // Hooks
 import useMedia from '../hooks/useMedia';
@@ -45,6 +46,9 @@ const Home = () => {
 
       {/*** Timer ***/}
       <Timer />
+
+      {/*** Slider ***/}
+      <MainSlider />
     </Box>
   );
 };

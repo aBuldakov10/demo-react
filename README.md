@@ -12,6 +12,7 @@ Used native **Fetch** in **async/await** functions for http
  requests.\
 Used **Formik** and **Yup** for validation forms.\
 Used **Firebase** as backend for authenticate.\
+Used **Swiper** for slider.\
 Used **Session storage** as backend for orders.\
 Used **i18n** for internationalization (Ru/En).\
 Used **YaMap** for displaying selected city on the _weather_ page.\
@@ -28,8 +29,9 @@ Used **prettier** for js linting.
 #### Pages:
 ##### Home
 - Displays **device version** on resize (mobile, tablet or desktop)
-- Shows **timer** until some event
-- Has internationalization. 
+- Shows **timer** until some event.
+- **Slider** with thumbs. Slider data is in own component.
+- Has internationalization.
 - Full adaptive.
 
 ##### Weather
@@ -41,7 +43,7 @@ the weather data according your coordinates. (must be enabled
 - Check if geolocation is enabled in your browser otherwise
 you'll get the error notification.
 - **Map** allows to see the selected city on the _weather_ page.
-- Has internationalization. 
+- Has internationalization.
 - Full adaptive.
 
 ##### To do list
@@ -50,7 +52,7 @@ It **disabled by default** (in sleep mode) that's why it
 can take a few minutes to start server. Or you can 
 create tasks while server starting and wait a few minutes.
 - Allows create/delete/edit and mark as done tasks.
-- Has internationalization. 
+- Has internationalization.
 - Full adaptive.
 
 ##### Orders
@@ -61,7 +63,7 @@ create tasks while server starting and wait a few minutes.
 - **Search** by 'Client name' column.
 - Add, edit and delete(one or more at once) orders.
 - Used **session storage** instead backend.
-- No internationalization. 
+- No internationalization.
 - Full adaptive.
 
 ##### Authentication
@@ -75,7 +77,7 @@ create a new one without being logged in.
 - **Profile** page displays user info. Here you can change
  user info, password and delete account. Default user name is
 "Unknown user", you can change it in profile page.
-- Has internationalization. 
+- Has internationalization.
 - Full adaptive.
 
 ##### Change language
