@@ -4,7 +4,7 @@ import { Alert, AlertTitle, Box, Divider } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 // Files
-import { cityWeatherSelector, locationDataSelector } from '../../store/weather/selectors';
+import { cityWeatherSelector, locationDataSelector } from '../../../store/weather/selectors';
 
 const LocationNotification = () => {
   const { t } = useTranslation();

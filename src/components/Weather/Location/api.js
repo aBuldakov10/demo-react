@@ -1,5 +1,5 @@
 // Import weather domain and unique api key
-import { apiDomain, apiKey } from '../../pages/Weather/api';
+import { apiDomain, apiKey } from '../../../pages/Weather/api';
 
 /*** Fetch location weather ***/
 export const fetchLocationWeather = async ({ lat, lon, lng }) => {

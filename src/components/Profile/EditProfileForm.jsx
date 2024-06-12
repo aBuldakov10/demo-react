@@ -5,6 +5,7 @@ import { Field, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
 // Files
+import './EditProfile.scss';
 import { editProfileValidation } from './validation';
 
 // Firebase
@@ -21,7 +22,7 @@ import {
 import { userInfoSelector } from '../../store/auth/selectors';
 
 // Components
-import Text from '../../components/Form/Text';
+import Text from '../Form/Text';
 
 const EditProfileForm = () => {
   const auth = getAuth(app);

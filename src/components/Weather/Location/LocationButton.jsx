@@ -6,11 +6,11 @@ import { LocationOn } from '@mui/icons-material';
 import { useTranslation } from 'react-i18next';
 
 // Files
-import './WeatherLocation.scss';
+import './Location.scss';
 import { chooseMyCity } from './index';
 
 // Store
-import { disabledLocation, getWeatherLocation, weatherLoaded, weatherLoading } from '../../store/weather/actions';
+import { disabledLocation, getWeatherLocation, weatherLoaded, weatherLoading } from '../../../store/weather/actions';
 
 const LocationButton = () => {
   const dispatch = useDispatch();

@@ -5,6 +5,7 @@ import { Field, Form, Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 
 // Files
+import './EditProfile.scss';
 import { confirmCredentialValidation } from './validation';
 
 // Firebase
@@ -21,8 +22,8 @@ import {
 import { authErrorSelector } from '../../store/auth/selectors';
 
 // Components
-import Text from '../../components/Form/Text';
-import Password from '../../components/Form/Password';
+import Text from '../Form/Text';
+import Password from '../Form/Password';
 
 const ConfirmCredentialPopup = () => {
   const auth = getAuth(app);

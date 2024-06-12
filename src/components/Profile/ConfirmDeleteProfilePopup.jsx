@@ -3,6 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Dialog, DialogActions, DialogTitle } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
+// Files
+import './EditProfile.scss';
+
 // Firebase
 import { app } from '../../constants/firebase';
 import { deleteUser, getAuth } from 'firebase/auth';

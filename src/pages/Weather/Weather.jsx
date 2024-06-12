@@ -18,8 +18,8 @@ import { activeCitySelector, locationDataSelector, weatherLoader } from '../../s
 import HeadPage from '../../components/HeadPage';
 import Loader from '../../components/Loader/Loader';
 import CityList from '../../components/Weather/CityList/CityList';
-import LocationButton from '../../components/WeatherLocation/LocationButton';
-import LocationNotification from '../../components/WeatherLocation/LocationNotification';
+import LocationButton from '../../components/Weather/Location/LocationButton';
+import LocationNotification from '../../components/Weather/Location/LocationNotification';
 import Content from '../../components/Weather/Content/Content';
 import YaMap from '../../components/YaMap/YaMap';
 

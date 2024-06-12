@@ -33,9 +33,9 @@ import {
 // Components
 import HeadPage from '../../components/HeadPage';
 import Password from '../../components/Form/Password';
-import ConfirmCredentialPopup from './ConfirmCredentialPopup';
-import ConfirmDeleteProfilePopup from './ConfirmDeleteProfilePopup';
-import EditProfileForm from './EditProfileForm';
+import EditProfileForm from '../../components/Profile/EditProfileForm';
+import ConfirmCredentialPopup from '../../components/Profile/ConfirmCredentialPopup';
+import ConfirmDeleteProfilePopup from '../../components/Profile/ConfirmDeleteProfilePopup';
 
 const Profile = () => {
   const auth = getAuth(app);
