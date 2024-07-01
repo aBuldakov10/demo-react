@@ -1,6 +1,11 @@
 // Import mixins and variables
 @import '../../assets/scss/assets/util';
 
+.weather__main {
+  display: flex;
+  flex-direction: column;
+}
+
 .weather-content-wrapper {
   position: relative;
   padding: 24px;

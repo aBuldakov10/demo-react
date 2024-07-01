@@ -10,7 +10,8 @@ Used **MUI** for styling without adaptive and minimum SCSS.\
 Used **Redux** for state managing.\
 Used native **Fetch** in **async/await** functions for http
  requests.\
-Used **Formik** and **Yup** for validation forms.\
+Used **react-hook-form** for work with forms.\
+Used **Formik** and **Yup** for work with forms and validation.\
 Used **Firebase** as backend for authenticate.\
 Used **Swiper** for slider.\
 Used **Session storage** as backend for orders.\
@@ -42,6 +43,7 @@ the weather data according your coordinates. (must be enabled
  geolocation in your browser).
 - Check if geolocation is enabled in your browser otherwise
 you'll get the error notification.
+- Search city by name (using **react-hook-form**).
 - **Map** allows to see the selected city on the _weather_ page.
 - Has internationalization.
 - Full adaptive.
@@ -63,6 +65,7 @@ create tasks while server starting and wait a few minutes.
 - **Search** by 'Client name' column.
 - Add, edit and delete(one or more at once) orders.
 - Used **session storage** instead backend.
+- Used **react-hook-form** for add, edit and search.
 - No internationalization.
 - Full adaptive.
 

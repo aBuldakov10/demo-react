@@ -1,0 +1,52 @@
+// Import mixins and variables
+@import '../../../assets/scss/assets/util';
+
+#searchCity {
+  padding-right: 60px;
+}
+
+.weather-search-btn {
+  transform: translateY(-50%);
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  display: flex;
+  color: $main-clr;
+  cursor: pointer;
+}
+
+// Locations list
+.location-list {
+  position: absolute !important;
+  top: 56px;
+  left: 0;
+  width: 100%;
+  z-index: 2;
+  max-height: 190px;
+  background: #fff;
+  overflow-y: auto;
+  list-style: none;
+
+  &__item {
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      background-color: $main-clr;
+      color: #fff;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    background-color: $main-clr;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #fff;
+  }
+}

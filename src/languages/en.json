@@ -120,6 +120,11 @@
       "lon": "and longitude",
       "disabled-msg": "You should to enable geolocation in your browser to see your weather location data",
       "button": "My location"
+    },
+    "search": {
+      "label": "Search",
+      "placeholder": "Search city",
+      "required": "This field is required"
     }
   },
 

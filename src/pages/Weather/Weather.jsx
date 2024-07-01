@@ -20,6 +20,7 @@ import Loader from '../../components/Loader/Loader';
 import CityList from '../../components/Weather/CityList/CityList';
 import LocationButton from '../../components/Weather/Location/LocationButton';
 import LocationNotification from '../../components/Weather/Location/LocationNotification';
+import CitySearch from '../../components/Weather/CitySearch/CitySearch';
 import Content from '../../components/Weather/Content/Content';
 import YaMap from '../../components/YaMap/YaMap';
 
@@ -52,7 +53,7 @@ const Weather = () => {
       <HeadPage headPageData={pageHeadData} />
 
       <Grid className="weather" container spacing={4}>
-        <Grid item xs={12} md={4} lg={3}>
+        <Grid item xs={12} md={4} lg={3} className="weather__aside">
           {/*** Render city list ***/}
           <CityList />
 
@@ -60,7 +61,10 @@ const Weather = () => {
           <LocationButton />
         </Grid>
 
-        <Grid item xs={12} md={8} lg={9}>
+        <Grid item xs={12} md={8} lg={9} className="weather__main">
+          {/*** Search city ***/}
+          <CitySearch />
+
           <Box className="weather-content-wrapper" sx={{ backgroundImage: `url(${imgBg})` }}>
             {loader ? (
               <Loader />
